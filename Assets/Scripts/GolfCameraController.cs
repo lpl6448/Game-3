@@ -1,25 +1,79 @@
 using UnityEngine;
 
+/// <summary>
+/// Controls the Camera in the mini golf game mode, rotating the camera and gradually
+/// following the ball. StartDrag() and EndDrag() are called from GolfPuttingInput
+/// </summary>
 public class GolfCameraController : MonoBehaviour
 {
-    public Vector2 CameraMouseSensitivity;
+    /// <summary>
+    /// Mouse sensitivity (x: horizontal, y: vertical) of the camera movement
+    /// </summary>
+    [SerializeField]
+    private Vector2 cameraMouseSensitivity = new Vector2(1, 1);
 
-    public float KeyboardSensitivity;
+    /// <summary>
+    /// Interpolation exponential factor used to smooth out mouse movements
+    /// (I made this factor somewhat arbitrary, but higher numbers mean faster/rougher movement)
+    /// </summary>
+    [SerializeField]
+    private float cameraLookLerp = 8;
 
-    public float CameraLookLerp;
+    /// <summary>
+    /// Target Transform that the camera will follow
+    /// </summary>
+    [SerializeField]
+    private Transform target;
 
-    public float TargetDistance;
+    /// <summary>
+    /// Distance from the target that this camera orbits at
+    /// </summary>
+    [SerializeField]
+    private float targetDistance = 8;
 
-    public Transform Target;
+    /// <summary>
+    /// Interpolation exponential factor used to smooth out the camera moving to follow the target
+    /// (I made this factor somewhat arbitrary, but higher numbers mean faster/rougher movement)
+    /// </summary>
+    [SerializeField]
+    private float cameraFollowLerp = 8;
 
+    /// <summary>
+    /// Rotation that the camera is moving toward
+    /// </summary>
     private Vector3 goalCameraAngles;
 
+    /// <summary>
+    /// Current target position that the camera is following (used for smoothing)
+    /// </summary>
+    private Vector3 currentTargetPosition;
+
+    /// <summary>
+    /// Whether the camera is currently being dragged or not
+    /// </summary>
     private bool dragging = false;
 
+    /// <summary>
+    /// Direction pointed to the camera's right, with a y-value of 0
+    /// </summary>
+    public Vector3 FlatRight => new Vector3(transform.right.x, 0, transform.right.z).normalized;
+
+    /// <summary>
+    /// Direction pointed in the camera's forward direction, with a y-value of 0
+    /// </summary>
+    public Vector3 FlatForward => new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
+
+    /// <summary>
+    /// Begins to drag this camera using mouse movements
+    /// </summary>
     public void StartDrag()
     {
         dragging = true;
     }
+
+    /// <summary>
+    /// Stops dragging this camera using mouse movements
+    /// </summary>
     public void EndDrag()
     {
         dragging = false;
@@ -30,7 +84,8 @@ public class GolfCameraController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        goalCameraAngles = Quaternion.LookRotation(Target.position - transform.position).eulerAngles;
+        currentTargetPosition = target.position;
+        goalCameraAngles = Quaternion.LookRotation(target.position - transform.position).eulerAngles;
     }
 
     private void Update()
@@ -54,18 +109,16 @@ public class GolfCameraController : MonoBehaviour
             lookInput = new Vector3(-Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X"), 0);
         }
 
-        // Keyboard camera controls
-        lookInput.y -= Input.GetAxisRaw("Horizontal") * KeyboardSensitivity * Time.deltaTime;
-
         // Rotate the camera angles
-        Vector3 angleDelta = Vector3.Scale(lookInput, CameraMouseSensitivity);
+        Vector3 angleDelta = Vector3.Scale(lookInput, cameraMouseSensitivity);
         goalCameraAngles += angleDelta;
 
         // Prevent the camera from turning upside-down
         goalCameraAngles.x = Mathf.Clamp(goalCameraAngles.x, -90, 90);
 
         // Update the camera's rotation and position
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(goalCameraAngles), 1 - Mathf.Pow(1 - CameraLookLerp, Time.deltaTime));
-        transform.position = Target.position - transform.forward * TargetDistance;
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(goalCameraAngles), 1 - Mathf.Exp(-cameraLookLerp * Time.deltaTime));
+        currentTargetPosition = Vector3.Lerp(currentTargetPosition, target.position, 1 - Mathf.Exp(-cameraFollowLerp * Time.deltaTime));
+        transform.position = currentTargetPosition - transform.forward * targetDistance;
     }
 }

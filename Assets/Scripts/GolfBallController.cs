@@ -1,64 +1,40 @@
+using UnityEditor.U2D;
 using UnityEngine;
 
+/// <summary>
+/// Controls basic physics for the golf ball, like angular damping and launching the ball.
+/// Launch() is called from GolfPuttingInput
+/// </summary>
 public class GolfBallController : MonoBehaviour
 {
-    public float PuttSpeed;
+    /// <summary>
+    /// Degrees per second of angular "friction" applied to the ball to stop its angular momentum
+    /// </summary>
+    [SerializeField]
+    private float angularDamping;
 
-    public float VerticalComponent;
-
-    public float AngularDamping;
-
+    /// <summary>
+    /// Rigidbody of the golf ball
+    /// </summary>
     [SerializeField]
     private new Rigidbody rigidbody;
 
-    [SerializeField]
-    private GolfBallIndicator indicator;
-
-    private bool dragging = false;
-
-    private Vector3 dragOrigin;
-
-    public void StartDrag()
-    {
-        dragging = true;
-        dragOrigin = Vector3.zero;
-        dragOrigin = GetDragOffset();
-    }
-    public void EndDrag()
-    {
-        dragging = false;
-
-        Launch(-GetDragOffset() * PuttSpeed);
-        indicator.DragOffset = Vector3.zero;
-    }
-
-    private void Update()
-    {
-        if (dragging)
-            indicator.DragOffset = GetDragOffset();
-    }
-
+    /// <summary>
+    /// Every physics tick that this ball is colliding with the ground, apply the angular damping
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionStay(Collision collision)
     {
-        rigidbody.angularVelocity -= rigidbody.angularVelocity.normalized * Mathf.Min(AngularDamping * Time.fixedDeltaTime, rigidbody.angularVelocity.magnitude);
+        rigidbody.angularVelocity -= rigidbody.angularVelocity.normalized * Mathf.Min(angularDamping * Time.fixedDeltaTime, rigidbody.angularVelocity.magnitude);
     }
 
-    private Vector3 GetDragOffset()
-    {
-        Plane dragPlane = new Plane(Vector3.up, dragOrigin);
-        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (dragPlane.Raycast(mouseRay, out float t))
-        {
-            Vector3 worldPoint = mouseRay.GetPoint(t);
-            return worldPoint - dragOrigin;
-        }
-        return dragOrigin;
-    }
-
-    private void Launch(Vector3 velocity)
+    /// <summary>
+    /// Applies an impulse to this ball
+    /// </summary>
+    /// <param name="velocity">Velocity to add</param>
+    public void Launch(Vector3 velocity)
     {
         // Add an impulse to the ball
         rigidbody.AddForce(velocity, ForceMode.VelocityChange);
-        rigidbody.AddForce(Vector3.up * VerticalComponent * velocity.magnitude, ForceMode.VelocityChange);
     }
 }
