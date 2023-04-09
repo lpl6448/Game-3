@@ -112,7 +112,7 @@ public class GolfPuttingInput : MonoBehaviour
     {
         Vector3 dragOffset = ModifyDragOffset();
         Vector3 launchVel = -dragOffset;
-        launchVel *= referencePuttSpeed * launchVel.magnitude;
+        launchVel *= referencePuttSpeed;
         launchVel.y += launchVel.magnitude * verticalComponent;
         return launchVel;
     }
