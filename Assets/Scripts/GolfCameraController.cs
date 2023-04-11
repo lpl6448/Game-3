@@ -13,6 +13,20 @@ public class GolfCameraController : MonoBehaviour
     private Vector2 cameraMouseSensitivity = new Vector2(1, 1);
 
     /// <summary>
+    /// Minimum camera pitch in degrees (farthest up that the player can drag the camera)
+    /// </summary>
+    [SerializeField]
+    [Range(-90, 90)]
+    private float minCameraPitch = -90;
+
+    /// <summary>
+    /// Maximum camera pitch in degrees (farthest down that the player can drag the camera)
+    /// </summary>
+    [SerializeField]
+    [Range(-90, 90)]
+    private float maxCameraPitch = 90;
+
+    /// <summary>
     /// Interpolation exponential factor used to smooth out mouse movements
     /// (I made this factor somewhat arbitrary, but higher numbers mean faster/rougher movement)
     /// </summary>
@@ -113,8 +127,8 @@ public class GolfCameraController : MonoBehaviour
         Vector3 angleDelta = Vector3.Scale(lookInput, cameraMouseSensitivity);
         goalCameraAngles += angleDelta;
 
-        // Prevent the camera from turning upside-down
-        goalCameraAngles.x = Mathf.Clamp(goalCameraAngles.x, -90, 90);
+        // Enforce min/max camera pitch rules
+        goalCameraAngles.x = Mathf.Clamp(goalCameraAngles.x, minCameraPitch, maxCameraPitch);
 
         // Update the camera's rotation and position
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(goalCameraAngles), 1 - Mathf.Exp(-cameraLookLerp * Time.deltaTime));
