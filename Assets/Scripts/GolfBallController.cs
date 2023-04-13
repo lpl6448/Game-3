@@ -15,6 +15,12 @@ public class GolfBallController : MonoBehaviour
     [SerializeField]
     private UnityEvent onRest;
 
+    // Event callback that runs whenever the ball goes into the hole.
+    // NOTE: This can be called multiple times for a given level if the ball bounces, so it
+    // should be ignored sometimes.
+    [SerializeField]
+    private UnityEvent onHole;
+
     /// <summary>
     /// Degrees per second of angular "friction" applied to the ball to stop its angular momentum
     /// </summary>
@@ -47,6 +53,17 @@ public class GolfBallController : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         rigidbody.angularVelocity -= rigidbody.angularVelocity.normalized * Mathf.Min(angularDamping * Time.fixedDeltaTime, rigidbody.angularVelocity.magnitude);
+    }
+
+    /// <summary>
+    /// Called whenever the ball collides with a trigger. Check if the trigger has the LevelEnd tag and
+    /// call the UnityEvent to end the level if so.
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "LevelEnd")
+            onHole.Invoke();
     }
 
     /// <summary>

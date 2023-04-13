@@ -13,6 +13,12 @@ public class GolfCameraController : MonoBehaviour
     private Vector2 cameraMouseSensitivity = new Vector2(1, 1);
 
     /// <summary>
+    /// Sensitivity of the scroll wheel used to zoom the camera in/out
+    /// </summary>
+    [SerializeField]
+    private float cameraZoomSensitivity = 10;
+
+    /// <summary>
     /// Minimum camera pitch in degrees (farthest up that the player can drag the camera)
     /// </summary>
     [SerializeField]
@@ -34,16 +40,34 @@ public class GolfCameraController : MonoBehaviour
     private float cameraLookLerp = 8;
 
     /// <summary>
+    /// Interpolation exponential factor used to smooth out the zoom level of the camera
+    /// </summary>
+    [SerializeField]
+    private float cameraZoomLerp = 6;
+
+    /// <summary>
     /// Target Transform that the camera will follow
     /// </summary>
     [SerializeField]
     private Transform target;
 
     /// <summary>
-    /// Distance from the target that this camera orbits at
+    /// Minimum distance from the target that this camera orbits at
     /// </summary>
     [SerializeField]
-    private float targetDistance = 8;
+    private float minTargetDistance = 2;
+
+    /// <summary>
+    /// Maximum distance from the target that this camera orbits at
+    /// </summary>
+    [SerializeField]
+    private float maxTargetDistance = 16;
+
+    /// <summary>
+    /// Distance from the target that the camera will aim to zoom to
+    /// </summary>
+    [SerializeField]
+    private float goalTargetDistance = 8;
 
     /// <summary>
     /// Interpolation exponential factor used to smooth out the camera moving to follow the target
@@ -56,6 +80,11 @@ public class GolfCameraController : MonoBehaviour
     /// Rotation that the camera is moving toward
     /// </summary>
     private Vector3 goalCameraAngles;
+
+    /// <summary>
+    /// Current log distance from the target that the camera orbits at
+    /// </summary>
+    private float currentTargetDistanceLog;
 
     /// <summary>
     /// Current target position that the camera is following (used for smoothing)
@@ -130,9 +159,15 @@ public class GolfCameraController : MonoBehaviour
         // Enforce min/max camera pitch rules
         goalCameraAngles.x = Mathf.Clamp(goalCameraAngles.x, minCameraPitch, maxCameraPitch);
 
+        // Zoom the camera in or out
+        float goalTargetDistanceLog = Mathf.Log(goalTargetDistance);
+        goalTargetDistanceLog -= Input.GetAxisRaw("Mouse ScrollWheel") * cameraZoomSensitivity;
+        goalTargetDistance = Mathf.Clamp(Mathf.Exp(goalTargetDistanceLog), minTargetDistance, maxTargetDistance);
+
         // Update the camera's rotation and position
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(goalCameraAngles), 1 - Mathf.Exp(-cameraLookLerp * Time.deltaTime));
         currentTargetPosition = Vector3.Lerp(currentTargetPosition, target.position, 1 - Mathf.Exp(-cameraFollowLerp * Time.deltaTime));
-        transform.position = currentTargetPosition - transform.forward * targetDistance;
+        currentTargetDistanceLog = Mathf.Lerp(currentTargetDistanceLog, Mathf.Log(goalTargetDistance), 1 - Mathf.Exp(-cameraZoomLerp * Time.deltaTime));
+        transform.position = currentTargetPosition - transform.forward * Mathf.Exp(currentTargetDistanceLog);
     }
 }
