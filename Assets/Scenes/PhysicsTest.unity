@@ -27104,7 +27104,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-21934
+  m_Name: pb_Mesh26558
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -28633,11 +28633,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1287696422}
+  - component: {fileID: 1287696423}
   - component: {fileID: 1287696421}
   - component: {fileID: 1287696420}
   - component: {fileID: 1287696419}
   - component: {fileID: 1287696418}
-  - component: {fileID: 1287696423}
   m_Layer: 10
   m_Name: GolfBall
   m_TagString: Untagged
@@ -28752,7 +28752,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7969d04452f1e9d4baa561b19219afba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onPutt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1977154937}
+        m_TargetAssemblyTypeName: GolfPuttingInput, Assembly-CSharp
+        m_MethodName: DeactivateInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onRest:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1977154937}
+        m_TargetAssemblyTypeName: GolfPuttingInput, Assembly-CSharp
+        m_MethodName: ActivateInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   angularDamping: 5
+  velocityEpsilon: 0.1
   rigidbody: {fileID: 1287696418}
 --- !u!1 &1538129694
 GameObject:
@@ -39206,7 +39237,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-13520
+  m_Name: pb_Mesh26460
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -42753,7 +42784,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-59778
+  m_Name: pb_Mesh26342
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -42917,7 +42948,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25774
+  m_Name: pb_Mesh26362
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -43117,6 +43148,7 @@ MonoBehaviour:
   golfBallDragMask:
     serializedVersion: 2
     m_Bits: 1024
+  AllowInput: 0
 --- !u!4 &1977154938
 Transform:
   m_ObjectHideFlags: 0
@@ -43138,7 +43170,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25894
+  m_Name: pb_Mesh26524
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

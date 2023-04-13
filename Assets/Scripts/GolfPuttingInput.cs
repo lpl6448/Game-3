@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Central control class that lets the player putt the ball and controls displays like the indicator.
@@ -59,6 +60,12 @@ public class GolfPuttingInput : MonoBehaviour
     // Whether the camera is currently being dragged and rotated by mouse movements
     private bool draggingCamera = false;
 
+    // Whether the ball can be dragged and launched
+    public bool AllowInput = false;
+
+    public void ActivateInput() => AllowInput = true;
+    public void DeactivateInput() => AllowInput = false;
+
     /// <summary>
     /// Every frame, if the user has just clicked, try to drag either the camera or the ball.
     /// When the user has let go of the mouse button, putt the ball or stop dragging the camera.
@@ -70,8 +77,9 @@ public class GolfPuttingInput : MonoBehaviour
             Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(mouseRay, 100000, golfBallDragMask))
             {
-                // If we click the ball, then begin dragging the ball.
-                draggingBall = true;
+                // If we click the ball and allow input, then begin dragging the ball.
+                if (AllowInput)
+                    draggingBall = true;
             }
             else
             {
@@ -85,8 +93,11 @@ public class GolfPuttingInput : MonoBehaviour
             if (draggingBall)
             {
                 draggingBall = false;
-                ballController.Launch(GetLaunchVelocity());
                 indicator.DragOffset = Vector3.zero;
+
+                // If input is allowed, launch the ball
+                if (AllowInput)
+                    ballController.Launch(GetLaunchVelocity());
             }
             if (draggingCamera)
             {
