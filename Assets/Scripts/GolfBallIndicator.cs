@@ -25,6 +25,12 @@ public class GolfBallIndicator : MonoBehaviour
     private float verticalOffset;
 
     /// <summary>
+    /// Animation component that is played whenever the stroke is over and the user can putt the ball again
+    /// </summary>
+    [SerializeField]
+    private Animation highlightAnimation;
+
+    /// <summary>
     /// World-space offset applied to the line Transform
     /// </summary>
     public Vector3 DragOffset { get; set; }
@@ -43,5 +49,13 @@ public class GolfBallIndicator : MonoBehaviour
             line.localRotation = Quaternion.LookRotation(DragOffset.normalized) * Quaternion.Euler(90, 0, 0);
         }
         line.localScale = new Vector3(line.localScale.x, DragOffset.magnitude, line.localScale.z);
+    }
+
+    /// <summary>
+    /// Plays the highlight animation effect (when the user can putt the ball again)
+    /// </summary>
+    public void PlayHighlightAnimation()
+    {
+        highlightAnimation.Play();
     }
 }

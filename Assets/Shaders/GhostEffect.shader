@@ -4,6 +4,7 @@ Shader "Unlit/GhostEffect"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1, 1, 1, 1)
+        _Cutoff ("Alpha Cutoff", Range(0, 1)) = 0
     }
     SubShader
     {
@@ -39,6 +40,7 @@ Shader "Unlit/GhostEffect"
             sampler2D _MainTex;
             float4 _MainTex_ST;
             fixed4 _Color;
+            float _Cutoff;
 
             v2f vert (appdata v)
             {
@@ -52,7 +54,13 @@ Shader "Unlit/GhostEffect"
             fixed4 frag (v2f i) : SV_Target
             {
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv) * _Color;
+                fixed4 texCol = tex2D(_MainTex, i.uv);
+                fixed4 col = texCol * _Color;
+                if (_Cutoff != 0)
+                {
+                    clip(texCol.a - _Cutoff);
+                    col.a = _Color.a;
+                }
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
