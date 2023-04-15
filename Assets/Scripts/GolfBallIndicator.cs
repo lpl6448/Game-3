@@ -9,15 +9,14 @@ public class GolfBallIndicator : MonoBehaviour
     /// <summary>
     /// Transform of the golf ball that the indicator's origin is always under
     /// </summary>
-    [SerializeField]
-    private Transform target;
+    public Transform Target;
 
     /// <summary>
     /// Line Transform that reflects the drag indicator's distance and direction
     /// </summary>
     [SerializeField]
     private Transform line;
-    
+
     /// <summary>
     /// Units in the y-direction to displace the line below the target Transform
     /// </summary>
@@ -41,7 +40,8 @@ public class GolfBallIndicator : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
-        transform.position = target.position + Vector3.up * verticalOffset;
+        if (Target != null)
+            transform.position = Target.position + Vector3.up * verticalOffset;
 
         if (DragOffset.sqrMagnitude > 0.001f)
         {

@@ -21,6 +21,10 @@ public class GolfBallController : MonoBehaviour
     [SerializeField]
     private UnityEvent onHole;
 
+    // Event callback that runs every frame that the ball is out of bounds
+    [SerializeField]
+    private UnityEvent onOutOfBounds;
+
     /// <summary>
     /// Degrees per second of angular "friction" applied to the ball to stop its angular momentum
     /// </summary>
@@ -46,6 +50,10 @@ public class GolfBallController : MonoBehaviour
     // Time.time when the ball last had a velocity greater than an epsilon value
     private float lastVelocityTime;
 
+    // Whether the ball was touching a level's bounds last frame
+    // Level bounds are definod by Colliders (with trigger set to true) that have the tag of LevelBounds
+    private bool isTouchingBounds = true;
+
     /// <summary>
     /// Every physics tick that this ball is colliding with the ground, apply the angular damping
     /// </summary>
@@ -67,6 +75,17 @@ public class GolfBallController : MonoBehaviour
     }
 
     /// <summary>
+    /// Called whenever the ball continues to collide with a trigger. If the trigger has the LevelBounds tag,
+    /// then the ball is still in bounds this frame.
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "LevelBounds")
+            isTouchingBounds = true;
+    }
+
+    /// <summary>
     /// Applies an impulse to this ball
     /// </summary>
     /// <param name="velocity">Velocity to add</param>
@@ -81,6 +100,16 @@ public class GolfBallController : MonoBehaviour
         onPutt.Invoke();
     }
 
+    /// <summary>
+    /// Makes the ball "at rest," freezing it and calling the onRest events
+    /// </summary>
+    public void Rest()
+    {
+        atRest = true;
+        rigidbody.isKinematic = true;
+        onRest.Invoke();
+    }
+
     private void Start()
     {
         rigidbody.isKinematic = atRest;
@@ -89,15 +118,16 @@ public class GolfBallController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // If the ball is not touching a level's bounds, it is out of bounds and must be respawned
+        if (!isTouchingBounds)
+            onOutOfBounds.Invoke();
+        isTouchingBounds = false; // Reset for next frame
+
         if (rigidbody.velocity.sqrMagnitude > velocityEpsilon * velocityEpsilon)
             lastVelocityTime = Time.time;
 
         // If the ball is not at rest and has been roughly still for one second, make it at rest
         if (!atRest && Time.time - lastVelocityTime > 1 && Time.time - lastLaunchTime > 1)
-        {
-            atRest = true;
-            rigidbody.isKinematic = true;
-            onRest.Invoke();
-        }
+            Rest();
     }
 }

@@ -7,6 +7,12 @@ using UnityEngine;
 public class GolfCameraController : MonoBehaviour
 {
     /// <summary>
+    /// If the camera is frozen (like when the ball goes out of bounds), it stops following accepting mouse drag input
+    /// and stops following the target
+    /// </summary>
+    public bool Frozen = false;
+
+    /// <summary>
     /// Mouse sensitivity (x: horizontal, y: vertical) of the camera movement
     /// </summary>
     [SerializeField]
@@ -92,6 +98,11 @@ public class GolfCameraController : MonoBehaviour
     private Vector3 currentTargetPosition;
 
     /// <summary>
+    /// Target position that the camera will aim to follow/orbit
+    /// </summary>
+    private Vector3 goalTargetPosition;
+
+    /// <summary>
     /// Whether the camera is currently being dragged or not
     /// </summary>
     private bool dragging = false;
@@ -111,7 +122,8 @@ public class GolfCameraController : MonoBehaviour
     /// </summary>
     public void StartDrag()
     {
-        dragging = true;
+        if (!Frozen)
+            dragging = true;
     }
 
     /// <summary>
@@ -128,6 +140,7 @@ public class GolfCameraController : MonoBehaviour
     private void Start()
     {
         currentTargetPosition = target.position;
+        goalTargetPosition = target.position;
         goalCameraAngles = Quaternion.LookRotation(target.position - transform.position).eulerAngles;
     }
 
@@ -145,28 +158,33 @@ public class GolfCameraController : MonoBehaviour
             Cursor.visible = true;
         }
 
-        // If the mouse is locked, move the camera based on mouse movement
-        Vector3 lookInput = Vector3.zero;
-        if (dragging)
+        if (!Frozen)
         {
-            lookInput = new Vector3(-Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X"), 0);
+            // If the mouse is locked, move the camera based on mouse movement
+            Vector3 lookInput = Vector3.zero;
+            if (dragging && !Frozen)
+            {
+                lookInput = new Vector3(-Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X"), 0);
+            }
+
+            // Rotate the camera angles
+            Vector3 angleDelta = Vector3.Scale(lookInput, cameraMouseSensitivity);
+            goalCameraAngles += angleDelta;
+
+            // Enforce min/max camera pitch rules
+            goalCameraAngles.x = Mathf.Clamp(goalCameraAngles.x, minCameraPitch, maxCameraPitch);
+
+            // Zoom the camera in or out
+            float goalTargetDistanceLog = Mathf.Log(goalTargetDistance);
+            goalTargetDistanceLog -= Input.GetAxisRaw("Mouse ScrollWheel") * cameraZoomSensitivity;
+            goalTargetDistance = Mathf.Clamp(Mathf.Exp(goalTargetDistanceLog), minTargetDistance, maxTargetDistance);
+
+            goalTargetPosition = target.position;
         }
-
-        // Rotate the camera angles
-        Vector3 angleDelta = Vector3.Scale(lookInput, cameraMouseSensitivity);
-        goalCameraAngles += angleDelta;
-
-        // Enforce min/max camera pitch rules
-        goalCameraAngles.x = Mathf.Clamp(goalCameraAngles.x, minCameraPitch, maxCameraPitch);
-
-        // Zoom the camera in or out
-        float goalTargetDistanceLog = Mathf.Log(goalTargetDistance);
-        goalTargetDistanceLog -= Input.GetAxisRaw("Mouse ScrollWheel") * cameraZoomSensitivity;
-        goalTargetDistance = Mathf.Clamp(Mathf.Exp(goalTargetDistanceLog), minTargetDistance, maxTargetDistance);
 
         // Update the camera's rotation and position
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(goalCameraAngles), 1 - Mathf.Exp(-cameraLookLerp * Time.deltaTime));
-        currentTargetPosition = Vector3.Lerp(currentTargetPosition, target.position, 1 - Mathf.Exp(-cameraFollowLerp * Time.deltaTime));
+        currentTargetPosition = Vector3.Lerp(currentTargetPosition, goalTargetPosition, 1 - Mathf.Exp(-cameraFollowLerp * Time.deltaTime));
         currentTargetDistanceLog = Mathf.Lerp(currentTargetDistanceLog, Mathf.Log(goalTargetDistance), 1 - Mathf.Exp(-cameraZoomLerp * Time.deltaTime));
         transform.position = currentTargetPosition - transform.forward * Mathf.Exp(currentTargetDistanceLog);
     }
