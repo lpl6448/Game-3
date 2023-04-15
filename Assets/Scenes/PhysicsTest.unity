@@ -26515,7 +26515,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26318
+  m_Name: pb_Mesh26568
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -27197,7 +27197,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26558
+  m_Name: pb_Mesh26820
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -28757,7 +28757,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!135 &1287696419
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -39337,7 +39337,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26460
+  m_Name: pb_Mesh26722
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -39597,7 +39597,7 @@ Transform:
   m_GameObject: {fileID: 1746426825}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99, y: 0.99, z: 0.99}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1287696422}
@@ -42885,7 +42885,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26342
+  m_Name: pb_Mesh26592
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -43271,7 +43271,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26524
+  m_Name: pb_Mesh26786
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
