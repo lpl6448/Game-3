@@ -57,10 +57,10 @@ public class GolfGameManager : MonoBehaviour
     /// Respawns the ball after a couple seconds (to allow the camera to follow it and to allow
     /// the player to realize their mistake)
     /// </summary>
-    public void RespawnBall()
+    public void RespawnBall(RespawnReason reason)
     {
         // If the current level has no bounds, do not respawn the ball unless it goes below y = -10
-        if (!currentLevel.HasBounds && ball.transform.position.y > -10)
+        if (reason == RespawnReason.OutOfBounds && !currentLevel.HasBounds && ball.transform.position.y > -10)
             return;
 
         if (!isRespawning)
