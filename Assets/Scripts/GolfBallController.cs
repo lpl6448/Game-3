@@ -119,6 +119,7 @@ public class GolfBallController : MonoBehaviour
     private void FixedUpdate()
     {
         // If the ball is not touching a level's bounds, it is out of bounds and must be respawned
+        // This still runs if the current level has no bounds, but the GolfGameManager should check the HasBounds flag of the level
         if (!isTouchingBounds)
             onOutOfBounds.Invoke();
         isTouchingBounds = false; // Reset for next frame

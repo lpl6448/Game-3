@@ -10,4 +10,8 @@ public class GolfLevel : MonoBehaviour
 
     // Transform representing the location where the golf ball will spawn
     public Transform BallSpawn;
+
+    // Whether this level has bounding boxes that can define a more precise "in-bounds" area
+    // If it is false, the ball respawns if it goes below y = -10
+    public bool HasBounds = false;
 }

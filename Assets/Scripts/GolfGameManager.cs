@@ -59,6 +59,10 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void RespawnBall()
     {
+        // If the current level has no bounds, do not respawn the ball unless it goes below y = -10
+        if (!currentLevel.HasBounds && ball.transform.position.y > -10)
+            return;
+
         if (!isRespawning)
             StartCoroutine(RespawnBallCrt());
     }
