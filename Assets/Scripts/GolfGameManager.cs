@@ -18,6 +18,10 @@ public class GolfGameManager : MonoBehaviour
     [SerializeField]
     private GolfPuttingInput golfInput;
 
+    // Reference to the overlay (controlling the stroke and par information)
+    [SerializeField]
+    private GolfOverlay golfOverlay;
+
     // Current level (serialized into the inspector for now, but it will not be once we start this scene from the hub world)
     [SerializeField]
     private GolfLevel currentLevel;
@@ -36,6 +40,9 @@ public class GolfGameManager : MonoBehaviour
 
     // Flag that is set whenever the level is completed to prevent level completion from being triggered multiple times
     private bool completedLevel = false;
+
+    // Counter for the number of strokes/putts the player has taken so far
+    private int strokeCount = 0;
 
     /// <summary>
     /// For now, begin the level as soon as this scene is initialized
@@ -58,12 +65,23 @@ public class GolfGameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Called by the onLaunch() event of the golf ball to increment the strokeCount by 1
+    /// </summary>
+    public void IncrementStroke()
+    {
+        strokeCount++;
+        golfOverlay.UpdateStroke(strokeCount);
+    }
+
+    /// <summary>
     /// Starts the specified level by spawning the ball there and moving the camera
     /// </summary>
     /// <param name="level"></param>
     public void BeginLevel(GolfLevel level)
     {
         currentLevel = level;
+        golfOverlay.UpdatePar(currentLevel.Par);
+        golfOverlay.UpdateStroke(0);
 
         // Spawn ball
         ball.transform.position = currentLevel.BallSpawn.position;
