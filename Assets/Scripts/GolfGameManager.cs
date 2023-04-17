@@ -49,6 +49,19 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        // Try to load a level from the GolfLevelManager. If it cannot be loaded, load the current level as a fallback
+        string levelName = GolfLevelManager.GetLevel();
+        if (levelName != null)
+        {
+            GameObject levelObj = GameObject.Find(levelName);
+            if (levelObj != null)
+            {
+                GolfLevel level = levelObj.GetComponent<GolfLevel>();
+                if (level != null)
+                    currentLevel = level;
+            }
+        }
+
         BeginLevel(currentLevel);
     }
 
@@ -61,6 +74,24 @@ public class GolfGameManager : MonoBehaviour
         {
             isWaitingToActivateInput = false;
             golfInput.ActivateInput();
+        }
+
+        // When the player presses R, reload the current level
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GolfLevelManager.LoadMiniGolfScene();
+        }
+
+        // TEMPORARY: If the player presses a number, load a particular level
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GolfLevelManager.OverrideCurrentLevel = "ProbuilderTestLevel";
+            GolfLevelManager.LoadMiniGolfScene();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            GolfLevelManager.OverrideCurrentLevel = "WaterTestLevel";
+            GolfLevelManager.LoadMiniGolfScene();
         }
     }
 
@@ -207,5 +238,10 @@ public class GolfGameManager : MonoBehaviour
             - cameraController.FlatForward * flatDis + Vector3.up * upDis;
         Quaternion conclCameraRot = Quaternion.LookRotation((cameraController.FlatForward * flatDis - Vector3.up * upDis).normalized);
         yield return cameraController.AnimateToStatic(conclCameraPos, conclCameraRot, 5, t => (1 - Mathf.Exp(-6 * t)) * (1 - Mathf.Exp(-6 * t)));
+
+        // Load the next level (if there is one) by reloading the scene
+        GolfLevelManager.CompleteLevel();
+        if (GolfLevelManager.GetLevel() != null)
+            GolfLevelManager.LoadMiniGolfScene();
     }
 }
