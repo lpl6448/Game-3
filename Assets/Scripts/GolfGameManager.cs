@@ -14,6 +14,10 @@ public class GolfGameManager : MonoBehaviour
     [SerializeField]
     private GolfCameraController cameraController;
 
+    // Reference to the putting input manager in the scene
+    [SerializeField]
+    private GolfPuttingInput golfInput;
+
     // Current level (serialized into the inspector for now, but it will not be once we start this scene from the hub world)
     [SerializeField]
     private GolfLevel currentLevel;
@@ -24,12 +28,33 @@ public class GolfGameManager : MonoBehaviour
     // Whether the ball is currently out of bounds and in the process of respawning
     private bool isRespawning = false;
 
+    // Whether the ball is at rest and the game state is going to activate input soon (like after a camera animation)
+    private bool isWaitingToActivateInput = false;
+
+    // Whether any incoming requests to activate the golf ball input should be delayed
+    private bool blockPuttingInput = false;
+
+    // Flag that is set whenever the level is completed to prevent level completion from being triggered multiple times
+    private bool completedLevel = false;
+
     /// <summary>
     /// For now, begin the level as soon as this scene is initialized
     /// </summary>
     private void Start()
     {
         BeginLevel(currentLevel);
+    }
+
+    /// <summary>
+    /// If waiting to activate input and input is no longer being blocked, activate input
+    /// </summary>
+    private void Update()
+    {
+        if (isWaitingToActivateInput && !blockPuttingInput)
+        {
+            isWaitingToActivateInput = false;
+            golfInput.ActivateInput();
+        }
     }
 
     /// <summary>
@@ -43,6 +68,20 @@ public class GolfGameManager : MonoBehaviour
         // Spawn ball
         ball.transform.position = currentLevel.BallSpawn.position;
         SaveBallPosition();
+
+        StartCoroutine(LevelIntro());
+    }
+
+    /// <summary>
+    /// Ends the level with a camera animation
+    /// </summary>
+    public void EndLevel()
+    {
+        if (!completedLevel)
+        {
+            completedLevel = true;
+            StartCoroutine(LevelConclusion());
+        }
     }
 
     /// <summary>
@@ -51,6 +90,17 @@ public class GolfGameManager : MonoBehaviour
     public void SaveBallPosition()
     {
         lastBallPosition = ball.transform.position;
+    }
+
+    /// <summary>
+    /// Tells the game manager to activate user input on the golf ball once ready (like after a camera animation)
+    /// </summary>
+    public void RequestActivateInput()
+    {
+        if (blockPuttingInput)
+            isWaitingToActivateInput = true;
+        else
+            golfInput.ActivateInput();
     }
 
     /// <summary>
@@ -76,16 +126,68 @@ public class GolfGameManager : MonoBehaviour
     {
         isRespawning = true;
 
-        cameraController.Frozen = true;
+        cameraController.LockInput = true;
 
         yield return new WaitForSeconds(2);
 
         ball.transform.position = lastBallPosition;
         ball.Rest();
 
-        cameraController.Frozen = false;
+        cameraController.LockInput = false;
 
         yield return new WaitForFixedUpdate();
         isRespawning = false;
+    }
+
+    /// <summary>
+    /// Runs an animation that introduces the level through camera animations
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator LevelIntro()
+    {
+        blockPuttingInput = true;
+        yield return null; // Wait one frame for now (so that the indicator has time to move to the starting ball position)
+
+        // For now the camera animation parameters (position, rotation, etc.) are calculated here
+        Vector3 focusDir = currentLevel.LevelIntroFocus != null
+            ? (currentLevel.LevelIntroFocus.position - currentLevel.BallSpawn.position).normalized
+            : Vector3.forward;
+        focusDir += Vector3.down * 0.5f;
+        focusDir.Normalize();
+
+        Vector3 introCameraPos = currentLevel.IntroCameraPosition != null
+            ? currentLevel.IntroCameraPosition.position
+            : currentLevel.BallSpawn.position - focusDir * 10 + Vector3.up * 2;
+        Quaternion introCameraRot = currentLevel.IntroCameraPosition != null
+            ? currentLevel.IntroCameraPosition.rotation : Quaternion.LookRotation((focusDir * 10 - Vector3.up * 2).normalized);
+
+        // Suspend camera input and animate it to the ball
+        cameraController.Frozen = true;
+        cameraController.transform.position = introCameraPos;
+        cameraController.transform.rotation = introCameraRot;
+        yield return new WaitForSeconds(2);
+        yield return cameraController.AnimateToBall(introCameraPos, introCameraRot, cameraController.GoalTargetDistance, focusDir,
+            2, t => Mathf.SmoothStep(0, 1, t));
+        yield return new WaitForSeconds(0.5f);
+
+        blockPuttingInput = false;
+    }
+
+    /// <summary>
+    /// Runs an animation that zooms the camera out to tell the player that the level has been completed
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator LevelConclusion()
+    {
+        // Permanently block input (until the scene is reset)
+        blockPuttingInput = true;
+
+        // For now camera animation parameters are calculated here
+        float flatDis = 15;
+        float upDis = 15;
+        Vector3 conclCameraPos = cameraController.transform.position
+            - cameraController.FlatForward * flatDis + Vector3.up * upDis;
+        Quaternion conclCameraRot = Quaternion.LookRotation((cameraController.FlatForward * flatDis - Vector3.up * upDis).normalized);
+        yield return cameraController.AnimateToStatic(conclCameraPos, conclCameraRot, 5, t => (1 - Mathf.Exp(-6 * t)) * (1 - Mathf.Exp(-6 * t)));
     }
 }

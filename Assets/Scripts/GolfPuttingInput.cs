@@ -63,7 +63,11 @@ public class GolfPuttingInput : MonoBehaviour
     // Whether the ball can be dragged and launched
     public bool AllowInput = false;
 
-    public void ActivateInput() => AllowInput = true;
+    public void ActivateInput()
+    {
+        AllowInput = true;
+        indicator.PlayHighlightAnimation();
+    }
     public void DeactivateInput() => AllowInput = false;
 
     /// <summary>
