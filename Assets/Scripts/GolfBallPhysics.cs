@@ -5,7 +5,7 @@ using UnityEngine.Events;
 /// Controls basic physics for the golf ball, like angular damping and launching the ball.
 /// Launch() is called from GolfPuttingInput
 /// </summary>
-public class GolfBallController : MonoBehaviour
+public class GolfBallPhysics : MonoBehaviour
 {
     // Event callback that runs whenever the ball is launched
     [SerializeField]

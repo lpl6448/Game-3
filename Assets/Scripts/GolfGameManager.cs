@@ -8,7 +8,7 @@ public class GolfGameManager : MonoBehaviour
 {
     // Reference to the golf ball managed by this script
     [SerializeField]
-    private GolfBallController ball;
+    private GolfBallPhysics ball;
 
     // Reference to the camera controller in the scene
     [SerializeField]

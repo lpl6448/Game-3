@@ -47,7 +47,7 @@ public class GolfPuttingInput : MonoBehaviour
 
     // Reference to the golf ball itself, used to launch the ball
     [SerializeField]
-    private GolfBallController ballController;
+    private GolfBallPhysics ballController;
 
     // LayerMask (probably just containing the "Golf Ball" layer).
     // If the user drags anything in this LayerMask (probably only the golf ball), it drags the golf ball and putts it.
