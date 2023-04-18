@@ -39,6 +39,10 @@ public class GolfBallPhysics : MonoBehaviour
     [SerializeField]
     private float velocityEpsilon;
 
+    // Amount of time that the velocity should be under the velocityEpsilon before the ball is at rest
+    [SerializeField]
+    private float velocityTime;
+
     /// <summary>
     /// Rigidbody of the golf ball
     /// </summary>
@@ -174,7 +178,7 @@ public class GolfBallPhysics : MonoBehaviour
             lastVelocityTime = Time.time;
 
         // If the ball is not at rest and has been roughly still for one second, make it at rest
-        if (!atRest && Time.time - lastVelocityTime > 1 && Time.time - lastLaunchTime > 1)
+        if (!atRest && Time.time - lastVelocityTime > velocityTime && Time.time - lastLaunchTime > 0.5f)
             Rest();
 
         // Reset water coverage for next frame
