@@ -76,7 +76,13 @@ public class GolfPuttingInput : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1) && !draggingBall)
+        {
+            draggingCamera = true;
+            cameraController.StartDrag();
+        }
+
+        if (Input.GetMouseButtonDown(0) && !draggingCamera)
         {
             Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(mouseRay, 100000, golfBallDragMask))
@@ -103,7 +109,7 @@ public class GolfPuttingInput : MonoBehaviour
                 if (AllowInput)
                     ballController.Launch(GetLaunchVelocity());
             }
-            if (draggingCamera)
+            if (draggingCamera && !Input.GetMouseButton(1))
             {
                 draggingCamera = false;
                 cameraController.EndDrag();
