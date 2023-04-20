@@ -5,6 +5,9 @@ public class GolfLevel : MonoBehaviour
     // Name of this level, taken from the GameObject's name
     public string Name => gameObject.name;
 
+    // Name displayed on-screen at the beginning of this level
+    public string DisplayName;
+
     // Max number of strokes that can be taken to beat this level
     public int Par = 3;
 

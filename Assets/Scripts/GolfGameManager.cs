@@ -22,6 +22,10 @@ public class GolfGameManager : MonoBehaviour
     [SerializeField]
     private GolfOverlay golfOverlay;
 
+    // Reference to the level intro canvas panel (controlling the UI animation at the beginning of the level)
+    [SerializeField]
+    private UILevelIntro uiLevelIntro;
+
     // Current level being played
     private GolfLevel currentLevel;
 
@@ -213,7 +217,11 @@ public class GolfGameManager : MonoBehaviour
         cameraController.Frozen = true;
         cameraController.transform.position = introCameraPos;
         cameraController.transform.rotation = introCameraRot;
-        yield return new WaitForSeconds(2);
+
+        yield return new WaitForSeconds(0.5f);
+        uiLevelIntro.AnimateIntro(currentLevel);
+
+        yield return new WaitForSeconds(1.5f);
         yield return cameraController.AnimateToBall(introCameraPos, introCameraRot, cameraController.GoalTargetDistance, focusDir,
             2, t => Mathf.SmoothStep(0, 1, t));
         yield return new WaitForSeconds(0.5f);
