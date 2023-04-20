@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// Central control class that lets the player putt the ball and controls displays like the indicator.
@@ -49,6 +48,10 @@ public class GolfPuttingInput : MonoBehaviour
     [SerializeField]
     private GolfBallPhysics ballController;
 
+    // Reference to the overlay (controlling the visibility animation)
+    [SerializeField]
+    private GolfOverlay golfOverlay;
+
     // LayerMask (probably just containing the "Golf Ball" layer).
     // If the user drags anything in this LayerMask (probably only the golf ball), it drags the golf ball and putts it.
     [SerializeField]
@@ -66,9 +69,20 @@ public class GolfPuttingInput : MonoBehaviour
     public void ActivateInput()
     {
         AllowInput = true;
+        golfOverlay.UpdateVisibility(true, 0);
         indicator.PlayHighlightAnimation();
     }
     public void DeactivateInput() => AllowInput = false;
+
+    /// <summary>
+    /// Launches the ball with the calculated velocity (based on mouse input)
+    /// and disables the golf overlay after a brief moment
+    /// </summary>
+    private void LaunchBall()
+    {
+        ballController.Launch(GetLaunchVelocity());
+        golfOverlay.UpdateVisibility(false, 0.75f);
+    }
 
     /// <summary>
     /// Every frame, if the user has just clicked, try to drag either the camera or the ball.
@@ -107,7 +121,7 @@ public class GolfPuttingInput : MonoBehaviour
 
                 // If input is allowed, launch the ball
                 if (AllowInput)
-                    ballController.Launch(GetLaunchVelocity());
+                    LaunchBall();
             }
             if (draggingCamera && !Input.GetMouseButton(1))
             {

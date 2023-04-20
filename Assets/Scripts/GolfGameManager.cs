@@ -141,7 +141,8 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void SaveBallPosition()
     {
-        lastBallPosition = ball.transform.position;
+        if (!isRespawning)
+            lastBallPosition = ball.transform.position;
     }
 
     /// <summary>
@@ -165,6 +166,10 @@ public class GolfGameManager : MonoBehaviour
         if (reason == RespawnReason.OutOfBounds && !currentLevel.HasBounds && ball.transform.position.y > -10)
             return;
 
+        // If the level has already been completed, do not respawn
+        if (completedLevel)
+            return;
+
         if (!isRespawning)
             StartCoroutine(RespawnBallCrt());
     }
@@ -177,6 +182,7 @@ public class GolfGameManager : MonoBehaviour
     private IEnumerator RespawnBallCrt()
     {
         isRespawning = true;
+        blockPuttingInput = true;
 
         cameraController.LockInput = true;
 
@@ -189,6 +195,7 @@ public class GolfGameManager : MonoBehaviour
 
         yield return new WaitForFixedUpdate();
         isRespawning = false;
+        blockPuttingInput = false;
     }
 
     /// <summary>
