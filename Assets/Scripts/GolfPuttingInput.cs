@@ -81,7 +81,7 @@ public class GolfPuttingInput : MonoBehaviour
     private void LaunchBall()
     {
         ballController.Launch(GetLaunchVelocity());
-        golfOverlay.UpdateVisibility(false, 0.75f);
+        golfOverlay.UpdateVisibility(false, 0);
     }
 
     /// <summary>
