@@ -22,8 +22,7 @@ public class GolfGameManager : MonoBehaviour
     [SerializeField]
     private GolfOverlay golfOverlay;
 
-    // Current level (serialized into the inspector for now, but it will not be once we start this scene from the hub world)
-    [SerializeField]
+    // Current level being played
     private GolfLevel currentLevel;
 
     // Last position that the ball was "safe" or resting at
