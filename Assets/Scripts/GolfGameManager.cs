@@ -96,6 +96,11 @@ public class GolfGameManager : MonoBehaviour
             GolfLevelManager.OverrideCurrentLevel = "WaterTestLevel";
             GolfLevelManager.LoadMiniGolfScene();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GolfLevelManager.OverrideCurrentLevel = "MarconeLevel1";
+            GolfLevelManager.LoadMiniGolfScene();
+        }
     }
 
     /// <summary>
@@ -205,7 +210,6 @@ public class GolfGameManager : MonoBehaviour
     private IEnumerator LevelIntro()
     {
         blockPuttingInput = true;
-        yield return null; // Wait one frame for now (so that the indicator has time to move to the starting ball position)
 
         // For now the camera animation parameters (position, rotation, etc.) are calculated here
         Vector3 focusDir = currentLevel.LevelIntroFocus != null
@@ -255,7 +259,7 @@ public class GolfGameManager : MonoBehaviour
 
         // Load the next level (if there is one) by reloading the scene
         GolfLevelManager.CompleteLevel();
-        if (GolfLevelManager.GetLevel() != null)
+        if (GolfLevelManager.HasNewLevel())
             GolfLevelManager.LoadMiniGolfScene();
     }
 }

@@ -18,6 +18,12 @@ public class GolfBallIndicator : MonoBehaviour
     private Transform line;
 
     /// <summary>
+    /// Arrow that reflects the direction and velocity that the ball will launch with
+    /// </summary>
+    [SerializeField]
+    private GolfBallArrow arrow;
+
+    /// <summary>
     /// Units in the y-direction to displace the line below the target Transform
     /// </summary>
     [SerializeField]
@@ -29,10 +35,29 @@ public class GolfBallIndicator : MonoBehaviour
     [SerializeField]
     private Animation highlightAnimation;
 
+    // TrailRenderer to enable based on whether input is active or not
+    [SerializeField]
+    private TrailRenderer trailRenderer;
+
     /// <summary>
     /// World-space offset applied to the line Transform
     /// </summary>
     public Vector3 DragOffset { get; set; }
+
+    /// <summary>
+    /// World-space offset applied to the arrow
+    /// </summary>
+    public Vector3 ArrowOffset { get; set; }
+
+    /// <summary>
+    /// Move the indicator to the ball before the first frame
+    /// </summary>
+    private void Awake()
+    {
+        SetTrails(false);
+        if (Target != null)
+            transform.position = Target.position + Vector3.up * verticalOffset;
+    }
 
     /// <summary>
     /// Every frame, move this indicator under the target Transform and make the line point from
@@ -49,6 +74,8 @@ public class GolfBallIndicator : MonoBehaviour
             line.localRotation = Quaternion.LookRotation(DragOffset.normalized) * Quaternion.Euler(90, 0, 0);
         }
         line.localScale = new Vector3(line.localScale.x, DragOffset.magnitude, line.localScale.z);
+
+        arrow.Offset = ArrowOffset;
     }
 
     /// <summary>
@@ -57,5 +84,10 @@ public class GolfBallIndicator : MonoBehaviour
     public void PlayHighlightAnimation()
     {
         highlightAnimation.Play();
+    }
+
+    public void SetTrails(bool emitting)
+    {
+        trailRenderer.emitting = emitting;
     }
 }

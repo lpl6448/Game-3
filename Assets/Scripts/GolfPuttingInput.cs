@@ -10,22 +10,12 @@ public class GolfPuttingInput : MonoBehaviour
     [SerializeField]
     private float referencePuttSpeed;
 
+    [SerializeField]
+    private float minimumPuttSpeed;
+
     // Vertical amount - which is the result sin(angle) - to launch the ball up into the air
     [SerializeField]
     private float verticalComponent;
-
-    // Whether the ball's putt direction is restricted to be in the forward direction of the camera
-    [SerializeField]
-    private bool lockPutterAngleToCamera = true;
-
-    // If lockPutterAngleToCamera is true, the maximum angle from the forward direction that the putt can be
-    [SerializeField]
-    private float maxPutterAngle = 15;
-
-    // If lockPutterAngleToCamera is true, the exponential limit factor of the putter angle restriction
-    // (See ExponentialLimit() function at the bottom of this script.)
-    [SerializeField]
-    private float putterAngleExpFactor = 1;
 
     // The max distance that the putter (or indicator) can be from the ball, imposed as a soft limit
     [SerializeField]
@@ -35,6 +25,12 @@ public class GolfPuttingInput : MonoBehaviour
     // (See ExponentialLimit() function at the bottom of this script.)
     [SerializeField]
     private float putterDistanceExpFactor = 1;
+
+    [SerializeField]
+    private AnimationCurve distanceResponseCurve;
+
+    [SerializeField]
+    private float arrowDistanceScale = 1;
 
     // Reference to the camera controller for the mini golf game mode
     [SerializeField]
@@ -80,8 +76,12 @@ public class GolfPuttingInput : MonoBehaviour
     /// </summary>
     private void LaunchBall()
     {
-        ballController.Launch(GetLaunchVelocity());
-        golfOverlay.UpdateVisibility(false, 0);
+        Vector3 velocity = GetLaunchVelocity();
+        if (velocity.magnitude >= minimumPuttSpeed)
+        {
+            ballController.Launch(GetLaunchVelocity());
+            golfOverlay.UpdateVisibility(false, 0);
+        }
     }
 
     /// <summary>
@@ -90,10 +90,27 @@ public class GolfPuttingInput : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1) && !draggingBall)
+        // Cancel ball drag if the player presses escape
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            draggingCamera = true;
-            cameraController.StartDrag();
+            draggingBall = false;
+            indicator.DragOffset = Vector3.zero;
+            indicator.ArrowOffset = Vector3.zero;
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (!draggingBall) // If the ball is not being dragged, start dragging the camera if the player right clicks
+            {
+                draggingCamera = true;
+                cameraController.StartDrag();
+            }
+            else // If the ball is being dragged and the player right clicks, cancel the drag
+            {
+                draggingBall = false;
+                indicator.DragOffset = Vector3.zero;
+                indicator.ArrowOffset = Vector3.zero;
+            }
         }
 
         if (Input.GetMouseButtonDown(0) && !draggingCamera)
@@ -114,10 +131,12 @@ public class GolfPuttingInput : MonoBehaviour
         }
         else if (!Input.GetMouseButton(0))
         {
+            // Once the user has let go of left mouse, launch the ball if it was being dragged
             if (draggingBall)
             {
                 draggingBall = false;
                 indicator.DragOffset = Vector3.zero;
+                indicator.ArrowOffset = Vector3.zero;
 
                 // If input is allowed, launch the ball
                 if (AllowInput)
@@ -134,6 +153,8 @@ public class GolfPuttingInput : MonoBehaviour
         if (draggingBall)
         {
             indicator.DragOffset = ModifyDragOffset();
+            Vector3 launchVel = GetLaunchVelocity();
+            indicator.ArrowOffset = new Vector3(launchVel.x, 0, launchVel.z) * arrowDistanceScale;
         }
     }
 
@@ -146,7 +167,8 @@ public class GolfPuttingInput : MonoBehaviour
     private Vector3 GetLaunchVelocity()
     {
         Vector3 dragOffset = ModifyDragOffset();
-        Vector3 launchVel = -dragOffset;
+        Vector3 launchDir = -dragOffset.normalized;
+        Vector3 launchVel = launchDir * distanceResponseCurve.Evaluate(dragOffset.magnitude / maxPutterDistance);
         launchVel *= referencePuttSpeed;
         launchVel.y += launchVel.magnitude * verticalComponent;
         return launchVel;
@@ -159,33 +181,9 @@ public class GolfPuttingInput : MonoBehaviour
     private Vector3 ModifyDragOffset()
     {
         Vector3 dragOffset = GetRawDragOffset();
-
-        if (lockPutterAngleToCamera)
-        {
-            // Transform the world-space drag offset into a position relative to the camera direction
-            Vector2 localDrag = new Vector2(
-                Vector3.Dot(cameraController.FlatRight, dragOffset),
-                Vector3.Dot(cameraController.FlatForward, dragOffset));
-
-            // Set a limit on the "putter distance," or how far back the putter can be from the ball
-            if (localDrag.y > 0)
-                localDrag.y = 0;
-            else
-                localDrag.y = -ExponentialLimit(-localDrag.y, maxPutterDistance, putterDistanceExpFactor);
-
-            // Set a limit on the "putter angle," or how much to the left/right the ball can be shot
-            localDrag.x = ExponentialLimit(Mathf.Abs(localDrag.x), Mathf.Abs(localDrag.y) * Mathf.Tan(maxPutterAngle * Mathf.Deg2Rad), putterAngleExpFactor) * Mathf.Sign(localDrag.x);
-
-            // Transform the local drag offset back into world space
-            Vector3 transformedDragOffset = cameraController.FlatRight * localDrag.x + cameraController.FlatForward * localDrag.y;
-            return transformedDragOffset;
-        }
-        else
-        {
-            float dragLength = dragOffset.magnitude;
-            dragLength = ExponentialLimit(dragLength, maxPutterDistance, putterDistanceExpFactor);
-            return dragOffset.normalized * dragLength;
-        }
+        float dragLength = dragOffset.magnitude;
+        dragLength = ExponentialLimit(dragLength, maxPutterDistance, putterDistanceExpFactor);
+        return dragOffset.normalized * dragLength;
     }
 
     /// <summary>
