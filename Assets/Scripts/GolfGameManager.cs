@@ -22,8 +22,11 @@ public class GolfGameManager : MonoBehaviour
     [SerializeField]
     private GolfOverlay golfOverlay;
 
-    // Current level (serialized into the inspector for now, but it will not be once we start this scene from the hub world)
+    // Reference to the level intro canvas panel (controlling the UI animation at the beginning of the level)
     [SerializeField]
+    private UILevelIntro uiLevelIntro;
+
+    // Current level being played
     private GolfLevel currentLevel;
 
     // Last position that the ball was "safe" or resting at
@@ -93,6 +96,11 @@ public class GolfGameManager : MonoBehaviour
             GolfLevelManager.OverrideCurrentLevel = "WaterTestLevel";
             GolfLevelManager.LoadMiniGolfScene();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GolfLevelManager.OverrideCurrentLevel = "MarconeLevel1";
+            GolfLevelManager.LoadMiniGolfScene();
+        }
     }
 
     /// <summary>
@@ -138,7 +146,8 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void SaveBallPosition()
     {
-        lastBallPosition = ball.transform.position;
+        if (!isRespawning)
+            lastBallPosition = ball.transform.position;
     }
 
     /// <summary>
@@ -162,6 +171,10 @@ public class GolfGameManager : MonoBehaviour
         if (reason == RespawnReason.OutOfBounds && !currentLevel.HasBounds && ball.transform.position.y > -10)
             return;
 
+        // If the level has already been completed, do not respawn
+        if (completedLevel)
+            return;
+
         if (!isRespawning)
             StartCoroutine(RespawnBallCrt());
     }
@@ -174,6 +187,7 @@ public class GolfGameManager : MonoBehaviour
     private IEnumerator RespawnBallCrt()
     {
         isRespawning = true;
+        blockPuttingInput = true;
 
         cameraController.LockInput = true;
 
@@ -186,6 +200,7 @@ public class GolfGameManager : MonoBehaviour
 
         yield return new WaitForFixedUpdate();
         isRespawning = false;
+        blockPuttingInput = false;
     }
 
     /// <summary>
@@ -195,7 +210,6 @@ public class GolfGameManager : MonoBehaviour
     private IEnumerator LevelIntro()
     {
         blockPuttingInput = true;
-        yield return null; // Wait one frame for now (so that the indicator has time to move to the starting ball position)
 
         // For now the camera animation parameters (position, rotation, etc.) are calculated here
         Vector3 focusDir = currentLevel.LevelIntroFocus != null
@@ -214,7 +228,11 @@ public class GolfGameManager : MonoBehaviour
         cameraController.Frozen = true;
         cameraController.transform.position = introCameraPos;
         cameraController.transform.rotation = introCameraRot;
-        yield return new WaitForSeconds(2);
+
+        yield return new WaitForSeconds(0.5f);
+        uiLevelIntro.AnimateIntro(currentLevel);
+
+        yield return new WaitForSeconds(1.5f);
         yield return cameraController.AnimateToBall(introCameraPos, introCameraRot, cameraController.GoalTargetDistance, focusDir,
             2, t => Mathf.SmoothStep(0, 1, t));
         yield return new WaitForSeconds(0.5f);
@@ -241,7 +259,7 @@ public class GolfGameManager : MonoBehaviour
 
         // Load the next level (if there is one) by reloading the scene
         GolfLevelManager.CompleteLevel();
-        if (GolfLevelManager.GetLevel() != null)
+        if (GolfLevelManager.HasNewLevel())
             GolfLevelManager.LoadMiniGolfScene();
     }
 }
