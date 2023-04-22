@@ -565,6 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0722a456e31c33d44b66835217b7fbc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotSpeed: 0.04
 --- !u!114 &290100453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2410,7 +2411,6 @@ GameObject:
   - component: {fileID: 1892534999}
   - component: {fileID: 1892534998}
   - component: {fileID: 1892534997}
-  - component: {fileID: 1892535000}
   m_Layer: 5
   m_Name: RightArrowBar
   m_TagString: Untagged
@@ -2521,20 +2521,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892534995}
   m_CullTransparentMesh: 1
---- !u!114 &1892535000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1892534995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4d4e78d13bb7144e9e740ff70c27b01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 290100452}
-  direction: 1
 --- !u!43 &1892671951
 Mesh:
   m_ObjectHideFlags: 0
@@ -2711,7 +2697,6 @@ GameObject:
   - component: {fileID: 1986383494}
   - component: {fileID: 1986383493}
   - component: {fileID: 1986383492}
-  - component: {fileID: 1986383495}
   m_Layer: 5
   m_Name: LeftArrowBar
   m_TagString: Untagged
@@ -2822,20 +2807,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986383490}
   m_CullTransparentMesh: 1
---- !u!114 &1986383495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986383490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4d4e78d13bb7144e9e740ff70c27b01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 290100452}
-  direction: 0
 --- !u!1 &2041998150
 GameObject:
   m_ObjectHideFlags: 0
