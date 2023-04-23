@@ -1,30 +1,56 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Class that controls the arrow indicator, which shows the direction/speed the ball will be putt in
+/// </summary>
 public class GolfBallArrow : MonoBehaviour
 {
+    // Transform of the dotted line part of the arrow
     [SerializeField]
     private Transform line;
 
+    // Minimum line width, when the putt speed is 0
     [SerializeField]
     private float minLineWidth = 0.1f;
 
+    // Maximum line width, as the putt speed approaches infinity
     [SerializeField]
     private float maxLineWidth = 0.25f;
 
+    // Array of renderers attached to lines (for dotted line effect)
     [SerializeField]
-    private Material[] lineDashMaterials;
+    private Renderer[] lineDashRenderers;
 
+    // Transform of the arrow's tip object
     [SerializeField]
     private Transform tip;
 
+    // Maximum scale of the tip (x=horiziontal, y=vertical) as the putt speed approaches infinity
     [SerializeField]
     private Vector2 maxTipSize = new Vector2(0.5f, 0.25f);
 
+    // Exponential factor that determines how fast the maximum line width and tip size are reached
     [SerializeField]
     private float arrowScaleExp = 1;
 
+    // Internal array of Materials that get updated with the dotted line effect
+    private Material[] lineDashMaterials;
+
+    // 3D Offset, set by GolfBallIndicator, of the arrow tip from this object's world position
     public Vector3 Offset;
 
+    /// <summary>
+    /// To initialize, create new temporary materials that can be changed without affecting the originals
+    /// </summary>
+    private void Start()
+    {
+        lineDashMaterials = MaterialController.InstantiateMaterials(lineDashRenderers);
+    }
+
+    /// <summary>
+    /// Every frame, update the line and tip Transforms' position, scale, and rotation to reflect the Offset
+    /// and update lineDashMaterials so that the line's dotted nature does not stretch.
+    /// </summary>
     private void LateUpdate()
     {
         float offsetLength = Offset.magnitude;
