@@ -59,13 +59,16 @@ public class GolfBallController : MonoBehaviour
 
     /// <summary>
     /// Called whenever the ball collides with a trigger. Check if the trigger has the LevelEnd tag and
-    /// call the UnityEvent to end the level if so.
+    /// call the UnityEvent to end the level if so. If the trigger has the LevelOutOfBounds tag, instantly
+    /// tell the ball that it has gone out of bounds (used to designate areas where the ball can never be).
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "LevelEnd")
             onHole.Invoke();
+        else if (other.tag == "LevelOutOfBounds")
+            onOutOfBounds.Invoke(RespawnReason.OutOfBounds);
     }
 
     /// <summary>

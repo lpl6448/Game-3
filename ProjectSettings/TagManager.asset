@@ -8,6 +8,7 @@ TagManager:
   - LevelBounds
   - WaterCollider
   - Clickable
+  - LevelOutOfBounds
   layers:
   - Default
   - TransparentFX
