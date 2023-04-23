@@ -28,7 +28,7 @@ public class HubCameraController : MonoBehaviour
     public void LookRight()
     {
         if(transform.rotation.y < 0.3420216f)
-            transform.Rotate(0.0f, rotSpeed, 0.0f);
+            transform.Rotate(0.0f, rotSpeed, 0.0f, Space.World);
     }
 
     /// <summary>
@@ -37,6 +37,6 @@ public class HubCameraController : MonoBehaviour
     public void LookLeft()
     {
         if (transform.rotation.y > -0.3420201f)
-            transform.Rotate(0.0f, -rotSpeed, 0.0f);
+            transform.Rotate(0.0f, -rotSpeed, 0.0f, Space.World);
     }
 }
