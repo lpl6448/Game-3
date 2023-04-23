@@ -42,7 +42,7 @@ public class GolfPuttingInput : MonoBehaviour
 
     // Reference to the golf ball itself, used to launch the ball
     [SerializeField]
-    private GolfBallPhysics ballController;
+    private GolfBallController ballController;
 
     // Reference to the overlay (controlling the visibility animation)
     [SerializeField]
