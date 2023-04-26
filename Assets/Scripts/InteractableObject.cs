@@ -8,12 +8,17 @@ using UnityEngine;
 public class InteractableObject : MonoBehaviour
 {
     [SerializeField]
-    string itemName;
+    protected string itemName;
+    [SerializeField]
+    protected Characters a_character;
+    protected Characters character;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        character = Characters.NONE;
+        if (this.GetComponent<Character>() != null)
+            character = a_character;
     }
 
     // Update is called once per frame

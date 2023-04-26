@@ -16,10 +16,14 @@ public class HubCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.mousePosition.x>fWidth-100)
-            LookRight();
-        else if(Input.mousePosition.x < 100)
-            LookLeft();
+        //Stop camera controls if not in hub state
+        if (GameData.gameState == State.Hub)
+        {
+            if (Input.mousePosition.x > fWidth - 100)
+                LookRight();
+            else if (Input.mousePosition.x < 100)
+                LookLeft();
+        }
     }
 
     /// <summary>

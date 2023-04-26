@@ -21,6 +21,8 @@ public class Character : InteractableObject
     /// </summary>
     public override void Clicked()
     {
-
+        base.Clicked();
+        GameData.gameState = State.Dialogue;
+        GameData.targetChar = character;
     }
 }
