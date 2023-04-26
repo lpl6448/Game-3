@@ -13,12 +13,15 @@ public class InteractableObject : MonoBehaviour
     protected Characters a_character;
     protected Characters character;
 
+    public Characters Character => character;
+
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         character = Characters.NONE;
-        if (this.GetComponent<Character>() != null)
+        if (gameObject.GetComponent<Character>() != null)
             character = a_character;
+        Debug.Log(character);
     }
 
     // Update is called once per frame

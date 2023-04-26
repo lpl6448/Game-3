@@ -30,7 +30,7 @@ public class HubInteractionController : MonoBehaviour
                 {
                     //Click a GameObject to return that GameObject your mouse pointer hit
                     GameObject m_MyGameObject = hit.collider.gameObject;
-                    //Set this GameObject you clicked as the currently selected in the EventSystem
+                    //Set this GameObject as the currently selected in the EventSystem
                     m_EventSystem.SetSelectedGameObject(m_MyGameObject);
                     m_MyGameObject.GetComponent<InteractableObject>().Hovered();
                     //Output the current selected GameObject's name to the console
@@ -41,6 +41,8 @@ public class HubInteractionController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && m_EventSystem.currentSelectedGameObject != null)
             {
+                GameData.targetChar = m_EventSystem.currentSelectedGameObject.GetComponent<InteractableObject>().Character;
+                Debug.Log("TargetChar = " + GameData.targetChar);
                 m_EventSystem.currentSelectedGameObject.GetComponent<InteractableObject>().Clicked();
             }
         }

@@ -1,19 +1,35 @@
+using Assets.Scripts.Enums;
 using Mono.Cecil;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class HubController : MonoBehaviour
 {
+    //Overlay objects
     [SerializeField]
     private GameObject dialogueOverlay;
     [SerializeField]
     private GameObject pauseOverlay;
 
+    //UI elements
+    [SerializeField]
+    private Image charSprite;
+
+    //Chacter gameObjects in scene
+    [SerializeField]
+    private List<Character> loadSceneChars;
+    private Dictionary<Characters, Character> sceneChars;
+
     // Start is called before the first frame update
     void Start()
     {
+        sceneChars = new Dictionary<Characters, Character>();
+        sceneChars.Add(Characters.Molly, loadSceneChars[0]);
+        sceneChars.Add(Characters.Marcone, loadSceneChars[1]);
+        sceneChars.Add(Characters.LC, loadSceneChars[2]);
         GameData.prevState = GameData.gameState;
     }
 
@@ -32,6 +48,7 @@ public class HubController : MonoBehaviour
                     break;
                 case State.Dialogue:
                     dialogueOverlay.SetActive(true);
+                    ChangeDialogueChar(Emotions.Neutral);
                     break;
                 case State.Paused:
                     pauseOverlay.SetActive(true);
@@ -71,19 +88,8 @@ public class HubController : MonoBehaviour
     /// <summary>
     /// Change the sprite of the character being spoken to with the targetChar field
     /// </summary>
-    private void ChangeDialogueSprite()
+    private void ChangeDialogueChar(Emotions emotion)
     {
-        switch(GameData.targetChar)
-        {
-            case Characters.Molly:
-                //Switch to molly
-                break;
-            case Characters.Marcone:
-                //Switch to marcone
-                break;
-            case Characters.LC:
-                //Switch to Lacuna and Toot Toot
-                break;
-        }
+        charSprite.material = sceneChars[GameData.targetChar].GetSprite(emotion);
     }
 }
