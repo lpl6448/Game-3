@@ -22,7 +22,7 @@ public class DataPersistenceManager : MonoBehaviour
     private void Start()
     {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
-        //LoadGame();
+        LoadGame();
     }
 
     public void NewGame()

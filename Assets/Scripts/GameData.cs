@@ -18,19 +18,11 @@ public static class GameData
         //Build progress flag dictionary if it wasn't loaded in
         if (progressFlags == null)
         {
-            Debug.Log("Building progress flags");
             progressFlags = new SerializableDictionary<Characters, bool[]>();
 
             progressFlags.Add(Characters.Molly, new bool[3]);
             progressFlags.Add(Characters.Marcone, new bool[3]);
-            for (int i = 0; i < 3; i++)
-            {
-                progressFlags[Characters.Molly][i] = false;
-                progressFlags[Characters.Marcone][i] = false;
-            }
             progressFlags.Add(Characters.LC, new bool[3]);
-            for (int i = 0; i < 3; i++)
-                progressFlags[Characters.LC][i] = false;
         }
     }
 }
