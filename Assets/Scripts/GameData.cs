@@ -18,7 +18,7 @@ public static class GameData
         //Build progress flag dictionary if it wasn't loaded in
         if (progressFlags == null)
         {
-            progressFlags = new SerializableDictionary<Characters, bool[]>();
+            progressFlags = new SerializableDictionary<Characters, bool[]>(); // Golf at index 1
 
             progressFlags.Add(Characters.Molly, new bool[3]);
             progressFlags.Add(Characters.Marcone, new bool[3]);
