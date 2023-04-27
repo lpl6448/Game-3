@@ -22,7 +22,7 @@ public class Character : InteractableObject
 
 
     // Start is called before the first frame update
-    new void Start()
+    protected override void Start()
     {
         base.Start();
         //Initialize and fill dictionary

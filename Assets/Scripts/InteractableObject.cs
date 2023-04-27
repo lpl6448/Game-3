@@ -16,7 +16,7 @@ public class InteractableObject : MonoBehaviour
     public Characters Character => character;
 
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         character = Characters.NONE;
         if (gameObject.GetComponent<Character>() != null)

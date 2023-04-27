@@ -9,18 +9,16 @@ using UnityEngine.UI;
 public class HubController : MonoBehaviour
 {
     //Overlay objects
-    [SerializeField]
-    private GameObject dialogueOverlay;
-    [SerializeField]
-    private GameObject pauseOverlay;
+    [SerializeField] private GameObject dialogueOverlay;
+    [SerializeField] private GameObject pauseOverlay;
+
+    [SerializeField] private DialogueManager dialogueManager;
 
     //UI elements
-    [SerializeField]
-    private Image charSprite;
+    [SerializeField] private Image charSprite;
 
     //Chacter gameObjects in scene
-    [SerializeField]
-    private List<Character> loadSceneChars;
+    [SerializeField] private List<Character> loadSceneChars;
     private Dictionary<Characters, Character> sceneChars;
 
     // Start is called before the first frame update
@@ -45,9 +43,11 @@ public class HubController : MonoBehaviour
                     break;
                 case State.Hub:
                     //Add stuff if needed
+                    dialogueOverlay.SetActive(false);
                     break;
                 case State.Dialogue:
                     dialogueOverlay.SetActive(true);
+                    dialogueManager.UpdateToTarget(GameData.targetChar);
                     ChangeDialogueChar(Emotions.Neutral);
                     break;
                 case State.Paused:
