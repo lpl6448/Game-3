@@ -74,7 +74,6 @@ public class DialogueManager : MonoBehaviour
     public void UpdateToTarget(Characters target)
     {
         speaker = target;
-        Debug.Log(GameData.progressFlags);
         if (GameData.progressFlags[target][0])
         {
             if (GameData.progressFlags[target][1])
