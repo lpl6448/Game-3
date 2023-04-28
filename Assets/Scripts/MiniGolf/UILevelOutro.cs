@@ -16,11 +16,17 @@ public class UILevelOutro : MonoBehaviour
         { 3, "Triple Bogey" },
     };
     private static readonly string holeInOneText = "Hole in One!";
-    private static readonly string defaultUnderText = "Mega Bogey";
-    private static readonly string defaultOverText = "Mega Eagle";
+    private static readonly string defaultUnderText = "Mega Eagle";
+    private static readonly string defaultOverText = "Mega Bogey";
+
+    [SerializeField]
+    private Animation outroAnimation;
 
     [SerializeField]
     private TextMeshProUGUI statusText;
+
+    [SerializeField]
+    private Image[] statusDividers;
 
     [SerializeField]
     private Color[] statusTextColors;
@@ -53,8 +59,15 @@ public class UILevelOutro : MonoBehaviour
                     parDiffName = defaultOverText;
         }
 
+        Color statusTextColor = statusTextColors[System.Math.Sign(parDiff) + 1];
         statusText.text = parDiffName;
-        statusText.color = statusTextColors[System.Math.Sign(parDiff) + 1];
+        statusText.color = statusTextColor;
+        foreach (Image divider in statusDividers)
+        {
+            Color color = statusTextColor;
+            color.a = divider.color.a;
+            divider.color = color;
+        }
 
         if (won)
         {
@@ -67,6 +80,6 @@ public class UILevelOutro : MonoBehaviour
             continueBackground.color = continueLoseColor;
         }
 
-        gameObject.SetActive(true);
+        outroAnimation.Play();
     }
 }

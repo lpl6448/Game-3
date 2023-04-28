@@ -255,11 +255,13 @@ public class GolfGameManager : MonoBehaviour
 
         // For now camera animation parameters are calculated here
         float flatDis = 15;
-        float upDis = 15;
+        float upDis = 10;
         Vector3 conclCameraPos = cameraController.transform.position
             - cameraController.FlatForward * flatDis + Vector3.up * upDis;
-        Quaternion conclCameraRot = Quaternion.LookRotation((cameraController.FlatForward * flatDis - Vector3.up * upDis).normalized);
-        yield return cameraController.AnimateToStatic(conclCameraPos, conclCameraRot, 5, t => (1 - Mathf.Exp(-6 * t)) * (1 - Mathf.Exp(-6 * t)));
+        Quaternion conclCameraRot = Quaternion.LookRotation((cameraController.FlatForward * flatDis - Vector3.up * upDis).normalized) * Quaternion.Euler(-60, 0, 0);
+        StartCoroutine(cameraController.AnimateToStatic(conclCameraPos, conclCameraRot, 5, t => (1 - Mathf.Exp(-6 * t)) * (1 - Mathf.Exp(-6 * t))));
+
+        yield return new WaitForSeconds(1.25f);
 
         // If the player beat the level, register it as completed
         bool won = strokeCount <= currentLevel.Par;
@@ -276,9 +278,9 @@ public class GolfGameManager : MonoBehaviour
     /// This function is called when the player clicks the "Try Again" or "Continue" button to either load the next level
     /// or update the GameData state and go back to the hub.
     /// </summary>
-    /// <param name="won"></param>
-    public void ConcludeLevel(bool won)
+    public void ConcludeLevel()
     {
+        bool won = strokeCount <= currentLevel.Par;
         // If there is another level in the sequence or the player has lost this level, play mini-golf again.
         if (GolfLevelManager.HasNewLevel() || !won)
             GolfLevelManager.LoadMiniGolfScene();
@@ -287,5 +289,14 @@ public class GolfGameManager : MonoBehaviour
             // If there is no new level and the player has won, the player can go back to the hub.
 
         }
+    }
+
+    /// <summary>
+    /// This function is called when the player clicks the "Give Up" button (in the pause menu or after level completion).
+    /// It effectively means that they have lost the challenge.
+    /// </summary>
+    public void GiveUpLevel()
+    {
+
     }
 }
