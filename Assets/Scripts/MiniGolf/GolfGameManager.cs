@@ -26,6 +26,10 @@ public class GolfGameManager : MonoBehaviour
     [SerializeField]
     private UILevelIntro uiLevelIntro;
 
+    // Reference to the level outro canvas panel (controlling the UI animation/controls at the end of the level)
+    [SerializeField]
+    private UILevelOutro uiLevelOutro;
+
     // Current level being played
     private GolfLevel currentLevel;
 
@@ -257,9 +261,31 @@ public class GolfGameManager : MonoBehaviour
         Quaternion conclCameraRot = Quaternion.LookRotation((cameraController.FlatForward * flatDis - Vector3.up * upDis).normalized);
         yield return cameraController.AnimateToStatic(conclCameraPos, conclCameraRot, 5, t => (1 - Mathf.Exp(-6 * t)) * (1 - Mathf.Exp(-6 * t)));
 
-        // Load the next level (if there is one) by reloading the scene
-        GolfLevelManager.CompleteLevel();
-        if (GolfLevelManager.HasNewLevel())
+        // If the player beat the level, register it as completed
+        bool won = strokeCount <= currentLevel.Par;
+        if (won)
+        {
+            GolfLevelManager.CompleteLevel();
+        }
+
+        // Officially conclude the level. (Once we have UI this will be called once the "Try Again" or "Continue" button is clicked.)
+        uiLevelOutro.AnimateOutro(currentLevel.Par, strokeCount);
+    }
+
+    /// <summary>
+    /// This function is called when the player clicks the "Try Again" or "Continue" button to either load the next level
+    /// or update the GameData state and go back to the hub.
+    /// </summary>
+    /// <param name="won"></param>
+    public void ConcludeLevel(bool won)
+    {
+        // If there is another level in the sequence or the player has lost this level, play mini-golf again.
+        if (GolfLevelManager.HasNewLevel() || !won)
             GolfLevelManager.LoadMiniGolfScene();
+        else
+        {
+            // If there is no new level and the player has won, the player can go back to the hub.
+
+        }
     }
 }
