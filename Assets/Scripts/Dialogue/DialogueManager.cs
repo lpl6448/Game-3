@@ -6,22 +6,26 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI dialogueBox;
+    [SerializeField] private GameObject dialogueBox;
     [SerializeField] private Button option1;
     [SerializeField] private Button option2;
+    [SerializeField] private Image continueArrow;
+
+    private TextMeshProUGUI dialogueText;
+    private Button dialogueButton;
 
     private Characters speaker;
 
-    void Start()
+    void Awake()
     {
-        //option1.onClick.AddListener(ToGolf);
-        //option2.onClick.AddListener(ToGolf);
+        dialogueText = dialogueBox.GetComponentInChildren<TextMeshProUGUI>();
+        dialogueButton = dialogueBox.GetComponent<Button>();
     }
 
     public void ToGolf()
     {
         //Update text to play golf
-        dialogueBox.text = "Wanna play golf?";
+        dialogueText.text = "Wanna play golf?";
         option1.GetComponentInChildren<TextMeshProUGUI>().text = "Yes";
         option2.GetComponentInChildren<TextMeshProUGUI>().text = "No";
         //Assign confirm to start golf and deny to not play golf to the button on clicks
@@ -39,7 +43,7 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("Woo played golf");
         ResetButtons();
         AssignSameClick(Winner);
-        dialogueBox.text = "Gah! I lost";
+        dialogueText.text = "Gah! I lost";
         option1.GetComponentInChildren<TextMeshProUGUI>().text = "Yippee";
         option2.GetComponentInChildren<TextMeshProUGUI>().text = "It eez what it eez";
     }
@@ -85,7 +89,7 @@ public class DialogueManager : MonoBehaviour
                 }
                 ResetButtons();
                 AssignSameClick(AlreadyWon);
-                dialogueBox.text = "You already beat me";
+                dialogueText.text = "You already beat me";
                 option1.GetComponentInChildren<TextMeshProUGUI>().text = "Ok";
                 option2.GetComponentInChildren<TextMeshProUGUI>().text = "Bye";
                 return;
@@ -93,14 +97,14 @@ public class DialogueManager : MonoBehaviour
             ResetButtons();
             option1.onClick.AddListener(Confirm);
             option2.onClick.AddListener(Decline);
-            dialogueBox.text = "Wanna play golf?";
+            dialogueText.text = "Wanna play golf?";
             option1.GetComponentInChildren<TextMeshProUGUI>().text = "Yes";
             option2.GetComponentInChildren<TextMeshProUGUI>().text = "No";
             return;
         }
         ResetButtons();
         AssignSameClick(ToGolf);
-        dialogueBox.text = "Hello Harry";
+        dialogueText.text = "Hello Harry";
         option1.GetComponentInChildren<TextMeshProUGUI>().text = "Howdy!";
         option2.GetComponentInChildren<TextMeshProUGUI>().text = "Hey there!";
     }
