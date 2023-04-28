@@ -22,11 +22,14 @@ public class GolfInitialization : MonoBehaviour
     {
         if (!hasInitialized)
         {
-            if (testLevel != null)
-                GolfLevelManager.LevelQueue.Enqueue(testLevel.gameObject.name);
-            else
-                foreach (GolfLevel level in levelsToPlay)
-                    GolfLevelManager.LevelQueue.Enqueue(level.gameObject.name);
+            if (!GolfLevelManager.HasNewLevel())
+            {
+                if (testLevel != null)
+                    GolfLevelManager.LevelQueue.Enqueue(testLevel.gameObject.name);
+                else
+                    foreach (GolfLevel level in levelsToPlay)
+                        GolfLevelManager.LevelQueue.Enqueue(level.gameObject.name);
+            }
 
             hasInitialized = true;
         }

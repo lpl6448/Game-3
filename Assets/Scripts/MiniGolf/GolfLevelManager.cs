@@ -17,8 +17,17 @@ public static class GolfLevelManager
     // If it is null, it just plays the next level in the queue
     public static string OverrideCurrentLevel;
 
-    // Stores the last played level (as a fallback for if there is no level to 
+    // Stores the last played level (as a fallback for if there is no next level to play)
     private static string lastCompletedLevel = null;
+
+    public static void PrepareLevelSet(params string[] levels)
+    {
+        LevelQueue.Clear();
+        OverrideCurrentLevel = null;
+
+        foreach (string level in levels)
+            LevelQueue.Enqueue(level);
+    }
 
     public static bool HasNewLevel()
     {
