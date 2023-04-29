@@ -104,6 +104,10 @@ public class GolfBallController : MonoBehaviour
         rigidbody.isKinematic = false;
         rigidbody.AddForce(velocity, ForceMode.VelocityChange);
 
+        // Add torque to the ball to make it start spinning
+        Vector3 torqueDir = Vector3.Cross(Vector3.up, velocity).normalized;
+        rigidbody.AddTorque(torqueDir * velocity.magnitude * 600, ForceMode.VelocityChange);
+
         atRest = false;
         lastLaunchTime = Time.time;
         onPutt.Invoke();
