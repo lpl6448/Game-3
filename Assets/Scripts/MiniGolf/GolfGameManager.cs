@@ -86,24 +86,24 @@ public class GolfGameManager : MonoBehaviour
         // When the player presses R, reload the current level
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GolfLevelManager.LoadMiniGolfScene();
+            RestartLevel();
         }
 
         // TEMPORARY: If the player presses a number, load a particular level
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             GolfLevelManager.OverrideCurrentLevel = "ProbuilderTestLevel";
-            GolfLevelManager.LoadMiniGolfScene();
+            GolfLevelManager.LoadMiniGolfScene(true);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             GolfLevelManager.OverrideCurrentLevel = "WaterTestLevel";
-            GolfLevelManager.LoadMiniGolfScene();
+            GolfLevelManager.LoadMiniGolfScene(true);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             GolfLevelManager.OverrideCurrentLevel = "MarconeLevel1";
-            GolfLevelManager.LoadMiniGolfScene();
+            GolfLevelManager.LoadMiniGolfScene(true);
         }
     }
 
@@ -233,13 +233,24 @@ public class GolfGameManager : MonoBehaviour
         cameraController.transform.position = introCameraPos;
         cameraController.transform.rotation = introCameraRot;
 
-        yield return new WaitForSeconds(0.5f);
-        uiLevelIntro.AnimateIntro(currentLevel);
+        if (GolfLevelManager.PlayIntroSequence)
+        {
+            // Play full intro animations
+            yield return new WaitForSeconds(0.5f);
+            uiLevelIntro.AnimateIntro(currentLevel);
+            yield return new WaitForSeconds(1.5f);
 
-        yield return new WaitForSeconds(1.5f);
-        yield return cameraController.AnimateToBall(introCameraPos, introCameraRot, cameraController.GoalTargetDistance, focusDir,
-            2, t => Mathf.SmoothStep(0, 1, t));
-        yield return new WaitForSeconds(0.5f);
+            yield return cameraController.AnimateToBall(introCameraPos, introCameraRot, cameraController.GoalTargetDistance, focusDir,
+                2, t => Mathf.SmoothStep(0, 1, t));
+            yield return new WaitForSeconds(0.5f);
+        }
+        else
+        {
+            // Skip UI intro and speed up camera animation slightly
+            yield return cameraController.AnimateToBall(introCameraPos, introCameraRot, cameraController.GoalTargetDistance, focusDir,
+                1.75f, t => Mathf.SmoothStep(0, 1, t));
+            yield return new WaitForSeconds(0.25f);
+        }
 
         blockPuttingInput = false;
     }
@@ -263,13 +274,6 @@ public class GolfGameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.25f);
 
-        // If the player beat the level, register it as completed
-        bool won = strokeCount <= currentLevel.Par;
-        if (won)
-        {
-            GolfLevelManager.CompleteLevel();
-        }
-
         // Officially conclude the level. (Once we have UI this will be called once the "Try Again" or "Continue" button is clicked.)
         uiLevelOutro.AnimateOutro(currentLevel.Par, strokeCount);
     }
@@ -281,9 +285,13 @@ public class GolfGameManager : MonoBehaviour
     public void ConcludeLevel()
     {
         bool won = strokeCount <= currentLevel.Par;
-        // If there is another level in the sequence or the player has lost this level, play mini-golf again.
-        if (GolfLevelManager.HasNewLevel() || !won)
-            GolfLevelManager.LoadMiniGolfScene();
+        if (won)
+            GolfLevelManager.CompleteLevel();
+
+        if (!won) // If the player has lost this level, play mini-golf again.
+            RestartLevel();
+        else if (GolfLevelManager.HasNewLevel()) // If there is another level in the sequence, play it.
+            GolfLevelManager.LoadMiniGolfScene(true);
         else
         {
             // If there is no new level and the player has won, the player can go back to the hub.
@@ -298,5 +306,14 @@ public class GolfGameManager : MonoBehaviour
     public void GiveUpLevel()
     {
 
+    }
+
+    /// <summary>
+    /// Reloads the mini-golf scene without completing the level, which effectively restarts it. This function also
+    /// tells the level manager to not play through the intro sequence again.
+    /// </summary>
+    public void RestartLevel()
+    {
+        GolfLevelManager.LoadMiniGolfScene(false);
     }
 }

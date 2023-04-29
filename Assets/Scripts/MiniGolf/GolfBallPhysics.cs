@@ -23,6 +23,8 @@ public class GolfBallPhysics : MonoBehaviour
     private new Rigidbody rigidbody;
 
     // Maximum amount of water covering the ball this physics update (0 - not submerged, 1 - fully submerged)
+    private float waterCoverage;
+
     public float WaterCoverage { get; private set; }
 
     /// <summary>
@@ -47,7 +49,7 @@ public class GolfBallPhysics : MonoBehaviour
             if (other.Raycast(new Ray(transform.position + Vector3.up * 1000, Vector3.down), out RaycastHit hit, 10000))
             {
                 float newWaterCoverage = Mathf.Clamp01(hit.point.y - transform.position.y + 0.5f);
-                WaterCoverage = Mathf.Max(WaterCoverage, newWaterCoverage);
+                waterCoverage = Mathf.Max(waterCoverage, newWaterCoverage);
             }
         }
     }
@@ -55,15 +57,18 @@ public class GolfBallPhysics : MonoBehaviour
     private void FixedUpdate()
     {
         // Apply drag to the rigidbody based on the amount of water coverage this frame
-        if (WaterCoverage > 0)
+        if (waterCoverage > 0)
         {
             // Calculate the volume of this ball that is submerged in the water. (Technically drag doesn't work this way, but it should be close enough.)
-            float b = WaterCoverage * 2 - 1;
+            float b = waterCoverage * 2 - 1;
             float waterSubmersion = -(b - 2) * (b + 1) * (b + 1) / 3;
             rigidbody.velocity *= Mathf.Clamp01(1 - rigidbody.velocity.magnitude * waterSubmersion * waterDrag * Time.fixedDeltaTime);
         }
 
+        // Set public water coverage (so that they can access it while the water coverage for next frame is accumulating)
+        WaterCoverage = waterCoverage;
+
         // Reset water coverage for next frame
-        WaterCoverage = 0;
+        waterCoverage = 0;
     }
 }

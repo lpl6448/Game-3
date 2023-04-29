@@ -25,10 +25,14 @@ public class GolfInitialization : MonoBehaviour
             if (!GolfLevelManager.HasNewLevel())
             {
                 if (testLevel != null)
-                    GolfLevelManager.LevelQueue.Enqueue(testLevel.gameObject.name);
+                    GolfLevelManager.PrepareLevelSet(testLevel.gameObject.name);
                 else
-                    foreach (GolfLevel level in levelsToPlay)
-                        GolfLevelManager.LevelQueue.Enqueue(level.gameObject.name);
+                {
+                    string[] levelNames = new string[levelsToPlay.Length];
+                    for (int i = 0; i < levelsToPlay.Length; i++)
+                        levelNames[i] = levelsToPlay[i].gameObject.name;
+                    GolfLevelManager.PrepareLevelSet(levelNames);
+                }
             }
 
             hasInitialized = true;
