@@ -142,15 +142,15 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Rotation: 0
-    - _Sky_Exponent: 4
+    - _Sky_Exponent: 5
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Splotch_Cutoff: 0.934
+    - _Splotch_Cutoff: 0.951
     - _Splotch_Noise_Scale: 6
-    - _Splotch_Noise_Time_Scale: 0.1
-    - _Splotch_Scale: 80
-    - _Splotch_Time_Scale: 0.5
+    - _Splotch_Noise_Time_Scale: 0.08
+    - _Splotch_Scale: 60
+    - _Splotch_Time_Scale: 0.3
     - _SrcBlend: 1
     - _Sun_Power: 400
     - _Surface: 0
@@ -161,10 +161,10 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Ground_Color: {r: 0.07482822, g: 0.0491723, b: 0.122641504, a: 1}
-    - _Horizon_Color: {r: 0.43756407, g: 0.36862746, b: 0.59607846, a: 1}
-    - _Sky_Color: {r: 0.062408738, g: 0.027450971, b: 0.27450982, a: 1}
+    - _Horizon_Color: {r: 0.42803407, g: 0.36862746, b: 0.59607846, a: 1}
+    - _Sky_Color: {r: 0.07545667, g: 0.027450971, b: 0.27450982, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _Splotch_Color: {r: 0.8514214, g: 0.7311321, b: 1, a: 0.6117647}
+    - _Splotch_Color: {r: 1, g: 0.88235295, b: 0.97492224, a: 0.6156863}
     - _Sun_Color: {r: 0.99162865, g: 0.8537736, b: 1, a: 1}
     - _Sun_Direction: {r: -0.3213939, g: 0.7660444, b: -0.5566704, a: 0}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
