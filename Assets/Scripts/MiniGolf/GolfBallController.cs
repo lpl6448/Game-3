@@ -57,6 +57,9 @@ public class GolfBallController : MonoBehaviour
     // Level bounds are definod by Colliders (with trigger set to true) that have the tag of LevelBounds
     private bool isTouchingBounds = true;
 
+    // Whether this ball has gone into the hole and triggered the celebration yet
+    private bool triggeredCelebration = false;
+
     /// <summary>
     /// Called whenever the ball collides with a trigger. Check if the trigger has the LevelEnd tag and
     /// call the UnityEvent to end the level if so. If the trigger has the LevelOutOfBounds tag, instantly
@@ -66,7 +69,16 @@ public class GolfBallController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "LevelEnd")
+        {
+            // CELEBRATE!
+            if (!triggeredCelebration)
+            {
+                other.GetComponentInParent<GolfHoleData>().PlayCelebration();
+                triggeredCelebration = true;
+            }
+
             onHole.Invoke();
+        }
         else if (other.tag == "LevelOutOfBounds")
             onOutOfBounds.Invoke(RespawnReason.OutOfBounds);
     }
