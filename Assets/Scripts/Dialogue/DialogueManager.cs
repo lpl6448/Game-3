@@ -157,7 +157,7 @@ public class DialogueManager : MonoBehaviour
         ResetButtons();
         dialogueText.text = $"{currentFrame.Speaker}: {currentFrame.Line}";
         //Only run response code if the prompt has responses available
-        if (currentFrame.NextFrame2 != -1 || currentFrame.LineType == LineType.Respondable)
+        if (currentFrame.NextFrame2 != -1 || currentFrame.LineType == LineType.Respondible)
         {
             //Activate response objects
             option1.gameObject.SetActive(true);

@@ -2,7 +2,7 @@ public enum LineType
 {
     NONE,
     Continuous,
-    Respondable,
+    Respondible,
     AskToGolf,
     ToGolf,
     WonGolf,
