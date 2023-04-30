@@ -21,7 +21,6 @@ public class InteractableObject : MonoBehaviour
         character = Characters.NONE;
         if (gameObject.GetComponent<Character>() != null)
             character = a_character;
-        Debug.Log(character);
     }
 
     // Update is called once per frame
@@ -35,7 +34,7 @@ public class InteractableObject : MonoBehaviour
     /// </summary>
     public virtual void Clicked()
     {
-        Debug.Log($"Hi! I'm {itemName}");
+        
     }
 
     /// <summary>

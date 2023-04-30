@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace Assets.Scripts.Enums
+﻿namespace Assets.Scripts.Enums
 {
     public enum Emotions
     {
@@ -10,6 +7,7 @@ namespace Assets.Scripts.Enums
         Annoyed,
         Wink,
         Angry,
-        Avoidant
+        Avoidant,
+        Smug
     }
 }

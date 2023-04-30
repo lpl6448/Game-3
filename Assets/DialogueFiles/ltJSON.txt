@@ -1,0 +1,136 @@
+{
+	"list": [
+		{
+			"ID": 0
+			"speaker": "Toot-Toot",
+			"emotion": "Happy",
+			"lineType": "Respondable",
+			"line": "Hiya Harry!",
+			"response1": "Toot, Lacuna",
+			"response2": "Howdy",
+			"nextFrame1": 1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 1
+			"speaker": "Lacuna",
+			"emotion": "Neutral",
+			"lineType": "AskToGolf",
+			"line": "Want to play golf?",
+			"response1": "Yeah",
+			"response2": "Not now",
+			"nextFrame1": 2,
+			"nextFrame2": 3
+		},
+		{
+			"ID": 2
+			"speaker": "Toot-Toot",
+			"emotion": "Happy",
+			"lineType": "ToGolf",
+			"line": "Yay!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 3
+			"speaker": "Toot-Toot",
+			"emotion": "Angry",
+			"lineType": "Continuous",
+			"line": "LAME!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 4,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 4
+			"speaker": "Lacuna",
+			"emotion": "Annoyed",
+			"lineType": "Continuous",
+			"line": "Seriously, come back when you aren't boring",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 5
+			"speaker": "Lacuna",
+			"emotion": "Happy",
+			"lineType": "LostGolf",
+			"line": "How're you going to lose to two little faeries?",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 6,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 6
+			"speaker": "Toot-Toot",
+			"emotion": "Happy",
+			"lineType": "Continuous",
+			"line": "Because we're a great team, Lacuna!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 7,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 7
+			"speaker": "Lacuna",
+			"emotion": "Annoyed",
+			"lineType": "Continuous",
+			"line": "Whatever...just come back and play us again sometime",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 8
+			"speaker": "Lacuna",
+			"emotion": "Angry",
+			"lineType": "WonGolf",
+			"line": "Why didn't you coordinate with me better Toot!?",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 9,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 9
+			"speaker": "Toot-Toot",
+			"emotion": "Angry",
+			"lineType": "Continuous",
+			"line": "Maybe if we accepted Mr. Macaroni's pizza bribe and didn't get offended and curse him I would have the energy to play well!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 10,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 10
+			"speaker": "Lacuna",
+			"emotion": "Neutral",
+			"lineType": "Continuous",
+			"line": "Curse...I have no clue what you could be referring to. I think his nose always has looked like that.",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 11
+			"speaker": "Toot-Toot",
+			"emotion": "Neutral",
+			"lineType": "HasLost",
+			"line": "Can't play now, we need to practice more",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+	]
+}

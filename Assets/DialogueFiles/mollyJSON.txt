@@ -1,0 +1,125 @@
+{
+	"list": [
+		{
+			"ID": 0
+			"speaker": "Molly",
+			"emotion": "Happy",
+			"lineType": "Respondable",
+			"line": "Hiya teach!",
+			"response1": "Hey Molly!",
+			"response2": "What's up?",
+			"nextFrame1": 1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 1
+			"speaker": "Molly",
+			"emotion": "Neutral",
+			"lineType": "AskToGolf",
+			"line": "Want to play golf?",
+			"response1": "Yeah",
+			"response2": "Not right now",
+			"nextFrame1": 2,
+			"nextFrame2": 3
+		},
+		{
+			"ID": 2
+			"speaker": "Molly",
+			"emotion": "Happy",
+			"lineType": "ToGolf",
+			"line": "Awesome! Let's play",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 3
+			"speaker": "Molly",
+			"emotion": "Annoyed",
+			"lineType": "Continuous",
+			"line": "Fine, I guess I'll just stay bored",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 4
+			"speaker": "Molly",
+			"emotion": "Wink",
+			"lineType": "LostGolf",
+			"line": "Ha, looks like I'm not the one that needs to practice their follow-through after all...",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 5
+			"speaker": "Molly",
+			"emotion": "Annoyed",
+			"lineType": "WonGolf",
+			"line": "Wow, you beat a newbie. Congrats I guess...",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 6,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 6
+			"speaker": "Molly",
+			"emotion": "Neutral",
+			"lineType": "Continuous",
+			"line": "What are you waiting for? Go collect clues!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 7
+			"speaker": "Molly",
+			"emotion": "Nuetral",
+			"lineType": "HasLost",
+			"line": "Any closer to cracking the case of Pinnochio Marcone?",
+			"response1": "Nothing yet",
+			"response2": "I'm working on it",
+			"nextFrame1": 8,
+			"nextFrame2": 8
+		},
+		{
+			"ID": 8
+			"speaker": "Molly",
+			"emotion": "Neutral",
+			"lineType": "Continuous",
+			"line": "Hop to it!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 9
+			"speaker": "Molly",
+			"emotion": "Nuetral",
+			"lineType": "Respondable",
+			"line": "Any closer to cracking the case of Pinnochio Marcone?",
+			"response1": "I've got it",
+			"response2": "I'll be back",
+			"nextFrame1": 10,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 10
+			"speaker": "Molly",
+			"emotion": "Happy",
+			"lineType": "Conclusion",
+			"line": "Let's catch us our Blue Fairy!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+	]
+}

@@ -6,5 +6,6 @@ public enum Characters
     NONE,
     Molly,
     Marcone,
-    LC
+    LC,
+    Dresden
 }

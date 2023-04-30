@@ -1,0 +1,180 @@
+{
+	"list": [
+		{
+			"ID": 0
+			"speaker": "Molly",
+			"emotion": "Happy",
+			"lineType": "Continuous",
+			"line": "Wow...this is Marcone's country club?",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 1
+			"speaker": "Dresden",
+			"emotion": "Happy",
+			"lineType": "Continuous",
+			"line": "Not bad, right?",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 2,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 2
+			"speaker": "Molly",
+			"emotion": "Happy",
+			"lineType": "Continuous",
+			"line": "I am so excited…our first day off in months~!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 3,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 3
+			"speaker": "Dresden",
+			"emotion": "Neutral",
+			"lineType": "Continuous",
+			"line": "Day off? I better see some improvement on that follow-through by the end of the day my young padawan",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 4,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 4
+			"speaker": "Molly",
+			"emotion": "Annoyed",
+			"lineType": "Continuous",
+			"line": "Yeah ok -",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 5,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 5
+			"speaker": "Marcone",
+			"emotion": "Happy",
+			"lineType": "Respondable",
+			"line": "Dresden, Molly, ciao bella.",
+			"response1": "Hello",
+			"response2": "Ciao bella yourself",
+			"nextFrame1": 6,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 6
+			"speaker": "Molly",
+			"emotion": "Happy",
+			"lineType": "Continuous",
+			"line": "Hello, Mr. Marcone",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 7,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 7
+			"speaker": "Dresden",
+			"emotion": "Neutral",
+			"lineType": "Continuous",
+			"line": "I'm a little surprised, John. It's unlike you to invite people for some casual golf, no strings attatched.",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 8,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 8
+			"speaker": "Marcone",
+			"emotion": "Avoidant",
+			"lineType": "Respondable",
+			"line": "I don't recall saying there were no strings attatched...",
+			"response1": "I figured",
+			"response2": "Damn...",
+			"nextFrame1": 9,
+			"nextFrame2": 10
+		},
+		{
+			"ID": 9
+			"speaker": "Dresden",
+			"emotion": "Annoyed",
+			"lineType": "Continuous",
+			"line": "I figured as much. Not like Gentleman Marcone to just have a little fun.",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 11,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 10
+			"speaker": "Dresden",
+			"emotion": "Annoyed",
+			"lineType": "Continuous",
+			"line": "Damn... and here I thought I got to just enjoy golfing today.",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 12,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 11
+			"speaker": "Marcone",
+			"emotion": "Neutral",
+			"lineType": "Continuous",
+			"line": "And that there is the investigator intuition I need today.",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 13,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 12
+			"speaker": "Marcone",
+			"emotion": "Neutral",
+			"lineType": "Continuous",
+			"line": "I would've thought a cocky P.I. like you could gleam that I don't invite riff raff to my home for fun.",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 13,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 13
+			"speaker": "Dresden",
+			"emotion": "Annoyed",
+			"lineType": "Continuous",
+			"line": "Well, what do you need then?",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 14,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 14
+			"speaker": "Marcone",
+			"emotion": "Avoidant",
+			"lineType": "Continuous",
+			"line": "I have run into a bit of magical turbulence in my work recently...",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 15,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 15
+			"speaker": "Marcone",
+			"emotion": "Neutral",
+			"lineType": "Respondable",
+			"line": "I have been cursed an no longer ... can tell a lie",
+			"response1": "Ha! Ain't that something",
+			"response2": "I'm not buying it",
+			"nextFrame1": 16,
+			"nextFrame2": 17
+		},
+	]
+}
