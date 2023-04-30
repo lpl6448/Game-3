@@ -42,7 +42,6 @@ public class HubInteractionController : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && m_EventSystem.currentSelectedGameObject != null)
             {
                 GameData.targetChar = m_EventSystem.currentSelectedGameObject.GetComponent<InteractableObject>().Character;
-                Debug.Log("TargetChar = " + GameData.targetChar);
                 m_EventSystem.currentSelectedGameObject.GetComponent<InteractableObject>().Clicked();
             }
         }

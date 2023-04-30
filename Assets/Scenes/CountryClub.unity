@@ -6465,6 +6465,11 @@ MonoBehaviour:
   option1: {fileID: 1760480448}
   option2: {fileID: 1061276951}
   continueArrow: {fileID: 908750966}
+  dCharSprite: {fileID: 682384354}
+  characterList:
+  - {fileID: 78809104}
+  - {fileID: 1870398815}
+  - {fileID: 1446990178}
 --- !u!4 &1674299535 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2460137346744355706, guid: f22bfcebbb016164480f1e0f1f6915b8, type: 3}

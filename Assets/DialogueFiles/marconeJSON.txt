@@ -1,0 +1,158 @@
+{
+	"list": [
+		{
+			"ID": 0
+			"speaker": "Marcone",
+			"emotion": "Neutral",
+			"lineType": "Respondable",
+			"line": "Hello Mr. Dresden",
+			"response1": "Hello there",
+			"response2": "What's up?",
+			"nextFrame1": 1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 1
+			"speaker": "Marcone",
+			"emotion": "Neutral",
+			"lineType": "AskToGolf",
+			"line": "Do you want to play golf?",
+			"response1": "Sure",
+			"response2": "Not right now",
+			"nextFrame1": 2,
+			"nextFrame2": 3
+		},
+		{
+			"ID": 2
+			"speaker": "Marcone",
+			"emotion": "Happy",
+			"lineType": "Golf",
+			"line": "Very good. Shall we?",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 3
+			"speaker": "Marcone",
+			"emotion": "Angry",
+			"lineType": "Continuous",
+			"line": "I am not a man that likes to be kept waiting...",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 4
+			"speaker": "Marcone",
+			"emotion": "Happy",
+			"lineType": "LostGolf",
+			"line": "Ah, yet another example of my superiority to you",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 5,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 5
+			"speaker": "Marcone",
+			"emotion": "Neutral",
+			"lineType": "LostGolf",
+			"line": "Please try again when you can offer me a challenge",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 6
+			"speaker": "Marcone",
+			"emotion": "Neutral",
+			"lineType": "WonGolf",
+			"line": "You wizards are always cheating at fair games I know it!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 7,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 7
+			"speaker": "Dresden",
+			"emotion": "Smug",
+			"lineType": "Continuous",
+			"line": "Your nose tells me that it doesn't agree with your use of the word /"fair/"...",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 8,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 8
+			"speaker": "Marcone",
+			"emotion": "Angry",
+			"lineType": "Continuous",
+			"line": "Ignore my nose and find a way to fix it already!",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 9
+			"speaker": "Marcone",
+			"emotion": "Neutral",
+			"lineType": "Respondable",
+			"line": "Any progress on finding who cursed me?",
+			"response1": "Making progress",
+			"response2": "Nope",
+			"nextFrame1": 10,
+			"nextFrame2": 11
+		},
+		{
+			"ID": 10
+			"speaker": "Dresden",
+			"emotion": "Neutral",
+			"lineType": "Continuous",
+			"line": "Making some progress, I've got to finish chasing a few leads.",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 12,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 11
+			"speaker": "Dresden",
+			"emotion": "Smug",
+			"lineType": "Continuous",
+			"line": "None yet. Sheesh aren't you nosy.",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": 13,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 12
+			"speaker": "Marcone",
+			"emotion": "Neutral",
+			"lineType": "Continuous",
+			"line": "Well then what are you talking to me for then?",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+		{
+			"ID": 12
+			"speaker": "Marcone",
+			"emotion": "Avoidant",
+			"lineType": "Continuous",
+			"line": "Aren't you a comedian. If only you were half as good a detective...",
+			"response1": "",
+			"response2": "",
+			"nextFrame1": -1,
+			"nextFrame2": -1
+		},
+	]
+}

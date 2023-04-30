@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public enum LineType
 {
+    NONE,
     Continuous,
     Respondable,
-    Golf,
+    AskToGolf,
+    ToGolf,
+    WonGolf,
+    LostGolf,
+    HasLost,
     FinishIntro,
     Conclusion
 }
