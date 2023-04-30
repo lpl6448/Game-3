@@ -45,12 +45,9 @@ public class DialogueFrame
         line = a_line;
         lineType = LineTypeFromString(a_lineType);
         nextFrame1 = a_nextFrame1;
-        //Fill response text fields as long as line type allows and neither response is empty
-        if(lineType==LineType.Respondable && (a_response1!=""&&a_response2!=""))
-        {
-            response1 = a_response1;
-            response2 = a_response2;
-        }
+        nextFrame2 = a_nextFrame2;
+        response1 = a_response1;
+        response2 = a_response2;
     }
 
     private Emotions EmotionFromString(string sEmotion)
@@ -80,7 +77,7 @@ public class DialogueFrame
         {
             case "Continuous":
                 return LineType.Continuous;
-            case "Repondable":
+            case "Respondable":
                 return LineType.Respondable;
             case "ToGolf":
                 return LineType.ToGolf;

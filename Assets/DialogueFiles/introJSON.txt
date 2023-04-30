@@ -1,7 +1,7 @@
 {
 	"list": [
 		{
-			"ID": 0
+			"ID": 0,
 			"speaker": "Molly",
 			"emotion": "Happy",
 			"lineType": "Continuous",
@@ -12,7 +12,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 1
+			"ID": 1,
 			"speaker": "Dresden",
 			"emotion": "Happy",
 			"lineType": "Continuous",
@@ -23,7 +23,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 2
+			"ID": 2,
 			"speaker": "Molly",
 			"emotion": "Happy",
 			"lineType": "Continuous",
@@ -34,7 +34,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 3
+			"ID": 3,
 			"speaker": "Dresden",
 			"emotion": "Neutral",
 			"lineType": "Continuous",
@@ -45,7 +45,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 4
+			"ID": 4,
 			"speaker": "Molly",
 			"emotion": "Annoyed",
 			"lineType": "Continuous",
@@ -56,7 +56,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 5
+			"ID": 5,
 			"speaker": "Marcone",
 			"emotion": "Happy",
 			"lineType": "Respondable",
@@ -67,7 +67,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 6
+			"ID": 6,
 			"speaker": "Molly",
 			"emotion": "Happy",
 			"lineType": "Continuous",
@@ -78,7 +78,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 7
+			"ID": 7,
 			"speaker": "Dresden",
 			"emotion": "Neutral",
 			"lineType": "Continuous",
@@ -89,7 +89,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 8
+			"ID": 8,
 			"speaker": "Marcone",
 			"emotion": "Avoidant",
 			"lineType": "Respondable",
@@ -100,7 +100,7 @@
 			"nextFrame2": 10
 		},
 		{
-			"ID": 9
+			"ID": 9,
 			"speaker": "Dresden",
 			"emotion": "Annoyed",
 			"lineType": "Continuous",
@@ -111,7 +111,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 10
+			"ID": 10,
 			"speaker": "Dresden",
 			"emotion": "Annoyed",
 			"lineType": "Continuous",
@@ -122,7 +122,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 11
+			"ID": 11,
 			"speaker": "Marcone",
 			"emotion": "Neutral",
 			"lineType": "Continuous",
@@ -133,7 +133,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 12
+			"ID": 12,
 			"speaker": "Marcone",
 			"emotion": "Neutral",
 			"lineType": "Continuous",
@@ -144,7 +144,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 13
+			"ID": 13,
 			"speaker": "Dresden",
 			"emotion": "Annoyed",
 			"lineType": "Continuous",
@@ -155,7 +155,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 14
+			"ID": 14,
 			"speaker": "Marcone",
 			"emotion": "Avoidant",
 			"lineType": "Continuous",
@@ -166,7 +166,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 15
+			"ID": 15,
 			"speaker": "Marcone",
 			"emotion": "Neutral",
 			"lineType": "Respondable",
@@ -175,6 +175,6 @@
 			"response2": "I'm not buying it",
 			"nextFrame1": 16,
 			"nextFrame2": 17
-		},
+		}
 	]
 }

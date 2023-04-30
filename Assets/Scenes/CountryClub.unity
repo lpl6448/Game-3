@@ -6461,6 +6461,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce21640736737b4ea5fde2c77e800f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  introDialogueJSON: {fileID: 4900000, guid: c64f3757cfca925419dadef1eb590524, type: 3}
+  MollyDialogueJSON: {fileID: 4900000, guid: 567d0dbf8579fe7478011fbdf48caac0, type: 3}
+  MarconeDialogueJSON: {fileID: 4900000, guid: e009595c7e6cee84e9ed0b8286801935, type: 3}
+  LTDialogueJSON: {fileID: 4900000, guid: c5d1642dafc1c1e47a13ebe509ceb9ae, type: 3}
   dialogueBox: {fileID: 1982580541}
   option1: {fileID: 1760480448}
   option2: {fileID: 1061276951}

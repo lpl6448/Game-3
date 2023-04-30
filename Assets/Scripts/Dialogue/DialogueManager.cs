@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    //Dialogue JSON Files
+    [SerializeField] TextAsset introDialogueJSON;
+    [SerializeField] TextAsset MollyDialogueJSON;
+    [SerializeField] TextAsset MarconeDialogueJSON;
+    [SerializeField] TextAsset LTDialogueJSON;
+
     //UI Componants
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private Button option1;
@@ -122,55 +128,25 @@ public class DialogueManager : MonoBehaviour
             switch(speaker)
             {
                 case Characters.Molly:
-                    targetFrameList = LoadDialogueList(DLists.Molly);
+                    targetFrameList = LoadDialogueList(DLists.Molly, MollyDialogueJSON);
                     break;
                 case Characters.Marcone:
-                    targetFrameList = LoadDialogueList(DLists.Marcone);
+                    targetFrameList = LoadDialogueList(DLists.Marcone, MarconeDialogueJSON);
                     break;
                 case Characters.LC:
-                    targetFrameList = LoadDialogueList(DLists.LT);
+                    targetFrameList = LoadDialogueList(DLists.LT, LTDialogueJSON);
                     break;
             }
         }
         else
         {
-            targetFrameList = LoadDialogueList(toRequest);
+            targetFrameList = LoadDialogueList(toRequest, introDialogueJSON);
         }
 
         //Start dialogue interaction
         DetermineDialogueSequence();
         //RenderDialogueFrame will keep the dialogue running until the sequence ends
         RenderDialogueFrame();
-
-        //if (GameData.progressFlags[target][0])
-        //{
-        //    if (GameData.progressFlags[target][1])
-        //    {
-        //        if (GameData.progressFlags[target][2])
-        //        {
-
-        //            return;
-        //        }
-        //        ResetButtons();
-        //        AssignSameClick(AlreadyWon);
-        //        dialogueText.text = "You already beat me";
-        //        option1.GetComponentInChildren<TextMeshProUGUI>().text = "Ok";
-        //        option2.GetComponentInChildren<TextMeshProUGUI>().text = "Bye";
-        //        return;
-        //    }
-        //    ResetButtons();
-        //    option1.onClick.AddListener(Confirm);
-        //    option2.onClick.AddListener(Decline);
-        //    dialogueText.text = "Wanna play golf?";
-        //    option1.GetComponentInChildren<TextMeshProUGUI>().text = "Yes";
-        //    option2.GetComponentInChildren<TextMeshProUGUI>().text = "No";
-        //    return;
-        //}
-        //ResetButtons();
-        //AssignSameClick(ToGolf);
-        //dialogueText.text = "Hello Harry";
-        //option1.GetComponentInChildren<TextMeshProUGUI>().text = "Howdy!";
-        //option2.GetComponentInChildren<TextMeshProUGUI>().text = "Hey there!";
     }
 
     /// <summary>
@@ -179,7 +155,7 @@ public class DialogueManager : MonoBehaviour
     private void RenderDialogueFrame()
     {
         ResetButtons();
-        dialogueText.text = $"{currentFrame.Speaker}: ${currentFrame.Line}";
+        dialogueText.text = $"{currentFrame.Speaker}: {currentFrame.Line}";
         //Only run response code if the prompt has responses available
         if (currentFrame.NextFrame2 != -1 || currentFrame.LineType == LineType.Respondable)
         {
@@ -188,10 +164,13 @@ public class DialogueManager : MonoBehaviour
             option2.gameObject.SetActive(true);
             //Fill text with the two responses
             option1.GetComponentInChildren<TextMeshProUGUI>().text = currentFrame.Response1;
-            option1.GetComponentInChildren<TextMeshProUGUI>().text = currentFrame.Response2;
+            option2.GetComponentInChildren<TextMeshProUGUI>().text = currentFrame.Response2;
             //Assign buttons with onclicks that will bring up the next frame
             option1.onClick.AddListener(delegate { Continue(currentFrame.NextFrame1); });
-            option2.onClick.AddListener(delegate { Continue(currentFrame.NextFrame2); });
+            if (currentFrame.NextFrame2 != -1)
+                option2.onClick.AddListener(delegate { Continue(currentFrame.NextFrame2); });
+            else
+                option2.onClick.AddListener(delegate { Continue(currentFrame.NextFrame1); });
         }
         //Otherwise, continuing will be handled by clicking the dialogue box
         else
@@ -212,12 +191,12 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     /// <param name="listRequest"></param>
     /// <returns></returns>
-    private List<DialogueFrame> LoadDialogueList(DLists listRequest)
+    private List<DialogueFrame> LoadDialogueList(DLists listRequest, TextAsset targetJSON)
     {
         //Create a FrameLoader object to load in dialogue
         FrameLoader loader = new FrameLoader();
         //Load in each dialogue frame list that was requested
-        return loader.LoadDialogue(listRequest);
+        return loader.LoadDialogue(listRequest, targetJSON);
     }
 
     /// <summary>

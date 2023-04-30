@@ -1,7 +1,7 @@
 {
 	"list": [
 		{
-			"ID": 0
+			"ID": 0,
 			"speaker": "Molly",
 			"emotion": "Happy",
 			"lineType": "Respondable",
@@ -12,7 +12,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 1
+			"ID": 1,
 			"speaker": "Molly",
 			"emotion": "Neutral",
 			"lineType": "AskToGolf",
@@ -23,7 +23,7 @@
 			"nextFrame2": 3
 		},
 		{
-			"ID": 2
+			"ID": 2,
 			"speaker": "Molly",
 			"emotion": "Happy",
 			"lineType": "ToGolf",
@@ -34,7 +34,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 3
+			"ID": 3,
 			"speaker": "Molly",
 			"emotion": "Annoyed",
 			"lineType": "Continuous",
@@ -45,7 +45,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 4
+			"ID": 4,
 			"speaker": "Molly",
 			"emotion": "Wink",
 			"lineType": "LostGolf",
@@ -56,7 +56,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 5
+			"ID": 5,
 			"speaker": "Molly",
 			"emotion": "Annoyed",
 			"lineType": "WonGolf",
@@ -67,7 +67,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 6
+			"ID": 6,
 			"speaker": "Molly",
 			"emotion": "Neutral",
 			"lineType": "Continuous",
@@ -78,7 +78,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 7
+			"ID": 7,
 			"speaker": "Molly",
 			"emotion": "Nuetral",
 			"lineType": "HasLost",
@@ -89,7 +89,7 @@
 			"nextFrame2": 8
 		},
 		{
-			"ID": 8
+			"ID": 8,
 			"speaker": "Molly",
 			"emotion": "Neutral",
 			"lineType": "Continuous",
@@ -100,7 +100,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 9
+			"ID": 9,
 			"speaker": "Molly",
 			"emotion": "Nuetral",
 			"lineType": "Respondable",
@@ -111,7 +111,7 @@
 			"nextFrame2": -1
 		},
 		{
-			"ID": 10
+			"ID": 10,
 			"speaker": "Molly",
 			"emotion": "Happy",
 			"lineType": "Conclusion",
@@ -120,6 +120,6 @@
 			"response2": "",
 			"nextFrame1": -1,
 			"nextFrame2": -1
-		},
+		}
 	]
 }
