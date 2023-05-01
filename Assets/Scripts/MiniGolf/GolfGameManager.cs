@@ -30,6 +30,10 @@ public class GolfGameManager : MonoBehaviour
     [SerializeField]
     private UILevelOutro uiLevelOutro;
 
+    // Reference to the pause menu (enabled/disabled upon hitting Escape)
+    [SerializeField]
+    private UIGolfPauseMenu uiPauseMenu;
+
     // Current level being played
     private GolfLevel currentLevel;
 
@@ -50,6 +54,12 @@ public class GolfGameManager : MonoBehaviour
 
     // Counter for the number of strokes/putts the player has taken so far
     private int strokeCount = 0;
+
+    // Whether the pause menu can be activated right now
+    private bool canPause = false;
+
+    // Whether the pause menu is currently active
+    public bool Paused { get; private set; }
 
     /// <summary>
     /// For now, begin the level as soon as this scene is initialized
@@ -87,6 +97,15 @@ public class GolfGameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             RestartLevel();
+        }
+
+        // When the player presses Escape, toggle the pause menu
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (uiPauseMenu.Active)
+                AttemptUnpause();
+            else if (canPause)
+                AttemptPause();
         }
 
         // TEMPORARY: If the player presses a number, load a particular level
@@ -183,6 +202,26 @@ public class GolfGameManager : MonoBehaviour
             StartCoroutine(RespawnBallCrt());
     }
 
+    public void AttemptPause()
+    {
+        if (canPause && !Paused && uiPauseMenu.CanInteract)
+        {
+            uiPauseMenu.PauseMenuIn(currentLevel);
+            Time.timeScale = 0; // Freeze the ball
+            Paused = true;
+        }
+    }
+
+    public void AttemptUnpause()
+    {
+        if (Paused && uiPauseMenu.CanInteract)
+        {
+            uiPauseMenu.PauseMenuOut();
+            Time.timeScale = 1; // Unfreeze the ball
+            Paused = false;
+        }
+    }
+
     /// <summary>
     /// Coroutine used to wait a couple seconds before respawning the ball, while controlling
     /// camera movements during this period as well
@@ -214,6 +253,7 @@ public class GolfGameManager : MonoBehaviour
     private IEnumerator LevelIntro()
     {
         blockPuttingInput = true;
+        canPause = false;
 
         // For now the camera animation parameters (position, rotation, etc.) are calculated here
         Vector3 focusDir = currentLevel.LevelIntroFocus != null
@@ -253,6 +293,7 @@ public class GolfGameManager : MonoBehaviour
         }
 
         blockPuttingInput = false;
+        canPause = true;
     }
 
     /// <summary>
@@ -263,6 +304,7 @@ public class GolfGameManager : MonoBehaviour
     {
         // Permanently block input (until the scene is reset)
         blockPuttingInput = true;
+        canPause = false;
 
         // For now camera animation parameters are calculated here
         float flatDis = 15;
@@ -305,7 +347,7 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void GiveUpLevel()
     {
-
+        AttemptUnpause();
     }
 
     /// <summary>
@@ -314,6 +356,7 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void RestartLevel()
     {
+        AttemptUnpause();
         GolfLevelManager.LoadMiniGolfScene(false);
     }
 }
