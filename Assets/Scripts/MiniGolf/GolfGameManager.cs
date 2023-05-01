@@ -83,6 +83,14 @@ public class GolfGameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Whenever we exit this level, unfreeze the game
+    /// </summary>
+    private void OnDestroy()
+    {
+        Time.timeScale = 1;
+    }
+
+    /// <summary>
     /// If waiting to activate input and input is no longer being blocked, activate input
     /// </summary>
     private void Update()
@@ -347,7 +355,7 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void GiveUpLevel()
     {
-        AttemptUnpause();
+
     }
 
     /// <summary>
@@ -356,7 +364,6 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void RestartLevel()
     {
-        AttemptUnpause();
         GolfLevelManager.LoadMiniGolfScene(false);
     }
 }
