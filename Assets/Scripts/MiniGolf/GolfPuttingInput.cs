@@ -32,6 +32,10 @@ public class GolfPuttingInput : MonoBehaviour
     [SerializeField]
     private float arrowDistanceScale = 1;
 
+    // Reference to the game manager used to check pause state
+    [SerializeField]
+    private GolfGameManager gameManager;
+
     // Reference to the camera controller for the mini golf game mode
     [SerializeField]
     private GolfCameraController cameraController;
@@ -98,51 +102,62 @@ public class GolfPuttingInput : MonoBehaviour
             indicator.ArrowOffset = Vector3.zero;
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (!gameManager.Paused)
         {
-            if (!draggingBall) // If the ball is not being dragged, start dragging the camera if the player right clicks
+            if (Input.GetMouseButtonDown(1))
             {
-                draggingCamera = true;
-                cameraController.StartDrag();
+                if (!draggingBall) // If the ball is not being dragged, start dragging the camera if the player right clicks
+                {
+                    draggingCamera = true;
+                    cameraController.StartDrag();
+                }
+                else // If the ball is being dragged and the player right clicks, cancel the drag
+                {
+                    draggingBall = false;
+                    indicator.DragOffset = Vector3.zero;
+                    indicator.ArrowOffset = Vector3.zero;
+                }
             }
-            else // If the ball is being dragged and the player right clicks, cancel the drag
+
+            if (Input.GetMouseButtonDown(0) && !draggingCamera)
             {
-                draggingBall = false;
-                indicator.DragOffset = Vector3.zero;
-                indicator.ArrowOffset = Vector3.zero;
+                Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(mouseRay, 100000, golfBallDragMask))
+                {
+                    // If we click the ball and allow input, then begin dragging the ball.
+                    if (AllowInput)
+                        draggingBall = true;
+                }
+                else
+                {
+                    // Otherwise, drag the camera (handled by the CameraController)
+                    draggingCamera = true;
+                    cameraController.StartDrag();
+                }
+            }
+            else if (!Input.GetMouseButton(0))
+            {
+                // Once the user has let go of left mouse, launch the ball if it was being dragged
+                if (draggingBall)
+                {
+                    draggingBall = false;
+                    indicator.DragOffset = Vector3.zero;
+                    indicator.ArrowOffset = Vector3.zero;
+
+                    // If input is allowed, launch the ball
+                    if (AllowInput)
+                        LaunchBall();
+                }
+                if (draggingCamera && !Input.GetMouseButton(1))
+                {
+                    draggingCamera = false;
+                    cameraController.EndDrag();
+                }
             }
         }
-
-        if (Input.GetMouseButtonDown(0) && !draggingCamera)
+        else
         {
-            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(mouseRay, 100000, golfBallDragMask))
-            {
-                // If we click the ball and allow input, then begin dragging the ball.
-                if (AllowInput)
-                    draggingBall = true;
-            }
-            else
-            {
-                // Otherwise, drag the camera (handled by the CameraController)
-                draggingCamera = true;
-                cameraController.StartDrag();
-            }
-        }
-        else if (!Input.GetMouseButton(0))
-        {
-            // Once the user has let go of left mouse, launch the ball if it was being dragged
-            if (draggingBall)
-            {
-                draggingBall = false;
-                indicator.DragOffset = Vector3.zero;
-                indicator.ArrowOffset = Vector3.zero;
-
-                // If input is allowed, launch the ball
-                if (AllowInput)
-                    LaunchBall();
-            }
-            if (draggingCamera && !Input.GetMouseButton(1))
+            if (draggingCamera)
             {
                 draggingCamera = false;
                 cameraController.EndDrag();
