@@ -8,12 +8,13 @@ public static class GameData
     public static State gameState;
     public static State prevState;
     public static Characters targetChar;
+    public static bool wonGolf;
 
     public static SerializableDictionary<Characters, bool[]> progressFlags;
 
     static GameData()
     {
-        gameState = State.Hub;
+        gameState = State.Title;
 
         //Build progress flag dictionary if it wasn't loaded in
         if (progressFlags == null)

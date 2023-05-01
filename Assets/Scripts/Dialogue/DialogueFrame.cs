@@ -66,6 +66,26 @@ public class DialogueFrame
                 return Emotions.Angry;
             case "Avoidant":
                 return Emotions.Avoidant;
+            case "Smile_Neutral":
+                return Emotions.Smile_Neutral ;
+            case "Smile_Angry":
+                return Emotions.Smile_Angry;
+            case "Smile_Sleep":
+                return Emotions.Smile_Sleep;
+            case "Smile_Wink":
+                return Emotions.Smile_Wink;
+            case "Smile_Interested":
+                return Emotions.Smile_Interested;
+            case "Frown_Neutral":
+                return Emotions.Frown_Neutral;
+            case "Frown_Angry":
+                return Emotions.Frown_Angry;
+            case "Frown_Sleep":
+                return Emotions.Frown_Sleep;
+            case "Frown_Wink":
+                return Emotions.Frown_Wink;
+            case "Frown_Interested":
+                return Emotions.Frown_Interested;
             default:
                 return Emotions.Neutral;
         }
@@ -79,10 +99,16 @@ public class DialogueFrame
                 return LineType.Continuous;
             case "Respondible":
                 return LineType.Respondible;
+            case "AskToGolf":
+                return LineType.AskToGolf;
             case "ToGolf":
                 return LineType.ToGolf;
             case "WonGolf":
                 return LineType.WonGolf;
+            case "LostGolf":
+                return LineType.LostGolf;
+            case "HasLost":
+                return LineType.HasLost;
             case "FinishIntro":
                 return LineType.Continuous;
             case "Conclusion":

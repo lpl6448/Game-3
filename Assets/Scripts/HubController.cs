@@ -48,7 +48,7 @@ public class HubController : MonoBehaviour
                 case State.Dialogue:
                     dialogueOverlay.SetActive(true);
                     dialogueManager.CallDialogueSequence(sceneChars, GameData.targetChar);
-                    ChangeDialogueChar(Emotions.Neutral);
+                    //ChangeDialogueChar(Emotions.Neutral);
                     break;
                 case State.Paused:
                     pauseOverlay.SetActive(true);

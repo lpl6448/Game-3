@@ -3,7 +3,7 @@
 		{
 			"ID": 0,
 			"speaker": "Toot-Toot",
-			"emotion": "Happy",
+			"emotion": "Smile_Wink",
 			"lineType": "Respondable",
 			"line": "Hiya Harry!",
 			"response1": "Toot, Lacuna",
@@ -14,7 +14,7 @@
 		{
 			"ID": 1,
 			"speaker": "Lacuna",
-			"emotion": "Neutral",
+			"emotion": "Frown_Neutral",
 			"lineType": "AskToGolf",
 			"line": "Want to play golf?",
 			"response1": "Yeah",
@@ -25,7 +25,7 @@
 		{
 			"ID": 2,
 			"speaker": "Toot-Toot",
-			"emotion": "Happy",
+			"emotion": "Smile_Wink",
 			"lineType": "ToGolf",
 			"line": "Yay!",
 			"response1": "",
@@ -36,7 +36,7 @@
 		{
 			"ID": 3,
 			"speaker": "Toot-Toot",
-			"emotion": "Angry",
+			"emotion": "Frown_Angry",
 			"lineType": "Continuous",
 			"line": "LAME!",
 			"response1": "",
@@ -47,7 +47,7 @@
 		{
 			"ID": 4,
 			"speaker": "Lacuna",
-			"emotion": "Annoyed",
+			"emotion": "Frown_Angry",
 			"lineType": "Continuous",
 			"line": "Seriously, come back when you aren't boring",
 			"response1": "",
@@ -58,7 +58,7 @@
 		{
 			"ID": 5,
 			"speaker": "Lacuna",
-			"emotion": "Happy",
+			"emotion": "Smile_Sleep",
 			"lineType": "LostGolf",
 			"line": "How're you going to lose to two little faeries?",
 			"response1": "",
@@ -69,7 +69,7 @@
 		{
 			"ID": 6,
 			"speaker": "Toot-Toot",
-			"emotion": "Happy",
+			"emotion": "Frown_Wink",
 			"lineType": "Continuous",
 			"line": "Because we're a great team, Lacuna!",
 			"response1": "",
@@ -80,7 +80,7 @@
 		{
 			"ID": 7,
 			"speaker": "Lacuna",
-			"emotion": "Annoyed",
+			"emotion": "Frown_Interested",
 			"lineType": "Continuous",
 			"line": "Whatever...just come back and play us again sometime",
 			"response1": "",
@@ -91,7 +91,7 @@
 		{
 			"ID": 8,
 			"speaker": "Lacuna",
-			"emotion": "Angry",
+			"emotion": "Frown_Angry",
 			"lineType": "WonGolf",
 			"line": "Why didn't you coordinate with me better Toot!?",
 			"response1": "",
@@ -102,7 +102,7 @@
 		{
 			"ID": 9,
 			"speaker": "Toot-Toot",
-			"emotion": "Angry",
+			"emotion": "Smile_Angry",
 			"lineType": "Continuous",
 			"line": "Maybe if we accepted Mr. Macaroni's pizza bribe and didn't get offended and curse him I would have the energy to play well!",
 			"response1": "",
@@ -113,7 +113,7 @@
 		{
 			"ID": 10,
 			"speaker": "Lacuna",
-			"emotion": "Neutral",
+			"emotion": "Frown_Neutral",
 			"lineType": "Continuous",
 			"line": "Curse...I have no clue what you could be referring to. I think his nose always has looked like that.",
 			"response1": "",
@@ -124,7 +124,7 @@
 		{
 			"ID": 11,
 			"speaker": "Toot-Toot",
-			"emotion": "Neutral",
+			"emotion": "Frown_Neutral",
 			"lineType": "HasLost",
 			"line": "Can't play now, we need to practice more",
 			"response1": "",

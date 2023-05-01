@@ -46,62 +46,9 @@ public class DialogueManager : MonoBehaviour
         characterDict.Add(Characters.LC, characterList[2]);
     }
 
-    public void ToGolf()
-    {
-        //Update text to play golf
-        dialogueText.text = "Wanna play golf?";
-        option1.GetComponentInChildren<TextMeshProUGUI>().text = "Yes";
-        option2.GetComponentInChildren<TextMeshProUGUI>().text = "No";
-        //Assign confirm to start golf and deny to not play golf to the button on clicks
-        ResetButtons();
-        option1.onClick.AddListener(Confirm);
-        option2.onClick.AddListener(Decline);
-
-        //Update progress flag 0 to true for speaker
-        GameData.progressFlags[speaker][0] = true;
-    }
-
-    public void Confirm()
-    {
-        //TODO: Load correct golf levels
-        Debug.Log("Woo played golf");
-        ResetButtons();
-        AssignSameClick(Winner);
-        dialogueText.text = "Gah! I lost";
-        option1.GetComponentInChildren<TextMeshProUGUI>().text = "Yippee";
-        option2.GetComponentInChildren<TextMeshProUGUI>().text = "It eez what it eez";
-    }
-
-    /// <summary>
-    /// Declines to play golf and closes dialogue overlay
-    /// Also serves as a sort of helper function to close dialogue overlay
-    /// </summary>
-    public void Decline()
-    {
-        //Return to hub state
-        GameData.gameState = State.Hub;
-        gameObject.SetActive(false);
-    }
-
-    public void Winner()
-    {
-        //TODO: Dialogue for winning
-        Debug.Log("Hey you won");
-        //TEMP: Update progress flag 1 to true for speaker
-        GameData.progressFlags[speaker][1] = true;
-        Decline();
-
-    }
-
-    public void AlreadyWon()
-    {
-        //TODO: Dialogue if you already won
-        Decline();
-    }
-
     public void Continue(int nextFrame)
     {
-        if(currentFrame.LineType==LineType.ToGolf)
+        if (currentFrame.LineType==LineType.ToGolf)
         {
             //TODO: Implement going to golf
         }
@@ -114,6 +61,9 @@ public class DialogueManager : MonoBehaviour
         }
         //Change current frame to next frame and call to render it
         currentFrame = targetFrameList[nextFrame];
+        //If currentFrame is an asktogolf frame, mark first word progress flag as true
+        if (currentFrame.LineType == LineType.AskToGolf)
+            GameData.progressFlags[GameData.targetChar][0] = true;
         RenderDialogueFrame();
     }
 
@@ -210,7 +160,7 @@ public class DialogueManager : MonoBehaviour
             if(searchFor==frame.LineType)
             {
                 currentFrame = frame;
-                break;
+                return;
             }
         }
     }
@@ -267,16 +217,5 @@ public class DialogueManager : MonoBehaviour
         option1.gameObject.SetActive(false);
         option2.gameObject.SetActive(false);
         continueArrow.gameObject.SetActive(false);
-    }
-
-    /// <summary>
-    /// Give both buttons the same onclick
-    /// Primarily for pre-dialogue testing
-    /// </summary>
-    /// <param name="func"></param>
-    private void AssignSameClick(UnityEngine.Events.UnityAction func)
-    {
-        option1.onClick.AddListener(func);
-        option2.onClick.AddListener(func);
     }
 }

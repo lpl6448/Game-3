@@ -5,7 +5,7 @@
 			"speaker": "Molly",
 			"emotion": "Happy",
 			"lineType": "Respondable",
-			"line": "Hiya teach!",
+			"line": "Hey teach!",
 			"response1": "Hey Molly!",
 			"response2": "What's up?",
 			"nextFrame1": 1,

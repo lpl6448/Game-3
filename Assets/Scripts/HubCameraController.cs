@@ -11,6 +11,7 @@ public class HubCameraController : MonoBehaviour
     void Start()
     {
         fWidth = Screen.width;
+        GameData.gameState = State.Hub;
     }
 
     // Update is called once per frame
