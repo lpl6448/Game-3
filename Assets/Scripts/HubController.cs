@@ -28,6 +28,15 @@ public class HubController : MonoBehaviour
         sceneChars.Add(Characters.Molly, loadSceneChars[0]);
         sceneChars.Add(Characters.Marcone, loadSceneChars[1]);
         sceneChars.Add(Characters.LC, loadSceneChars[2]);
+
+        //Handle if the scene is entered from golf
+        if(GameData.fromGolf)
+        {
+            GameData.gameState = State.Dialogue;
+            dialogueOverlay.SetActive(true);
+            dialogueManager.CallDialogueSequence(sceneChars, GameData.targetChar);
+        }
+
         GameData.prevState = GameData.gameState;
     }
 
@@ -48,13 +57,12 @@ public class HubController : MonoBehaviour
                 case State.Dialogue:
                     dialogueOverlay.SetActive(true);
                     dialogueManager.CallDialogueSequence(sceneChars, GameData.targetChar);
-                    //ChangeDialogueChar(Emotions.Neutral);
                     break;
                 case State.Paused:
                     pauseOverlay.SetActive(true);
                     break;
                 case State.Golf:
-                    //Load golf scene
+                    //Exists for sake of the state machine
                     break;
             }
         }

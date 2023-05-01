@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentFrame.LineType==LineType.ToGolf)
         {
-            //TODO: Implement going to golf
+            SceneManager.LoadScene("MiniGolf");
         }
         //If the next frame will be nothing, close the dialogue overlay and return to hub
         if(nextFrame==-1)
@@ -178,6 +179,21 @@ public class DialogueManager : MonoBehaviour
     {
         if (speaker == Characters.NONE)
             return;
+
+        //Handle starting dialogue after golf
+        if(GameData.fromGolf)
+        {
+            //Call dialogue for winning and make this characters golf won flag as true
+            if (GameData.wonGolf)
+            {
+                GetCurrentFrame(LineType.WonGolf);
+                GameData.progressFlags[speaker][1] = true;
+            }
+            //Call lost golf dialogue
+            else
+                GetCurrentFrame(LineType.LostGolf);
+        }
+
         switch(speaker)
         {
             case Characters.Molly:
