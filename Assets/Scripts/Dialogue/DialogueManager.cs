@@ -51,8 +51,13 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentFrame.LineType==LineType.ToGolf)
         {
+            dialogueBox.SetActive(false);
+            GameData.gameState = State.Golf;
+            GolfLevelManager.hasInitialized = false;
             SceneManager.LoadScene("MiniGolf");
         }
+        if (currentFrame.LineType == LineType.WonGolf || currentFrame.LineType == LineType.LostGolf)
+            GameData.fromGolf = false;
         //If the next frame will be nothing, close the dialogue overlay and return to hub
         if(nextFrame==-1)
         {
@@ -192,27 +197,28 @@ public class DialogueManager : MonoBehaviour
             //Call lost golf dialogue
             else
                 GetCurrentFrame(LineType.LostGolf);
+            return;
         }
 
         switch(speaker)
         {
             case Characters.Molly:
-                if (GameData.progressFlags[Characters.Molly][0])
-                    GetCurrentFrame(LineType.AskToGolf);
-                else if (GameData.progressFlags[Characters.Molly][1])
-                    GetCurrentFrame(LineType.HasLost);
-                else if (GameData.progressFlags[Characters.Molly][2])
+                if (GameData.progressFlags[Characters.Molly][2])
                     //Hardcoded ID for the frame that Molly will prompt completing the game, could be implemented better
                     GetCurrentFrame(9);
+                else if (GameData.progressFlags[Characters.Molly][1])
+                    GetCurrentFrame(LineType.HasLost);
+                else if (GameData.progressFlags[Characters.Molly][0])
+                    GetCurrentFrame(LineType.AskToGolf);
                 else
                     GetCurrentFrame(0);
                 break;
             case Characters.Marcone:
             case Characters.LC:
-                if (GameData.progressFlags[speaker][0])
-                    GetCurrentFrame(LineType.AskToGolf);
-                else if(GameData.progressFlags[speaker][1])
+                if (GameData.progressFlags[speaker][1])
                     GetCurrentFrame(LineType.HasLost);
+                else if(GameData.progressFlags[speaker][0])
+                    GetCurrentFrame(LineType.AskToGolf);
                 else
                     GetCurrentFrame(0);
                 break;

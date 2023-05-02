@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Controls the game flow of the golf game mode (level management, stroke/par counting, etc.)
@@ -345,7 +346,10 @@ public class GolfGameManager : MonoBehaviour
         else
         {
             // If there is no new level and the player has won, the player can go back to the hub.
-
+            GameData.progressFlags[GameData.targetChar][1] = true;
+            GameData.fromGolf = true;
+            GameData.wonGolf = true;
+            SceneManager.LoadScene("CountryClub");
         }
     }
 
@@ -355,7 +359,9 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void GiveUpLevel()
     {
-
+        GameData.fromGolf = true;
+        GameData.wonGolf = false;
+        SceneManager.LoadScene("CountryClub");
     }
 
     /// <summary>

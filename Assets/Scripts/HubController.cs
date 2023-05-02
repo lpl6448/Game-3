@@ -76,11 +76,7 @@ public class HubController : MonoBehaviour
                 }
                 break;
             case State.Dialogue:
-                if(Input.GetKeyDown(KeyCode.Escape))
-                {
-                    dialogueOverlay.SetActive(false);
-                    GameData.gameState = State.Hub;
-                }
+                
                 break;
             case State.Paused:
                 if (Input.GetKeyDown(KeyCode.Escape)) 

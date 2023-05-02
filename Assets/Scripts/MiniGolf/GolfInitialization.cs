@@ -6,8 +6,6 @@
 /// </summary>
 public class GolfInitialization : MonoBehaviour
 {
-    private static bool hasInitialized = false;
-
     [Header("Hover over property names to see details")]
 
     [SerializeField]
@@ -30,7 +28,7 @@ public class GolfInitialization : MonoBehaviour
 
     private void Awake()
     {
-        if (!hasInitialized)
+        if (!GolfLevelManager.hasInitialized)
         {
             if(GameData.targetChar!=Characters.NONE)
             {
@@ -60,7 +58,7 @@ public class GolfInitialization : MonoBehaviour
                 }
             }
 
-            hasInitialized = true;
+            GolfLevelManager.hasInitialized = true;
         }
     }
 

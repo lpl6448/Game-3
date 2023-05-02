@@ -23,6 +23,8 @@ public static class GolfLevelManager
     // Stores the last played level (as a fallback for if there is no next level to play)
     private static string lastCompletedLevel = null;
 
+    public static bool hasInitialized = false;
+
     public static void PrepareLevelSet(params string[] levels)
     {
         LevelQueue.Clear();
