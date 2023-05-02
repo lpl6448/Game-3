@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HubCameraController : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     private float fWidth;
     [SerializeField]

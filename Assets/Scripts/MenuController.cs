@@ -8,6 +8,14 @@ public class MenuController : MonoBehaviour
     public void NewGame()
     {
         //TODO: Delete save file
+        foreach(KeyValuePair<Characters, bool[]> entry in GameData.progressFlags)
+        {
+            for(int i=0, length=entry.Value.Length; i<length; i++)
+            {
+                entry.Value[i] = false;
+            }
+        }
+
         GameData.gameState = State.Hub;
         SceneManager.LoadScene("CountryClub");
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class HubInteractionController : MonoBehaviour
+public class RayInteractionController : MonoBehaviour
 {
     private EventSystem m_EventSystem;
 
