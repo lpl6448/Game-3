@@ -18,7 +18,7 @@ public class Character : InteractableObject
     /// <summary>
     /// Dictionary that contains all sprites and their emotions key
     /// </summary>
-    private Dictionary<Emotions, Material> charMats;
+    protected Dictionary<Emotions, Material> charMats;
 
 
     // Start is called before the first frame update
@@ -31,12 +31,6 @@ public class Character : InteractableObject
         {
             charMats.Add(spriteEmotions[i], loadCharMats[i]);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     /// <summary>

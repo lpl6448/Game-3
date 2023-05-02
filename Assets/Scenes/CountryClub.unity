@@ -7024,7 +7024,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1870398810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6246895a4282d247a023a876023a7dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 5de0cca72b7717c429f9c26a8f2de8ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Marcone
@@ -7035,6 +7035,16 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b639d9ea6ffeadf49b13663cc9522ee3, type: 2}
   - {fileID: 2100000, guid: 72b382cffb1300441af4bda8d210f426, type: 2}
   spriteEmotions: 00000000040000000500000001000000
+  nose1Mats:
+  - {fileID: 2100000, guid: dbd2fbc6d31083f43b16f45bd8ef8eee, type: 2}
+  - {fileID: 2100000, guid: 71068551c0f60e94a96bc45a337bd672, type: 2}
+  - {fileID: 2100000, guid: 98453fd1f2a185d428ceb575bf7990d8, type: 2}
+  - {fileID: 2100000, guid: b609a9983ec5dda419a5724668cd5044, type: 2}
+  nose2Mats:
+  - {fileID: 2100000, guid: 03fdef380d231f943af88880b6db6c2f, type: 2}
+  - {fileID: 2100000, guid: 794ad06226af1524a82d68fd9300896a, type: 2}
+  - {fileID: 2100000, guid: d78b686e13f3c1a4a812d3afac7bec48, type: 2}
+  - {fileID: 2100000, guid: 7d479aedbc2e9f448958c2b29843fbb4, type: 2}
 --- !u!1001 &1887803313
 PrefabInstance:
   m_ObjectHideFlags: 0

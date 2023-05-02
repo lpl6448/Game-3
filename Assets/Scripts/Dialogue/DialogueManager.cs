@@ -110,6 +110,10 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void RenderDialogueFrame()
     {
+        //Check if Marcone's nose needs to grow (very magic numbers implementation)
+        if (speaker == Characters.Marcone && currentFrame._ID == 6)
+            characterList[1].GetComponent<Marcone>().GrowNose();
+
         ResetButtons();
         dialogueText.text = $"{currentFrame.Speaker}: {currentFrame.Line}";
         //Shrink font size if line is too long
