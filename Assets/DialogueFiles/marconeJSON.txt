@@ -4,7 +4,7 @@
 			"ID": 0,
 			"speaker": "Marcone",
 			"emotion": "Neutral",
-			"lineType": "Respondable",
+			"lineType": "Respondible",
 			"line": "Hello Mr. Dresden",
 			"response1": "Hello there",
 			"response2": "What's up?",

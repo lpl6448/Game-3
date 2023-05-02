@@ -206,7 +206,7 @@ public class DialogueManager : MonoBehaviour
         switch(speaker)
         {
             case Characters.Molly:
-                if (GameData.progressFlags[Characters.Molly][2])
+                if (GameData.progressFlags[Characters.Molly][1] && GameData.progressFlags[Characters.Marcone][1] && GameData.progressFlags[Characters.LC][1])
                     //Hardcoded ID for the frame that Molly will prompt completing the game, could be implemented better
                     GetCurrentFrame(9);
                 else if (GameData.progressFlags[Characters.Molly][1])
