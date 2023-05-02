@@ -69,7 +69,7 @@
 		{
 			"ID": 6,
 			"speaker": "Marcone",
-			"emotion": "Neutral",
+			"emotion": "Angry",
 			"lineType": "WonGolf",
 			"line": "You wizards are always cheating at fair games I know it!",
 			"response1": "",

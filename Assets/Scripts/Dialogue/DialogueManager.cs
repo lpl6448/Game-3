@@ -112,6 +112,9 @@ public class DialogueManager : MonoBehaviour
     {
         ResetButtons();
         dialogueText.text = $"{currentFrame.Speaker}: {currentFrame.Line}";
+        //Shrink font size if line is too long
+        if (currentFrame.Line.Length > 80)
+            dialogueText.fontSize = 28;
         //Only run response code if the prompt has responses available
         if (currentFrame.NextFrame2 != -1 || currentFrame.LineType == LineType.Respondible)
         {

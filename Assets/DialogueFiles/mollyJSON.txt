@@ -14,7 +14,7 @@
 		{
 			"ID": 1,
 			"speaker": "Molly",
-			"emotion": "Neutral",
+			"emotion": "Happy",
 			"lineType": "AskToGolf",
 			"line": "Want to play golf?",
 			"response1": "Yeah",
