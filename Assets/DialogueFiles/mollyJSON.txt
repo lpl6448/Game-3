@@ -108,7 +108,7 @@
 			"response1": "I've got it",
 			"response2": "I'll be back",
 			"nextFrame1": 10,
-			"nextFrame2": 11,
+			"nextFrame2": 11
 		},
 		{
 			"ID": 10,
