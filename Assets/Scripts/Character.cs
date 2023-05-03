@@ -16,6 +16,11 @@ public class Character : InteractableObject
     [SerializeField]
     private List<Emotions> spriteEmotions;
     /// <summary>
+    /// Reference to the DialogueBubble effect that can display above the character (only one per scene)
+    /// </summary>
+    [SerializeField]
+    private DialogueBubble dialogueBubble;
+    /// <summary>
     /// Dictionary that contains all sprites and their emotions key
     /// </summary>
     protected Dictionary<Emotions, Material> charMats;
@@ -41,6 +46,15 @@ public class Character : InteractableObject
         base.Clicked();
         GameData.gameState = State.Dialogue;
         GameData.targetChar = character;
+    }
+
+    /// <summary>
+    /// Makes a dialogue bubble appear above the character
+    /// </summary>
+    public override void Hovered()
+    {
+        base.Hovered();
+        dialogueBubble.Activate(this);
     }
 
     public virtual Material GetSprite(Emotions emotion)
