@@ -15,6 +15,14 @@ public class PauseMenu: MonoBehaviour
     }
 
     /// <summary>
+    /// Save game to file
+    /// </summary>
+    public void Save()
+    {
+        //DataPersistenceManager.instance.SaveGame();
+    }
+
+    /// <summary>
     /// Quit to the title screen
     /// </summary>
     public void ToTitle()
