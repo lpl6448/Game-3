@@ -5,6 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
+    [SerializeField] private Canvas creditOverlay;
+
+    private void Start()
+    {
+        if (GameData.showCredits)
+        {
+            GameData.showCredits = false;
+            Credits();
+        }
+    }
+
     public void NewGame()
     {
         //TODO: Delete save file
@@ -28,8 +39,7 @@ public class MenuController : MonoBehaviour
 
     public void Credits()
     {
-        //TODO: Bring up credits screen
-        Debug.Log("Made by Caniac Games");
+        creditOverlay.gameObject.SetActive(!creditOverlay.isActiveAndEnabled);
     }
 
     public void Quit()

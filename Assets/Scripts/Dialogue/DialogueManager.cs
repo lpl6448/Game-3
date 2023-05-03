@@ -126,11 +126,15 @@ public class DialogueManager : MonoBehaviour
         //Check if Marcone's nose needs to grow (very magic numbers implementation)
         if (speaker == Characters.Marcone && currentFrame._ID == 6)
             characterList[1].GetComponent<Marcone>().GrowNose();
+        if(speaker == Characters.Marcone && currentFrame._ID == 28)
+            characterList[1].GetComponent<Marcone>().ShrinkNose();
 
         ResetButtons();
         //Shrink font size if line is too long
-        if (currentFrame.Line.Length > 80)
-            dialogueText.fontSize = 28;
+        if (currentFrame.Line.Length > 60)
+            dialogueText.fontSize = 24;
+        else
+            dialogueText.fontSize = 32;
 
         // Begin animating text typing
         skipTextTyping = false;
@@ -301,7 +305,7 @@ public class DialogueManager : MonoBehaviour
         //Check if LineType is finishConlusion, if so, go to end scene
         if(currentFrame.LineType == LineType.FinishConclusion)
         {
-
+            SceneManager.LoadScene("Congrats");
         }
         //If the next frame will be nothing, close the dialogue overlay and return to hub
         if (nextFrame == -1)

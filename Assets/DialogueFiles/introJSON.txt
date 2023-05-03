@@ -27,7 +27,7 @@
 			"speaker": "Molly",
 			"emotion": "Happy",
 			"lineType": "Continuous",
-			"line": "I am so excited�our first day off in months~!",
+			"line": "I am so excited! Our first day off in months~!",
 			"response1": "",
 			"response2": "",
 			"nextFrame1": 3,

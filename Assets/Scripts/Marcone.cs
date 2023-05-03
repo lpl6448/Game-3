@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Marcone : Character
 {
+    [SerializeField] private List<Material> nose0Mats = new List<Material>();
     [SerializeField] private List<Material> nose1Mats = new List<Material>();
     [SerializeField] private List<Material> nose2Mats = new List<Material>();
 
@@ -15,24 +16,40 @@ public class Marcone : Character
         //Grow nose
         if(charMats!=null)
             noseSize++;
+        UpdateNose();
+    }
+
+    public void ShrinkNose()
+    {
+        if(charMats!=null)
+            noseSize=0;
+        UpdateNose();
+    }
+
+    private void UpdateNose()
+    {
         //Select which material list is for the new nose size
-        List<Material> newNoseList= new List<Material>();
-        if(noseSize==1)
+        List<Material> newNoseList = new List<Material>();
+        if(noseSize==0)
+        {
+            newNoseList = nose0Mats;
+        }
+        else if (noseSize == 1)
         {
             newNoseList = nose1Mats;
         }
-        else if(noseSize==2)
+        else if (noseSize == 2)
         {
-            newNoseList= nose2Mats;
+            newNoseList = nose2Mats;
         }
         List<Emotions> keylist = new List<Emotions>();
-        foreach(KeyValuePair<Emotions, Material> entry in charMats)
+        foreach (KeyValuePair<Emotions, Material> entry in charMats)
         {
             keylist.Add(entry.Key);
         }
         //Replace character materials with new nose size
         int iterator = 0;
-        foreach(Emotions key in keylist)
+        foreach (Emotions key in keylist)
         {
             charMats[key] = newNoseList[iterator];
             iterator++;

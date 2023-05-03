@@ -9,6 +9,9 @@ TagManager:
   - WaterCollider
   - Clickable
   - LevelOutOfBounds
+  - Wall
+  - GolfMusic
+  - HubMusic
   layers:
   - Default
   - TransparentFX

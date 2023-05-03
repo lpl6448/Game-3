@@ -83,6 +83,7 @@ public class GolfPuttingInput : MonoBehaviour
         Vector3 velocity = GetLaunchVelocity();
         if (velocity.magnitude >= minimumPuttSpeed)
         {
+            SFXHandler.Instance.playPutt();
             ballController.Launch(GetLaunchVelocity());
             golfOverlay.UpdateVisibility(false, 0);
         }

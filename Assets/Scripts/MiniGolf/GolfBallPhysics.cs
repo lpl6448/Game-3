@@ -36,6 +36,14 @@ public class GolfBallPhysics : MonoBehaviour
         rigidbody.angularVelocity -= rigidbody.angularVelocity.normalized * Mathf.Min(angularDamping * Time.fixedDeltaTime, rigidbody.angularVelocity.magnitude);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Wall"))
+            SFXHandler.Instance.playWallBonk();
+        if (collision.gameObject.CompareTag("WaterCollider"))
+            SFXHandler.Instance.PlaySplash();
+    }
+
     /// <summary>
     /// Called whenever the ball continues to collide with a trigger. If the trigger has the WaterCollider tag, then it is
     /// partially/fully submerged in water this frame.

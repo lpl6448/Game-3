@@ -10,6 +10,7 @@ public static class GameData
     public static Characters targetChar;
     public static bool wonGolf;
     public static bool fromGolf;
+    public static bool showCredits;
 
     public static SerializableDictionary<Characters, bool[]> progressFlags;
 
