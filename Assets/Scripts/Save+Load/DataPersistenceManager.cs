@@ -22,7 +22,7 @@ public class DataPersistenceManager : MonoBehaviour
     private void Start()
     {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
-        LoadGame();
+        //LoadGame();
     }
 
     public void NewGame()
@@ -48,6 +48,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+        if(saveData==null)
+            saveData = new SaveData();
         //Get most recent progress flags
         saveData.progressFlags = GameData.progressFlags;
 
