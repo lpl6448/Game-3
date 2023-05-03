@@ -201,7 +201,7 @@
 		{
 			"ID": 18,
 			"speaker": "Molly",
-			"emotion": "Smug",
+			"emotion": "Happy",
 			"lineType": "Continuous",
 			"line": "Um, would you be able to demonstrate this curse for us?",
 			"response1": "",
