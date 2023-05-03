@@ -8149,7 +8149,7 @@ MonoBehaviour:
   option2: {fileID: 1061276951}
   continueArrow: {fileID: 908750966}
   dCharSprite: {fileID: 682384354}
-  warpEffect: {fileID: 0}
+  warpEffect: {fileID: 290100457}
   characterList:
   - {fileID: 78809104}
   - {fileID: 1870398815}
