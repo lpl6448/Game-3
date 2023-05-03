@@ -110,7 +110,7 @@ public class DialogueFrame
             case "HasLost":
                 return LineType.HasLost;
             case "FinishIntro":
-                return LineType.Continuous;
+                return LineType.FinishIntro;
             case "Conclusion":
                 return LineType.Conclusion;
             default:

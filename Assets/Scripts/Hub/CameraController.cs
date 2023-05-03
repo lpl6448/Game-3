@@ -21,7 +21,11 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        GameData.gameState = State.Hub;
+        //GameData.gameState = State.Hub;
+
+        // Retrieve past camera rotation from GameData
+        currentRotation = GameData.cameraRotation;
+        goalRotation = GameData.cameraRotation;
     }
 
     // Update is called once per frame
@@ -54,6 +58,9 @@ public class CameraController : MonoBehaviour
         // Smooth and update the camera's rotation
         currentRotation = Mathf.Lerp(currentRotation, goalRotation, 1 - Mathf.Exp(-rotationLerpFactor * Time.deltaTime));
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, currentRotation, transform.eulerAngles.z);
+
+        // The camera rotation should save after returning to the hub
+        GameData.cameraRotation = goalRotation;
     }
 
     /// <summary>
