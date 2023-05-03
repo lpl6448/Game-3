@@ -53,9 +53,9 @@ public class HubController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameData.gameState != GameData.prevState)
+        if (GameData.gameState != GameData.prevState)
         {
-            switch(GameData.gameState)
+            switch (GameData.gameState)
             {
                 case State.Title:
                     //go to title screen;
@@ -76,20 +76,20 @@ public class HubController : MonoBehaviour
                     break;
             }
         }
-        switch(GameData.gameState)
+        switch (GameData.gameState)
         {
             case State.Hub:
-                if(Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     pauseOverlay.SetActive(true);
                     GameData.gameState = State.Paused;
                 }
                 break;
             case State.Dialogue:
-                
+
                 break;
             case State.Paused:
-                if (Input.GetKeyDown(KeyCode.Escape)) 
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     pauseOverlay.SetActive(false);
                     GameData.gameState = State.Hub;

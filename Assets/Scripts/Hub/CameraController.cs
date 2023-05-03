@@ -19,10 +19,10 @@ public class CameraController : MonoBehaviour
     private float currentRotation = 0; // Current y-rotation of the camera
     private float goalRotation = 0; // Target y-rotation of the camera
 
-    void Start()
-    {
-        GameData.gameState = State.Hub;
-    }
+    //void Start()
+    //{
+    //    GameData.gameState = State.Hub;
+    //}
 
     // Update is called once per frame
     void Update()
