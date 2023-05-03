@@ -13,6 +13,8 @@ public static class GameData
     public static float cameraRotation;
     public static bool showCredits;
 
+    public static bool[] miniGolfInstructionsIn = new bool[] { true, true };
+
     public static SerializableDictionary<Characters, bool[]> progressFlags;
 
     static GameData()

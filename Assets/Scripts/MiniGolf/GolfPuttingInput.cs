@@ -120,7 +120,7 @@ public class GolfPuttingInput : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButtonDown(0) && !draggingCamera)
+            if (Input.GetMouseButtonDown(0) && !draggingCamera && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
                 Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(mouseRay, 100000, golfBallDragMask))

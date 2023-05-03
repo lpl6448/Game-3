@@ -36,6 +36,10 @@ public class GolfGameManager : MonoBehaviour
     [SerializeField]
     private UIGolfPauseMenu uiPauseMenu;
 
+    // Reference to the instructions panels that appear when the player plays mini-golf for the first time
+    [SerializeField]
+    private UIGolfInstructions uiGolfInstructions;
+
     [SerializeField]
     private WarpEffect warpEffect;
 
@@ -317,6 +321,9 @@ public class GolfGameManager : MonoBehaviour
 
         blockPuttingInput = false;
         canPause = true;
+
+        yield return new WaitForSeconds(1);
+        uiGolfInstructions.Initialize();
     }
 
     /// <summary>
@@ -325,6 +332,8 @@ public class GolfGameManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator LevelConclusion()
     {
+        uiGolfInstructions.Deactivate();
+
         // Permanently block input (until the scene is reset)
         blockPuttingInput = true;
         canPause = false;
