@@ -21,6 +21,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Image continueArrow;
     [SerializeField] private Image dCharSprite;
 
+    [SerializeField] private WarpEffect warpEffect;
+
     private TextMeshProUGUI dialogueText;
     private Button dialogueButton;
 
@@ -34,6 +36,8 @@ public class DialogueManager : MonoBehaviour
     private List<DialogueFrame> lcDL = new List<DialogueFrame>();
     //List of loaded dialogue frame lists
     private List<DialogueFrame> targetFrameList;
+
+    private bool skipTextTyping; // If true (when the user clicks the dialogue box), the text-typing animation is skipped
 
     DialogueFrame currentFrame;
 
@@ -51,9 +55,22 @@ public class DialogueManager : MonoBehaviour
 
     public void Continue(int nextFrame)
     {
-        //Check if any special case continue buttons need to be added
-        //If so, return
-        if (CheckSpecialCases(nextFrame))
+        if (currentFrame.LineType==LineType.ToGolf)
+        {
+            dialogueBox.SetActive(false);
+            GameData.gameState = State.Golf;
+            GolfLevelManager.hasInitialized = false;
+            GolfLevelManager.PlayIntroSequence = true;
+            GolfLevelManager.PlayWarpEffect = true;
+            warpEffect.StartCoroutine(warpEffect.WarpCameraOut("MiniGolf"));
+        }
+        if (currentFrame.LineType == LineType.WonGolf || currentFrame.LineType == LineType.LostGolf)
+            GameData.fromGolf = false;
+        //If the next frame will be nothing, close the dialogue overlay and return to hub
+        if(nextFrame==-1)
+        {
+            GameData.gameState = State.Hub;
+            gameObject.SetActive(false);
             return;
 
         //Change current frame to next frame and call to render it
@@ -127,10 +144,37 @@ public class DialogueManager : MonoBehaviour
             characterList[1].GetComponent<Marcone>().GrowNose();
 
         ResetButtons();
-        dialogueText.text = $"{currentFrame.Speaker}: {currentFrame.Line}";
         //Shrink font size if line is too long
         if (currentFrame.Line.Length > 80)
             dialogueText.fontSize = 28;
+
+        // Begin animating text typing
+        skipTextTyping = false;
+        dialogueButton.onClick.AddListener(delegate { skipTextTyping = true; });
+        StartCoroutine(AnimateDialogueFrame());
+
+        //Update the character portrait on screen (unless speaker is dresden)
+        if(speaker!=Characters.Dresden)
+        {
+            dCharSprite.material = characterDict[speaker].GetSprite(currentFrame.Emotion);
+        }
+    }
+
+    private IEnumerator AnimateDialogueFrame()
+    {
+        dialogueText.text = $"<b>{currentFrame.Speaker}</b>: ";
+
+        float typeRate = 25;
+        for (int i = 0; i < currentFrame.Line.Length; i++)
+        {
+            if (skipTextTyping)
+                break;
+
+            yield return new WaitForSeconds(1 / typeRate);
+            dialogueText.text = $"<b>{currentFrame.Speaker}</b>: {currentFrame.Line.Substring(0, i)}";
+        }
+        dialogueText.text = $"<b>{currentFrame.Speaker}</b>: {currentFrame.Line}";
+
         //Only run response code if the prompt has responses available
         if (currentFrame.NextFrame2 != -1 || currentFrame.LineType == LineType.Respondable)
         {
@@ -152,12 +196,6 @@ public class DialogueManager : MonoBehaviour
         {
             continueArrow.gameObject.SetActive(true);
             dialogueButton.onClick.AddListener(delegate { Continue(currentFrame.NextFrame1); });
-        }
-
-        //Update the character portrait on screen (unless speaker is dresden)
-        if(speaker!=Characters.Dresden)
-        {
-            dCharSprite.material = characterDict[speaker].GetSprite(currentFrame.Emotion);
         }
     }
 
