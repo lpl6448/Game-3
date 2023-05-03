@@ -26,8 +26,6 @@ public class HubController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        warpEffect.StartCoroutine(warpEffect.WarpCameraIn());
-
         sceneChars = new Dictionary<Characters, Character>();
         sceneChars.Add(Characters.Molly, loadSceneChars[0]);
         sceneChars.Add(Characters.Marcone, loadSceneChars[1]);
@@ -43,11 +41,19 @@ public class HubController : MonoBehaviour
         if (GameData.fromGolf)
         {
             GameData.gameState = State.Dialogue;
-            dialogueOverlay.SetActive(true);
-            dialogueManager.CallDialogueSequence(sceneChars, GameData.targetChar);
+            StartCoroutine(WarpThenBeginDialogue());
         }
 
         GameData.prevState = GameData.gameState;
+    }
+
+    private IEnumerator WarpThenBeginDialogue()
+    {
+        yield return warpEffect.WarpCameraIn();
+        yield return new WaitForSeconds(0.5f);
+
+        dialogueOverlay.SetActive(true);
+        dialogueManager.CallDialogueSequence(sceneChars, GameData.targetChar);
     }
 
     // Update is called once per frame
