@@ -111,6 +111,8 @@ public class DialogueFrame
                 return LineType.HasLost;
             case "FinishIntro":
                 return LineType.FinishIntro;
+            case "FinishConclusion":
+                return LineType.FinishConclusion;
             case "Conclusion":
                 return LineType.Conclusion;
             default:
