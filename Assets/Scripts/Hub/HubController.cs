@@ -17,6 +17,8 @@ public class HubController : MonoBehaviour
     //UI elements
     [SerializeField] private Image charSprite;
 
+    [SerializeField] private WarpEffect warpEffect;
+
     //Chacter gameObjects in scene
     [SerializeField] private List<Character> loadSceneChars;
     private Dictionary<Characters, Character> sceneChars;
@@ -24,6 +26,8 @@ public class HubController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        warpEffect.StartCoroutine(warpEffect.WarpCameraIn());
+
         sceneChars = new Dictionary<Characters, Character>();
         sceneChars.Add(Characters.Molly, loadSceneChars[0]);
         sceneChars.Add(Characters.Marcone, loadSceneChars[1]);

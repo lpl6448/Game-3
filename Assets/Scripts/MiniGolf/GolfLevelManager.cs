@@ -18,7 +18,10 @@ public static class GolfLevelManager
     public static string OverrideCurrentLevel;
 
     // Whether the intro camera/UI animation is enabled when the next level loads
-    public static bool PlayIntroSequence { get; private set; } = true;
+    public static bool PlayIntroSequence { get; set; } = true;
+
+    // Whether the warp effect should be played when the next level loads
+    public static bool PlayWarpEffect { get; set; } = true;
 
     // Stores the last played level (as a fallback for if there is no next level to play)
     private static string lastCompletedLevel = null;

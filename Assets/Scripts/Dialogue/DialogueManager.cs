@@ -20,6 +20,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Image continueArrow;
     [SerializeField] private Image dCharSprite;
 
+    [SerializeField] private WarpEffect warpEffect;
+
     private TextMeshProUGUI dialogueText;
     private Button dialogueButton;
 
@@ -54,7 +56,9 @@ public class DialogueManager : MonoBehaviour
             dialogueBox.SetActive(false);
             GameData.gameState = State.Golf;
             GolfLevelManager.hasInitialized = false;
-            SceneManager.LoadScene("MiniGolf");
+            GolfLevelManager.PlayIntroSequence = true;
+            GolfLevelManager.PlayWarpEffect = true;
+            warpEffect.StartCoroutine(warpEffect.WarpCameraOut("MiniGolf"));
         }
         if (currentFrame.LineType == LineType.WonGolf || currentFrame.LineType == LineType.LostGolf)
             GameData.fromGolf = false;

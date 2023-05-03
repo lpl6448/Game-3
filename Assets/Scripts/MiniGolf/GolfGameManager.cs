@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Controls the game flow of the golf game mode (level management, stroke/par counting, etc.)
@@ -35,6 +36,9 @@ public class GolfGameManager : MonoBehaviour
     [SerializeField]
     private UIGolfPauseMenu uiPauseMenu;
 
+    [SerializeField]
+    private WarpEffect warpEffect;
+
     // Current level being played
     private GolfLevel currentLevel;
 
@@ -61,6 +65,10 @@ public class GolfGameManager : MonoBehaviour
 
     // Whether the pause menu is currently active
     public bool Paused { get; private set; }
+
+    // Whether controls like giving up the level or completing the level should be disabled
+    // (to prevent the warp effect from being called multiple times)
+    private bool disabled = false;
 
     /// <summary>
     /// For now, begin the level as soon as this scene is initialized
@@ -282,6 +290,12 @@ public class GolfGameManager : MonoBehaviour
         cameraController.transform.position = introCameraPos;
         cameraController.transform.rotation = introCameraRot;
 
+        if (GolfLevelManager.PlayWarpEffect)
+        {
+            GolfLevelManager.PlayWarpEffect = false;
+            yield return warpEffect.WarpCameraIn();
+        }
+
         if (GolfLevelManager.PlayIntroSequence)
         {
             // Play full intro animations
@@ -335,6 +349,10 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void ConcludeLevel()
     {
+        if (disabled)
+            return;
+        disabled = true;
+
         bool won = strokeCount <= currentLevel.Par;
         if (won)
             GolfLevelManager.CompleteLevel();
@@ -349,7 +367,8 @@ public class GolfGameManager : MonoBehaviour
             GameData.progressFlags[GameData.targetChar][1] = true;
             GameData.fromGolf = true;
             GameData.wonGolf = true;
-            SceneManager.LoadScene("CountryClub");
+            uiLevelOutro.gameObject.SetActive(false); // Disable the outro UI so players can see the warp
+            warpEffect.StartCoroutine(warpEffect.WarpCameraOut("CountryClub"));
         }
     }
 
@@ -359,9 +378,16 @@ public class GolfGameManager : MonoBehaviour
     /// </summary>
     public void GiveUpLevel()
     {
+        if (disabled)
+            return;
+        disabled = true;
+
         GameData.fromGolf = true;
         GameData.wonGolf = false;
-        SceneManager.LoadScene("CountryClub");
+        AttemptUnpause();
+        canPause = false;
+        cameraController.enabled = false; // Freeze camera
+        warpEffect.StartCoroutine(warpEffect.WarpCameraOut("CountryClub"));
     }
 
     /// <summary>

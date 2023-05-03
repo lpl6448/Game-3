@@ -815,6 +815,8 @@ GameObject:
   - component: {fileID: 290100452}
   - component: {fileID: 290100454}
   - component: {fileID: 290100455}
+  - component: {fileID: 290100457}
+  - component: {fileID: 290100456}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -884,7 +886,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 5, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 806200634}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 17, y: 0, z: 0}
@@ -911,7 +914,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -946,6 +949,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotSpeed: 0.14
+--- !u!111 &290100456
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290100448}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: f045d971f94a38d43ba5fd090b8dd806, type: 2}
+  - {fileID: 7400000, guid: b7b69b388eb3adb41b4b7adda2598677, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &290100457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290100448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420b4ff1bfcbfd94b9d9fac144632618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  warpAnimations: {fileID: 290100456}
+  warpOutAnimation: {fileID: 7400000, guid: f045d971f94a38d43ba5fd090b8dd806, type: 2}
+  warpInAnimation: {fileID: 7400000, guid: b7b69b388eb3adb41b4b7adda2598677, type: 2}
 --- !u!4 &298719785 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2304931149449798800, guid: 0f76269ae1c485146a382146b683886b, type: 3}
@@ -1880,6 +1915,7 @@ MonoBehaviour:
   pauseOverlay: {fileID: 1063349532}
   dialogueManager: {fileID: 1652520301}
   charSprite: {fileID: 682384354}
+  warpEffect: {fileID: 290100457}
   loadSceneChars:
   - {fileID: 78809104}
   - {fileID: 1870398815}
@@ -3910,6 +3946,11 @@ Transform:
   m_Father: {fileID: 1227910476}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!4 &806200634 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+  m_PrefabInstance: {fileID: 4613662773934424243}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &833821827
 GameObject:
   m_ObjectHideFlags: 0
@@ -5618,7 +5659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1063349533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7439,6 +7480,7 @@ MonoBehaviour:
   option2: {fileID: 1061276951}
   continueArrow: {fileID: 908750966}
   dCharSprite: {fileID: 682384354}
+  warpEffect: {fileID: 290100457}
   characterList:
   - {fileID: 78809104}
   - {fileID: 1870398815}
@@ -8748,7 +8790,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh77988
+  m_Name: pb_Mesh71094
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9114,3 +9156,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2143367941}
   m_CullTransparentMesh: 1
+--- !u!1001 &4613662773934424243
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 290100451}
+    m_Modifications:
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051913, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613662774739051914, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
+      propertyPath: m_Name
+      value: WarpEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8cd2723fd3988b44fb69f853a7a8a2ef, type: 3}
