@@ -38,9 +38,4 @@ public class InteractableObject : MonoBehaviour
     {
         //Highlight the item
     }
-
-    public virtual void UnHover()
-    {
-        //Implemented in Character
-    }
 }

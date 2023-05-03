@@ -6,12 +6,6 @@ using UnityEngine;
 public class Character : InteractableObject
 {
     /// <summary>
-    /// Holds the speech bubble object associated with this character
-    /// </summary>
-    [SerializeField]
-    protected GameObject speechBubble;
-
-    /// <summary>
     /// List of sprites for different character emotions
     /// </summary>
     [SerializeField]
@@ -26,8 +20,6 @@ public class Character : InteractableObject
     /// </summary>
     protected Dictionary<Emotions, Material> charMats;
 
-    protected bool hovering = false;
-
 
     // Start is called before the first frame update
     protected override void Start()
@@ -41,14 +33,6 @@ public class Character : InteractableObject
         }
     }
 
-    protected void Update()
-    {
-        //if (!hovering)
-        //    return;
-        //hovering = false;
-        //speechBubble.SetActive(false);
-    }
-
     /// <summary>
     /// Pulls up dialogue box for specific character
     /// </summary>
@@ -57,18 +41,6 @@ public class Character : InteractableObject
         base.Clicked();
         GameData.gameState = State.Dialogue;
         GameData.targetChar = character;
-    }
-
-    public override void Hovered()
-    {
-        hovering = true;
-        speechBubble.SetActive(true);
-    }
-
-    public override void UnHover()
-    {
-        hovering=false;
-        speechBubble.SetActive(false);
     }
 
     public virtual Material GetSprite(Emotions emotion)
