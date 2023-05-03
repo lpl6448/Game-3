@@ -26,8 +26,6 @@ public class HubController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        warpEffect.StartCoroutine(warpEffect.WarpCameraIn());
-
         sceneChars = new Dictionary<Characters, Character>();
         sceneChars.Add(Characters.Molly, loadSceneChars[0]);
         sceneChars.Add(Characters.Marcone, loadSceneChars[1]);
@@ -43,19 +41,27 @@ public class HubController : MonoBehaviour
         if (GameData.fromGolf)
         {
             GameData.gameState = State.Dialogue;
-            dialogueOverlay.SetActive(true);
-            dialogueManager.CallDialogueSequence(sceneChars, GameData.targetChar);
+            StartCoroutine(WarpThenBeginDialogue());
         }
 
         GameData.prevState = GameData.gameState;
     }
 
+    private IEnumerator WarpThenBeginDialogue()
+    {
+        yield return warpEffect.WarpCameraIn();
+        yield return new WaitForSeconds(0.5f);
+
+        dialogueOverlay.SetActive(true);
+        dialogueManager.CallDialogueSequence(sceneChars, GameData.targetChar);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(GameData.gameState != GameData.prevState)
+        if (GameData.gameState != GameData.prevState)
         {
-            switch(GameData.gameState)
+            switch (GameData.gameState)
             {
                 case State.Title:
                     //go to title screen;
@@ -76,20 +82,20 @@ public class HubController : MonoBehaviour
                     break;
             }
         }
-        switch(GameData.gameState)
+        switch (GameData.gameState)
         {
             case State.Hub:
-                if(Input.GetKeyDown(KeyCode.Escape))
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     pauseOverlay.SetActive(true);
                     GameData.gameState = State.Paused;
                 }
                 break;
             case State.Dialogue:
-                
+
                 break;
             case State.Paused:
-                if (Input.GetKeyDown(KeyCode.Escape)) 
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     pauseOverlay.SetActive(false);
                     GameData.gameState = State.Hub;
