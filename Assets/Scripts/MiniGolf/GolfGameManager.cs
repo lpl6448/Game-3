@@ -348,8 +348,12 @@ public class GolfGameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.25f);
 
+        bool won = strokeCount <= currentLevel.Par;
+        if (won)
+            GolfLevelManager.CompleteLevel();
+
         // Officially conclude the level. (Once we have UI this will be called once the "Try Again" or "Continue" button is clicked.)
-        uiLevelOutro.AnimateOutro(currentLevel.Par, strokeCount);
+        uiLevelOutro.AnimateOutro(currentLevel.Par, strokeCount, GolfLevelManager.HasNewLevel());
     }
 
     /// <summary>
@@ -363,9 +367,6 @@ public class GolfGameManager : MonoBehaviour
         disabled = true;
 
         bool won = strokeCount <= currentLevel.Par;
-        if (won)
-            GolfLevelManager.CompleteLevel();
-
         if (!won) // If the player has lost this level, play mini-golf again.
             RestartLevel();
         else if (GolfLevelManager.HasNewLevel()) // If there is another level in the sequence, play it.
@@ -393,9 +394,14 @@ public class GolfGameManager : MonoBehaviour
 
         GameData.fromGolf = true;
         GameData.wonGolf = false;
+
         AttemptUnpause();
         canPause = false;
+        uiPauseMenu.gameObject.SetActive(false);
+        uiLevelOutro.gameObject.SetActive(false); // Disable the outro UI so players can see the warp
+        uiGolfInstructions.Deactivate();
         cameraController.enabled = false; // Freeze camera
+
         warpEffect.StartCoroutine(warpEffect.WarpCameraOut("CountryClub"));
     }
 

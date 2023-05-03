@@ -20,6 +20,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Button option2;
     [SerializeField] private Image continueArrow;
     [SerializeField] private Image dCharSprite;
+    [SerializeField] private GameObject cameraControlsPanel;
 
     [SerializeField] private WarpEffect warpEffect;
 
@@ -65,21 +66,22 @@ public class DialogueManager : MonoBehaviour
         RenderDialogueFrame();
     }
 
-    public void CallDialogueSequence(Dictionary<Characters, Character> sceneChars, Characters target = Characters.NONE, DLists toRequest=DLists.NONE)
+    public void CallDialogueSequence(Dictionary<Characters, Character> sceneChars, Characters target = Characters.NONE, DLists toRequest = DLists.NONE)
     {
+        cameraControlsPanel.SetActive(false);
         speaker = target;
-        if(targetFrameList!=null)
+        if (targetFrameList != null)
             targetFrameList.Clear();
         //Request JSON object if there is a specific dialgoue list request
-        if(toRequest!=DLists.NONE)
+        if (toRequest != DLists.NONE)
         {
-            switch(toRequest)
+            switch (toRequest)
             {
                 case DLists.Intro:
-                    targetFrameList = LoadDialogueList(DLists.Intro, introDialogueJSON); 
+                    targetFrameList = LoadDialogueList(DLists.Intro, introDialogueJSON);
                     break;
                 case DLists.Conclusion:
-                    targetFrameList = LoadDialogueList(DLists.Conclusion, conclusionDialogueJSON); 
+                    targetFrameList = LoadDialogueList(DLists.Conclusion, conclusionDialogueJSON);
                     break;
                 case DLists.Molly:
                     targetFrameList = LoadDialogueList(DLists.Molly, MollyDialogueJSON);
@@ -95,7 +97,7 @@ public class DialogueManager : MonoBehaviour
         //Request JSON objects based on speaker if there is one
         if (speaker != Characters.NONE)
         {
-            switch(speaker)
+            switch (speaker)
             {
                 case Characters.Molly:
                     targetFrameList = LoadDialogueList(DLists.Molly, MollyDialogueJSON);
@@ -126,7 +128,7 @@ public class DialogueManager : MonoBehaviour
         //Check if Marcone's nose needs to grow (very magic numbers implementation)
         if (speaker == Characters.Marcone && currentFrame._ID == 6)
             characterList[1].GetComponent<Marcone>().GrowNose();
-        if(speaker == Characters.Marcone && currentFrame._ID == 28)
+        if (speaker == Characters.Marcone && currentFrame._ID == 28)
             characterList[1].GetComponent<Marcone>().ShrinkNose();
 
         ResetButtons();
@@ -142,7 +144,7 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(AnimateDialogueFrame());
 
         //Update the character portrait on screen (unless speaker is dresden)
-        if(speaker!=Characters.Dresden)
+        if (speaker != Characters.Dresden)
         {
             dCharSprite.material = characterDict[speaker].GetSprite(currentFrame.Emotion);
         }
@@ -206,9 +208,9 @@ public class DialogueManager : MonoBehaviour
     /// <param name="searchFor"></param>
     private void GetCurrentFrame(LineType searchFor)
     {
-        foreach(DialogueFrame frame in targetFrameList)
+        foreach (DialogueFrame frame in targetFrameList)
         {
-            if(searchFor==frame.LineType)
+            if (searchFor == frame.LineType)
             {
                 currentFrame = frame;
                 return;
@@ -248,7 +250,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        switch(speaker)
+        switch (speaker)
         {
             case Characters.Molly:
                 if (GameData.progressFlags[Characters.Molly][1] && GameData.progressFlags[Characters.Marcone][1] && GameData.progressFlags[Characters.LC][1])
@@ -265,7 +267,7 @@ public class DialogueManager : MonoBehaviour
             case Characters.LC:
                 if (GameData.progressFlags[speaker][1])
                     GetCurrentFrame(LineType.HasLost);
-                else if(GameData.progressFlags[speaker][0])
+                else if (GameData.progressFlags[speaker][0])
                     GetCurrentFrame(LineType.AskToGolf);
                 else
                     GetCurrentFrame(0);
@@ -281,6 +283,7 @@ public class DialogueManager : MonoBehaviour
             GameData.progressFlags[Characters.NONE][0] = true;
             GameData.gameState = State.Hub;
             gameObject.SetActive(false);
+            cameraControlsPanel.SetActive(true);
             return true;
         }
         //Check if currentFrame should trigger going to golf
@@ -303,7 +306,7 @@ public class DialogueManager : MonoBehaviour
             return true;
         }
         //Check if LineType is finishConlusion, if so, go to end scene
-        if(currentFrame.LineType == LineType.FinishConclusion)
+        if (currentFrame.LineType == LineType.FinishConclusion)
         {
             SceneManager.LoadScene("Congrats");
         }
@@ -312,6 +315,8 @@ public class DialogueManager : MonoBehaviour
         {
             GameData.gameState = State.Hub;
             gameObject.SetActive(false);
+            if (currentFrame.LineType != LineType.ToGolf)
+                cameraControlsPanel.SetActive(true);
             return true;
         }
         return false;

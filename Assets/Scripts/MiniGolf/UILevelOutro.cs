@@ -43,7 +43,10 @@ public class UILevelOutro : MonoBehaviour
     [SerializeField]
     private Color continueWinColor;
 
-    public void AnimateOutro(int par, int strokes)
+    [SerializeField]
+    private GameObject giveUpButton;
+
+    public void AnimateOutro(int par, int strokes, bool hasNewLevel)
     {
         int parDiff = strokes - par;
         bool won = strokes <= par;
@@ -73,11 +76,13 @@ public class UILevelOutro : MonoBehaviour
         {
             continueText.text = "Continue";
             continueBackground.color = continueWinColor;
+            giveUpButton.SetActive(hasNewLevel);
         }
         else
         {
             continueText.text = "Try again";
             continueBackground.color = continueLoseColor;
+            giveUpButton.SetActive(true);
         }
 
         outroAnimation.Play();
