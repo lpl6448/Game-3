@@ -22,7 +22,8 @@ public static class GameData
         {
             progressFlags = new SerializableDictionary<Characters, bool[]>(); // Golf at index 1
 
-            progressFlags.Add(Characters.Molly, new bool[3]);
+            progressFlags.Add(Characters.NONE, new bool[2]);
+            progressFlags.Add(Characters.Molly, new bool[2]);
             progressFlags.Add(Characters.Marcone, new bool[2]);
             progressFlags.Add(Characters.LC, new bool[2]);
         }

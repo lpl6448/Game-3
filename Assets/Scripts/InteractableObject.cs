@@ -23,12 +23,6 @@ public class InteractableObject : MonoBehaviour
             character = a_character;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Each specific class of interactable item will leverage their own clicked method
     /// </summary>

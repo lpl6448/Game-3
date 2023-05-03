@@ -32,9 +32,15 @@ public class HubController : MonoBehaviour
         sceneChars.Add(Characters.Molly, loadSceneChars[0]);
         sceneChars.Add(Characters.Marcone, loadSceneChars[1]);
         sceneChars.Add(Characters.LC, loadSceneChars[2]);
-
+        //Check if intro cutscene has been played, play it if not
+        if (!GameData.progressFlags[Characters.NONE][0])
+        {
+            GameData.gameState = State.Dialogue;
+            dialogueOverlay.SetActive(true);
+            dialogueManager.CallDialogueSequence(sceneChars, Characters.NONE, DLists.Intro);
+        }
         //Handle if the scene is entered from golf
-        if(GameData.fromGolf)
+        if (GameData.fromGolf)
         {
             GameData.gameState = State.Dialogue;
             dialogueOverlay.SetActive(true);

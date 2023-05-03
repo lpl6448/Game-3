@@ -4,7 +4,7 @@
 			"ID": 0,
 			"speaker": "Toot-Toot",
 			"emotion": "Smile_Wink",
-			"lineType": "Respondible",
+			"lineType": "Respondable",
 			"line": "Hiya Harry!",
 			"response1": "Toot, Lacuna",
 			"response2": "Howdy",

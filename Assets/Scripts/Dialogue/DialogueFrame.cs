@@ -97,8 +97,8 @@ public class DialogueFrame
         {
             case "Continuous":
                 return LineType.Continuous;
-            case "Respondible":
-                return LineType.Respondible;
+            case "Respondable":
+                return LineType.Respondable;
             case "AskToGolf":
                 return LineType.AskToGolf;
             case "ToGolf":

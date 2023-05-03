@@ -33,11 +33,12 @@ public class RayInteractionController : MonoBehaviour
                     //Set this GameObject as the currently selected in the EventSystem
                     m_EventSystem.SetSelectedGameObject(m_MyGameObject);
                     m_MyGameObject.GetComponent<InteractableObject>().Hovered();
-                    //Output the current selected GameObject's name to the console
                 }
             }
             else
+            {
                 m_EventSystem.SetSelectedGameObject(null);
+            }
 
             if (Input.GetMouseButtonDown(0) && m_EventSystem.currentSelectedGameObject != null)
             {
