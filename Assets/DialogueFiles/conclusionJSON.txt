@@ -69,7 +69,7 @@
         {
 			"ID": 6,
 			"speaker": "Marcone",
-			"emotion": "Annoyed",
+			"emotion": "Avoidant",
 			"lineType": "Continuous",
 			"line": "I'm not sure I care at this point.",
 			"response1": "",
@@ -91,7 +91,7 @@
         {
 			"ID": 8,
 			"speaker": "Marcone",
-			"emotion": "Annoyed",
+			"emotion": "Avoidant",
 			"lineType": "Continuous",
 			"line": "What a genius. Don't quit your day job, kid.",
 			"response1": "",
@@ -146,7 +146,7 @@
         {
 			"ID": 13,
 			"speaker": "Marcone",
-			"emotion": "Annoyed",
+			"emotion": "Avoidant",
 			"lineType": "Continuous",
 			"line": "What? A man can't offer a slice of pizza pie to two of his dearest constituents?",
 			"response1": "",
@@ -278,7 +278,7 @@
         {
 			"ID": 25,
 			"speaker": "Marcone",
-			"emotion": "Annoyed",
+			"emotion": "Avoidant",
 			"lineType": "Continuous",
 			"line": "I think I left my fly swatter somewhere around here, let me go find it.",
 			"response1": "",
@@ -312,12 +312,12 @@
 			"ID": 28,
 			"speaker": "Marcone",
 			"emotion": "Happy",
-			"lineType": "Continuous",
+			"lineType": "FinishConclusion",
 			"line": "I appreciate the help.",
 			"response1": "",
 			"response2": "",
 			"nextFrame1": -1,
 			"nextFrame2": -1
-		},
+		}
 	]
 }

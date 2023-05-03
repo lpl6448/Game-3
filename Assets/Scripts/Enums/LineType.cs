@@ -2,12 +2,13 @@ public enum LineType
 {
     NONE,
     Continuous,
-    Respondible,
+    Respondable,
     AskToGolf,
     ToGolf,
     WonGolf,
     LostGolf,
     HasLost,
     FinishIntro,
+    FinishConclusion,
     Conclusion
 }

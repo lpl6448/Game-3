@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     //Dialogue JSON Files
     [SerializeField] TextAsset introDialogueJSON;
+    [SerializeField] TextAsset conclusionDialogueJSON;
     [SerializeField] TextAsset MollyDialogueJSON;
     [SerializeField] TextAsset MarconeDialogueJSON;
     [SerializeField] TextAsset LTDialogueJSON;
@@ -27,6 +28,7 @@ public class DialogueManager : MonoBehaviour
 
     //Lists to hold dialogue frames associated with characters or progressions
     private List<DialogueFrame> introDL = new List<DialogueFrame>();
+    private List<DialogueFrame> conclusionDL = new List<DialogueFrame>();
     private List<DialogueFrame> mollyDL = new List<DialogueFrame>();
     private List<DialogueFrame> marconeDL = new List<DialogueFrame>();
     private List<DialogueFrame> lcDL = new List<DialogueFrame>();
@@ -49,22 +51,11 @@ public class DialogueManager : MonoBehaviour
 
     public void Continue(int nextFrame)
     {
-        if (currentFrame.LineType==LineType.ToGolf)
-        {
-            dialogueBox.SetActive(false);
-            GameData.gameState = State.Golf;
-            GolfLevelManager.hasInitialized = false;
-            SceneManager.LoadScene("MiniGolf");
-        }
-        if (currentFrame.LineType == LineType.WonGolf || currentFrame.LineType == LineType.LostGolf)
-            GameData.fromGolf = false;
-        //If the next frame will be nothing, close the dialogue overlay and return to hub
-        if(nextFrame==-1)
-        {
-            GameData.gameState = State.Hub;
-            gameObject.SetActive(false);
+        //Check if any special case continue buttons need to be added
+        //If so, return
+        if (CheckSpecialCases(nextFrame))
             return;
-        }
+
         //Change current frame to next frame and call to render it
         currentFrame = targetFrameList[nextFrame];
         //If currentFrame is an asktogolf frame, mark first word progress flag as true
@@ -73,11 +64,33 @@ public class DialogueManager : MonoBehaviour
         RenderDialogueFrame();
     }
 
-    public void CallDialogueSequence(Dictionary<Characters, Character> sceneChars, Characters target = Characters.NONE, DLists toRequest=DLists.Intro)
+    public void CallDialogueSequence(Dictionary<Characters, Character> sceneChars, Characters target = Characters.NONE, DLists toRequest=DLists.NONE)
     {
         speaker = target;
         if(targetFrameList!=null)
             targetFrameList.Clear();
+        //Request JSON object if there is a specific dialgoue list request
+        if(toRequest!=DLists.NONE)
+        {
+            switch(toRequest)
+            {
+                case DLists.Intro:
+                    targetFrameList = LoadDialogueList(DLists.Intro, introDialogueJSON); 
+                    break;
+                case DLists.Conclusion:
+                    targetFrameList = LoadDialogueList(DLists.Conclusion, conclusionDialogueJSON); 
+                    break;
+                case DLists.Molly:
+                    targetFrameList = LoadDialogueList(DLists.Molly, MollyDialogueJSON);
+                    break;
+                case DLists.Marcone:
+                    targetFrameList = LoadDialogueList(DLists.Marcone, MarconeDialogueJSON);
+                    break;
+                case DLists.LT:
+                    targetFrameList = LoadDialogueList(DLists.LT, LTDialogueJSON);
+                    break;
+            }
+        }
         //Request JSON objects based on speaker if there is one
         if (speaker != Characters.NONE)
         {
@@ -94,10 +107,6 @@ public class DialogueManager : MonoBehaviour
                     break;
             }
         }
-        else
-        {
-            targetFrameList = LoadDialogueList(toRequest, introDialogueJSON);
-        }
 
         //Start dialogue interaction
         DetermineDialogueSequence();
@@ -110,6 +119,9 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void RenderDialogueFrame()
     {
+        //Get speaker to render from current frame
+        speaker = currentFrame.Actor;
+
         //Check if Marcone's nose needs to grow (very magic numbers implementation)
         if (speaker == Characters.Marcone && currentFrame._ID == 6)
             characterList[1].GetComponent<Marcone>().GrowNose();
@@ -120,7 +132,7 @@ public class DialogueManager : MonoBehaviour
         if (currentFrame.Line.Length > 80)
             dialogueText.fontSize = 28;
         //Only run response code if the prompt has responses available
-        if (currentFrame.NextFrame2 != -1 || currentFrame.LineType == LineType.Respondible)
+        if (currentFrame.NextFrame2 != -1 || currentFrame.LineType == LineType.Respondable)
         {
             //Activate response objects
             option1.gameObject.SetActive(true);
@@ -189,11 +201,14 @@ public class DialogueManager : MonoBehaviour
 
     private void DetermineDialogueSequence()
     {
+        //If there is no speaker, the sequence is intro or conclusion and can just call frame 0
         if (speaker == Characters.NONE)
-            return;
+        {
+            GetCurrentFrame(0);
+        }
 
         //Handle starting dialogue after golf
-        if(GameData.fromGolf)
+        if (GameData.fromGolf)
         {
             //Call dialogue for winning and make this characters golf won flag as true
             if (GameData.wonGolf)
@@ -230,6 +245,49 @@ public class DialogueManager : MonoBehaviour
                     GetCurrentFrame(0);
                 break;
         }
+    }
+
+    private bool CheckSpecialCases(int nextFrame)
+    {
+        //Check if finishing intro and mark intro flag as completed
+        if (currentFrame.LineType == LineType.FinishIntro)
+        {
+            GameData.progressFlags[Characters.NONE][0] = true;
+            GameData.gameState = State.Hub;
+            gameObject.SetActive(false);
+            return true;
+        }
+        //Check if currentFrame should trigger going to golf
+        if (currentFrame.LineType == LineType.ToGolf)
+        {
+            dialogueBox.SetActive(false);
+            GameData.gameState = State.Golf;
+            GolfLevelManager.hasInitialized = false;
+            SceneManager.LoadScene("MiniGolf");
+            return true;
+        }
+        //Reset the from golf variable if this frame is upon returning to golf
+        if (currentFrame.LineType == LineType.WonGolf || currentFrame.LineType == LineType.LostGolf)
+            GameData.fromGolf = false;
+        //Check if this frame should trigger the conclusion sequence
+        if (currentFrame.LineType == LineType.Conclusion)
+        {
+            CallDialogueSequence(characterDict, Characters.NONE, DLists.Conclusion);
+            return true;
+        }
+        //Check if LineType is finishConlusion, if so, go to end scene
+        if(currentFrame.LineType == LineType.FinishConclusion)
+        {
+
+        }
+        //If the next frame will be nothing, close the dialogue overlay and return to hub
+        if (nextFrame == -1)
+        {
+            GameData.gameState = State.Hub;
+            gameObject.SetActive(false);
+            return true;
+        }
+        return false;
     }
 
 

@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class RayInteractionController : MonoBehaviour
 {
+    [SerializeField] private InteractableObject[] interactableObjects;
+
     private EventSystem m_EventSystem;
 
     // Start is called before the first frame update
@@ -35,9 +37,16 @@ public class RayInteractionController : MonoBehaviour
                     m_MyGameObject.GetComponent<InteractableObject>().Hovered();
                     //Output the current selected GameObject's name to the console
                 }
+                else
+                {
+                    foreach (InteractableObject obj in interactableObjects)
+                        obj.UnHover();
+                }
             }
             else
+            {
                 m_EventSystem.SetSelectedGameObject(null);
+            }
 
             if (Input.GetMouseButtonDown(0) && m_EventSystem.currentSelectedGameObject != null)
             {

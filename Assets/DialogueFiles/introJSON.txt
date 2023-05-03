@@ -212,7 +212,7 @@
 		{
 			"ID": 19,
 			"speaker": "Marcone",
-			"emotion": "Annoyed",
+			"emotion": "Avoidant",
 			"lineType": "Continuous",
 			"line": "Not until I figure out how to reverse it.",
 			"response1": "",
@@ -268,12 +268,12 @@
 			"ID": 24,
 			"speaker": "Molly",
 			"emotion": "Wink",
-			"lineType": "Continuous",
+			"lineType": "FinishIntro",
 			"line": "You can count on us, Mr. Marcone!",
 			"response1": "",
 			"response2": "",
 			"nextFrame1": -1,
 			"nextFrame2": -1
-		},	
+		}
 	]
 }

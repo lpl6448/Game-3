@@ -3,6 +3,7 @@
 /// </summary>
 public enum DLists
 {
+    NONE,
     Intro,
     Molly,
     Marcone,

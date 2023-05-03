@@ -7,12 +7,14 @@ public class FrameLoader : MonoBehaviour
 {
     //Lists that will contain all dialogue frames
     private List<DialogueFrame> introDL = new List<DialogueFrame>();
+    private List<DialogueFrame> conclusionDL = new List<DialogueFrame>();
     private List<DialogueFrame> mollyDL = new List<DialogueFrame>();
     private List<DialogueFrame> marconeDL = new List<DialogueFrame>();
     private List<DialogueFrame> lcDL = new List<DialogueFrame>();
 
     //Properties to access DialogueFrame lists
     public List<DialogueFrame> IntroDL => introDL;
+    public List<DialogueFrame > ConclusionDL => conclusionDL;
     public List<DialogueFrame> MollyDL => mollyDL;
     public List<DialogueFrame > MarconeDL => marconeDL;
     public List<DialogueFrame> LCDL => lcDL;
@@ -48,6 +50,7 @@ public class FrameLoader : MonoBehaviour
     }
 
     private FrameList introList = new FrameList();
+    private FrameList conclusionList = new FrameList();
     private FrameList mollyList = new FrameList();
     private FrameList marconeList = new FrameList();
     private FrameList ltList = new FrameList();
@@ -70,6 +73,13 @@ public class FrameLoader : MonoBehaviour
                     introDL.Add(new DialogueFrame(mf.ID, mf.speaker, mf.emotion, mf.line, mf.lineType, mf.nextFrame1, mf.nextFrame2, mf.response1, mf.response2));
                 }
                 return introDL;
+            case DLists.Conclusion:
+                conclusionList = JsonUtility.FromJson<FrameList>(targetFile.text);
+                foreach (MockFrame mf in conclusionList.list)
+                {
+                    conclusionDL.Add(new DialogueFrame(mf.ID, mf.speaker, mf.emotion, mf.line, mf.lineType, mf.nextFrame1, mf.nextFrame2, mf.response1, mf.response2));
+                }
+                return conclusionDL;
             case DLists.Molly:
                 mollyList = JsonUtility.FromJson<FrameList>(targetFile.text);
                 foreach (MockFrame mf in mollyList.list)
