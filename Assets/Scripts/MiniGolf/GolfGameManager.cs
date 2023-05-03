@@ -384,7 +384,8 @@ public class GolfGameManager : MonoBehaviour
 
         GameData.fromGolf = true;
         GameData.wonGolf = false;
-        Time.timeScale = 1; // Unfreeze physics
+        AttemptUnpause();
+        canPause = false;
         cameraController.enabled = false; // Freeze camera
         warpEffect.StartCoroutine(warpEffect.WarpCameraOut("CountryClub"));
     }

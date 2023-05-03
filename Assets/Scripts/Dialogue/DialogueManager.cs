@@ -35,6 +35,8 @@ public class DialogueManager : MonoBehaviour
     //List of loaded dialogue frame lists
     private List<DialogueFrame> targetFrameList;
 
+    private bool skipTextTyping; // If true (when the user clicks the dialogue box), the text-typing animation is skipped
+
     DialogueFrame currentFrame;
 
     [SerializeField] private List<Character> characterList;
@@ -119,10 +121,37 @@ public class DialogueManager : MonoBehaviour
             characterList[1].GetComponent<Marcone>().GrowNose();
 
         ResetButtons();
-        dialogueText.text = $"{currentFrame.Speaker}: {currentFrame.Line}";
         //Shrink font size if line is too long
         if (currentFrame.Line.Length > 80)
             dialogueText.fontSize = 28;
+
+        // Begin animating text typing
+        skipTextTyping = false;
+        dialogueButton.onClick.AddListener(delegate { skipTextTyping = true; });
+        StartCoroutine(AnimateDialogueFrame());
+
+        //Update the character portrait on screen (unless speaker is dresden)
+        if(speaker!=Characters.Dresden)
+        {
+            dCharSprite.material = characterDict[speaker].GetSprite(currentFrame.Emotion);
+        }
+    }
+
+    private IEnumerator AnimateDialogueFrame()
+    {
+        dialogueText.text = $"<b>{currentFrame.Speaker}</b>: ";
+
+        float typeRate = 25;
+        for (int i = 0; i < currentFrame.Line.Length; i++)
+        {
+            if (skipTextTyping)
+                break;
+
+            yield return new WaitForSeconds(1 / typeRate);
+            dialogueText.text = $"<b>{currentFrame.Speaker}</b>: {currentFrame.Line.Substring(0, i)}";
+        }
+        dialogueText.text = $"<b>{currentFrame.Speaker}</b>: {currentFrame.Line}";
+
         //Only run response code if the prompt has responses available
         if (currentFrame.NextFrame2 != -1 || currentFrame.LineType == LineType.Respondible)
         {
@@ -144,12 +173,6 @@ public class DialogueManager : MonoBehaviour
         {
             continueArrow.gameObject.SetActive(true);
             dialogueButton.onClick.AddListener(delegate { Continue(currentFrame.NextFrame1); });
-        }
-
-        //Update the character portrait on screen (unless speaker is dresden)
-        if(speaker!=Characters.Dresden)
-        {
-            dCharSprite.material = characterDict[speaker].GetSprite(currentFrame.Emotion);
         }
     }
 

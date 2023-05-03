@@ -6568,7 +6568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be5ab6b071e70384e87fbc2134d2af2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bubbleOffset: {x: 0.25, y: 1.8, z: 0}
+  bubbleOffset: {x: 0.3, y: 1.85, z: 0}
   scaleLerpFactor: 10
   minimumScale: 0.25
   maximumScale: 1
@@ -7835,6 +7835,7 @@ GameObject:
   - component: {fileID: 1652520298}
   - component: {fileID: 1652520297}
   - component: {fileID: 1652520301}
+  - component: {fileID: 1652520302}
   m_Layer: 5
   m_Name: DialogueScreen
   m_TagString: Untagged
@@ -7954,6 +7955,26 @@ MonoBehaviour:
   - {fileID: 78809104}
   - {fileID: 1870398815}
   - {fileID: 1446990178}
+--- !u!95 &1652520302
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652520296}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f023636757402104396b0c46812a3181, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &1674299535 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2460137346744355706, guid: f22bfcebbb016164480f1e0f1f6915b8, type: 3}
