@@ -507,7 +507,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Molly
   a_character: 1
-  speechBubble: {fileID: 2125498599}
   loadCharMats:
   - {fileID: 2100000, guid: 7f52e7158c3df804c9bfebe238a9dddd, type: 2}
   - {fileID: 2100000, guid: d7676fb0c15b6f241a066ff5f5b33111, type: 2}
@@ -1135,11 +1134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf78ea9b4ef81eb40b8949cfa8ee2e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableObjects:
-  - {fileID: 78809104}
-  - {fileID: 1870398815}
-  - {fileID: 1446990178}
-  - {fileID: 850447931}
 --- !u!114 &290100455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1152,11 +1146,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0722a456e31c33d44b66835217b7fbc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotSpeed: 20
-  rotationLerpFactor: 8
-  chevronLeft: {fileID: 1081232288}
-  chevronRight: {fileID: 1020734326}
-  hoverChevronOffset: -8
+  rotSpeed: 25
+  rotationLerpFactor: 6
+  chevronLeft: {fileID: 1706055574}
+  chevronRight: {fileID: 534619358}
+  hoverChevronOffset: 0
 --- !u!111 &290100456
 Animation:
   m_ObjectHideFlags: 0
@@ -7393,7 +7387,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Lacuna and Toot Toot
   a_character: 3
-  speechBubble: {fileID: 46358089}
   loadCharMats:
   - {fileID: 2100000, guid: 1ffa927bdc3434047bc5f0590f5f4d4a, type: 2}
   - {fileID: 2100000, guid: 6dae7963512294140a5a9b7bfa5d513b, type: 2}
@@ -8156,7 +8149,7 @@ MonoBehaviour:
   option2: {fileID: 1061276951}
   continueArrow: {fileID: 908750966}
   dCharSprite: {fileID: 682384354}
-  warpEffect: {fileID: 290100457}
+  warpEffect: {fileID: 0}
   characterList:
   - {fileID: 78809104}
   - {fileID: 1870398815}
@@ -8804,7 +8797,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Marcone
   a_character: 2
-  speechBubble: {fileID: 14585546}
   loadCharMats:
   - {fileID: 2100000, guid: a530434f0dc119b45b79ed415303ee16, type: 2}
   - {fileID: 2100000, guid: 9ddc1098f198aea4bbae87eb77905ed2, type: 2}

@@ -55,24 +55,8 @@ public class DialogueManager : MonoBehaviour
 
     public void Continue(int nextFrame)
     {
-        if (currentFrame.LineType==LineType.ToGolf)
-        {
-            dialogueBox.SetActive(false);
-            GameData.gameState = State.Golf;
-            GolfLevelManager.hasInitialized = false;
-            GolfLevelManager.PlayIntroSequence = true;
-            GolfLevelManager.PlayWarpEffect = true;
-            warpEffect.StartCoroutine(warpEffect.WarpCameraOut("MiniGolf"));
-        }
-        if (currentFrame.LineType == LineType.WonGolf || currentFrame.LineType == LineType.LostGolf)
-            GameData.fromGolf = false;
-        //If the next frame will be nothing, close the dialogue overlay and return to hub
-        if(nextFrame==-1)
-        {
-            GameData.gameState = State.Hub;
-            gameObject.SetActive(false);
+        if (CheckSpecialCases(nextFrame))
             return;
-
         //Change current frame to next frame and call to render it
         currentFrame = targetFrameList[nextFrame];
         //If currentFrame is an asktogolf frame, mark first word progress flag as true
@@ -301,8 +285,9 @@ public class DialogueManager : MonoBehaviour
             dialogueBox.SetActive(false);
             GameData.gameState = State.Golf;
             GolfLevelManager.hasInitialized = false;
-            SceneManager.LoadScene("MiniGolf");
-            return true;
+            GolfLevelManager.PlayIntroSequence = true;
+            GolfLevelManager.PlayWarpEffect = true;
+            warpEffect.StartCoroutine(warpEffect.WarpCameraOut("MiniGolf"));
         }
         //Reset the from golf variable if this frame is upon returning to golf
         if (currentFrame.LineType == LineType.WonGolf || currentFrame.LineType == LineType.LostGolf)
